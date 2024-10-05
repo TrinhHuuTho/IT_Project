@@ -29,7 +29,9 @@ git commit -m "Mô tả ngắn gọn về thay đổi"
 
 7. Push lên repository:
 git push origin <ten_branch_cua_ban>
-Tạo Pull Request: Sau khi đã push branch, hãy tạo một Pull Request trên GitHub để kết hợp các thay đổi của bạn vào nhánh chính (main). Điều này sẽ giúp mọi người trong nhóm có thể xem xét và phản hồi.
+
+8. Tạo Pull Request:
+Sau khi đã push branch, hãy tạo một Pull Request trên GitHub để kết hợp các thay đổi của bạn\n vào nhánh chính (main). Điều này sẽ giúp mọi người trong nhóm có thể xem xét và phản hồi.
 
 8. Pull Các Thay đổi Mới Nhất:
 git checkout main
