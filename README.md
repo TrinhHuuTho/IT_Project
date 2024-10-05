@@ -3,7 +3,7 @@
 ## Hướng dẫn sử dụng Repository cho Dự án Nhóm
 
 ### Giới thiệu
-Chào mừng bạn đến với dự án nhóm của chúng ta! Trong tài liệu này sẽ hướng dẫn cách làm việc với repository này một cách hiệu quả.
+Trong tài liệu này sẽ hướng dẫn cách làm việc với repository này một cách hiệu quả.
 
 ---
 ```bash
