@@ -1,0 +1,30 @@
+package vn.iotstar.entity;
+
+import java.io.Serializable;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Table(name = "GENRE")
+public class Genre implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "genre_id")
+    private int genreId;
+
+    @Column(name = "genre_name", columnDefinition = "nvarchar(100) not null unique")
+    @NotEmpty(message = "Tên thể loại không được phép rỗng")
+    private String genreName;
+
+    @Column(name = "describe_genre", columnDefinition = "text")
+    private String describeGenre;
+}
