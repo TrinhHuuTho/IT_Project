@@ -1,0 +1,27 @@
+package vn.iotstar.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "BOOKGENRE")
+public class BookGenre {
+
+	@EmbeddedId
+	private BookGenreKey id;
+
+	@ManyToOne
+	@MapsId("genreId")
+	@JoinColumn(name = "genre_id")
+	private Genre genre;
+
+	@ManyToOne
+	@MapsId("bookId")
+	@JoinColumn(name = "book_id")
+	private Book book;
+}

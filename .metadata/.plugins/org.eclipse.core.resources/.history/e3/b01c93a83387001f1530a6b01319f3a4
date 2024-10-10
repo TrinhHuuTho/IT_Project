@@ -1,0 +1,30 @@
+package vn.iotstar.entity;
+
+import java.io.Serializable;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Table(name = "FAVOURITE")
+public class Favourite implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
+	private FavouriteKey id;
+
+	@ManyToOne
+	@MapsId("usersId")
+	@JoinColumn(name = "users_id")
+	private User user;
+
+	@ManyToOne
+	@MapsId("bookId")
+	@JoinColumn(name = "book_id")
+	private Book book;
+}

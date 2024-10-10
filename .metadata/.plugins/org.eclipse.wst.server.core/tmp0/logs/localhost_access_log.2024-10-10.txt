@@ -164,3 +164,11 @@
 0:0:0:0:0:0:0:1 - - [10/Oct/2024:14:10:28 +0700] "GET /IT_Project_Course/home.jsp HTTP/1.1" 404 739
 0:0:0:0:0:0:0:1 - - [10/Oct/2024:14:10:31 +0700] "GET /IT_Project_Course/views/home.jsp HTTP/1.1" 200 121496
 0:0:0:0:0:0:0:1 - - [10/Oct/2024:14:10:31 +0700] "GET /IT_Project_Course/assets/images/logo.png HTTP/1.1" 404 804
+127.0.0.1 - - [10/Oct/2024:16:04:49 +0700] "GET / HTTP/1.1" 404 752
+0:0:0:0:0:0:0:1 - - [10/Oct/2024:16:04:49 +0700] "GET /IT_Project_Course/ HTTP/1.1" 404 774
+0:0:0:0:0:0:0:1 - - [10/Oct/2024:16:05:48 +0700] "GET /IT_Project_Course/home HTTP/1.1" 200 121496
+0:0:0:0:0:0:0:1 - - [10/Oct/2024:16:05:48 +0700] "GET /IT_Project_Course/assets/images/logo.png HTTP/1.1" 404 804
+0:0:0:0:0:0:0:1 - - [10/Oct/2024:16:05:53 +0700] "GET /IT_Project_Course/views/home.jsp HTTP/1.1" 200 121496
+0:0:0:0:0:0:0:1 - - [10/Oct/2024:16:05:53 +0700] "GET /IT_Project_Course/assets/images/logo.png HTTP/1.1" 404 804
+0:0:0:0:0:0:0:1 - - [10/Oct/2024:16:05:55 +0700] "GET /IT_Project_Course/views/home.jsp HTTP/1.1" 200 121496
+0:0:0:0:0:0:0:1 - - [10/Oct/2024:16:05:55 +0700] "GET /IT_Project_Course/assets/images/logo.png HTTP/1.1" 404 804

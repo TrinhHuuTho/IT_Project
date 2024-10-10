@@ -1,0 +1,44 @@
+package vn.iotstar.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Table(name = "BOOK")
+public class Book implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "book_id")
+    private int bookId;
+
+    @Column(name = "title", columnDefinition = "nvarchar(200) not null unique")
+    @NotEmpty(message = "Tên sách không được phép rỗng")
+    private String title;
+
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = true)
+    private Author author;
+
+    @Column(name = "content", columnDefinition = "nvarchar(100) not null")
+    @NotEmpty(message = "Nội dung không được phép rỗng")
+    private String content;
+
+    @Column(name = "created_at", nullable = false)
+    //@Temporal(TemporalType.DATE)
+    private Date createdAt;
+
+    @Lob
+    @Column(name = "images_book", columnDefinition = "varbinary(max)")
+    private byte[] imagesBook;
+}
