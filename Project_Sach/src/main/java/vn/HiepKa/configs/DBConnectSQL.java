@@ -3,12 +3,12 @@ package vn.HiepKa.configs;
 import java.sql.Connection;
 import java.sql.DriverManager;
 public class DBConnectSQL {
-	private final String serverName = "LAPTOP-4TT7LL7D\\NGUYENHIEPKA";
+	private final String serverName = "ADMIN";
 	private final String dbName = "PROJECT";
 	private final String portNumber = "1433";
 	private final String instance = "";
 	private final String userID = "sa";
-	private final String password = "09102004";
+	private final String password = "12";
 
 	public Connection getConnection() throws Exception {
 	        String url = "jdbc:sqlserver://" + serverName + ":" + portNumber + "\\" + instance + " ;databaseName=" + dbName;
