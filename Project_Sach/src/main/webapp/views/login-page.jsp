@@ -36,11 +36,19 @@
                                         <i class="fa fa-twitter"></i> <span class="hidden-xs hidden-sm">Signin with twitter</span>
                                     </a>
                                 </div>
-                                <div class="col-xs-4 col-sm-4 col-md-12">
-                                    <a href="#" class="btn btn-block btn-google">
-                                        <i class="fa fa-google-plus"></i> <span class="hidden-xs hidden-sm">Signin with google</span>
-                                    </a>
-                                </div>
+                                <!-- Nút Đăng nhập bằng Google -->
+								<div class="col-xs-4 col-sm-4 col-md-12">
+								    <a href="https://accounts.google.com/o/oauth2/v2/auth?
+											scope=email%20profile&
+											access_type=offline&
+											include_granted_scopes=true&
+											response_type=code&
+											redirect_uri=http://localhost:8081/Project_Sach/authentication/auth/google&
+											client_id=1013728767709-o6q514dv1kk6h8eh3asqsalkdi3tbfud.apps.googleusercontent.com"
+								    	class="btn btn-block btn-google">
+									    <i class="fa fa-google"></i> <span class="hidden-xs hidden-sm">Sign in with Google</span>
+									</a>
+								</div>																				                            
                             </div>
                             <!-- ./social-buttons -->
                         </div>
@@ -158,5 +166,4 @@
     <!-- ./container -->   
 
 </body>
-
 </html>

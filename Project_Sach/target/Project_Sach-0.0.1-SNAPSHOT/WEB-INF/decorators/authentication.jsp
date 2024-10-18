@@ -32,7 +32,10 @@
     <!-- Main structure css file -->
     <link rel="stylesheet" href="${URL}login-page-devforum\css\login-style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-
+	
+	 <!-- Thêm thư viện Google Sign-In -->
+    <script src="https://accounts.google.com/gsi/client" async="true" defer></script>
+    <script src="${URL}login-page-devforum/js/loginGoogle.js"></script>											
 </head>
 
 	<!--Nội dung chính-->

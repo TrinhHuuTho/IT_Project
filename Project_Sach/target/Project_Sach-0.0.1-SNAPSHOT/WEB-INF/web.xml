@@ -19,4 +19,16 @@
 	<session-config>
 		<tracking-mode>COOKIE</tracking-mode>
 	</session-config>
+
+	<servlet>
+		<servlet-name>GoogleAuthServlet</servlet-name>
+		<servlet-class>vn.HiepKa.controllers.GoogleAuthServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>GoogleAuthServlet</servlet-name>
+		<url-pattern>/authentication/auth/google</url-pattern>
+	</servlet-mapping>
+
+
 </web-app>

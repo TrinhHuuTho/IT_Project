@@ -1,6 +1,8 @@
 vn\HiepKa\dao\IUserDao.class
-vn\HiepKa\configs\DBConnectSQL.class
+vn\HiepKa\utils\Constants.class
+vn\HiepKa\controllers\GoogleAuthServlet.class
 vn\HiepKa\dao\impl\UserDaoImpl.class
+vn\HiepKa\controllers\AuthenticationController.class
+vn\HiepKa\configs\DBConnectSQL.class
 vn\HiepKa\controllers\HomeControllers.class
 vn\HiepKa\models\UserModel.class
-vn\HiepKa\controllers\AuthenticationController.class
