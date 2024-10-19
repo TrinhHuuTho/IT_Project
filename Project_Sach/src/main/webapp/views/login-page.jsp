@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ include file="/commons/taglib.jsp"%>
-	<c:url value="/" var="URL"></c:url>
+<%@ include file="/commons/taglib.jsp"%>
+<c:url value="/" var="URL"></c:url>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -55,15 +55,24 @@
                                 <h3 class="auth-title">Login to your account</h3>
                                 <p>Don’t have an account? <a class="lnk-toggler" data-panel=".panel-signup" href="#">Sign Up Free!</a></p>
                             </div>
+
+                            <!-- Hiển thị thông báo lỗi nếu có -->
+                            <div style="height: auto; margin-bottom: 10px;">
+							    <c:if test="${not empty errorMessage}">
+							        <div class="alert alert-danger" role="alert" style="font-size: 14px; padding: 6px;">
+							            ${errorMessage}
+							        </div>
+							    </c:if>
+							</div>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12">
-                                    <form name="loginForm" class="loginForm" action="#" method="POST">
+                                    <form name="loginForm" class="loginForm" action="<c:url value='/authentication/login' />" method="POST">
                                         <div class="form-group">
-                                            <input type="email" class="form-control email" name="username" placeholder="Email address">
+                                            <input type="email" class="form-control email" name="email" placeholder="Email address" required>
                                         </div>
                                         <div class="form-group">
                                             <div class="pwdMask">
-                                                <input type="password" class="form-control password" name="password" placeholder="Password">
+                                                <input type="password" class="form-control password" name="password" placeholder="Password" required>
                                                 <span class="fa fa-eye-slash pwd-toggle"></span>
                                             </div>
                                         </div>
@@ -71,7 +80,7 @@
                                         <div class="row remember-row">
                                             <div class="col-xs-6 col-sm-6">
                                                 <label class="checkbox text-left">
-                                                    <input type="checkbox" value="remember-me">
+                                                    <input type="checkbox" value="remember-me" name="remember">
                                                     <span class="label-text">Remember me</span>
                                                 </label>
                                             </div>
@@ -90,6 +99,7 @@
                             </div>
                         </div>
                         <!-- ./panel-login -->
+
                         <!-- panel-signup start -->
                         <div class="authfy-panel panel-signup text-center">
                             <div class="row">
@@ -97,7 +107,7 @@
                                     <div class="authfy-heading">
                                         <h3 class="auth-title">Sign up for free!</h3>
                                     </div>
-                                    <form name="signupForm" class="signupForm" action="#" method="POST">
+                                    <form name="signupForm" class="signupForm" action="<c:url value='/authentication/signup' />" method="POST">
                                         <div class="form-group">
                                             <input type="email" class="form-control" name="username" placeholder="Email address">
                                         </div>
@@ -122,6 +132,7 @@
                             </div>
                         </div>
                         <!-- ./panel-signup -->
+
                         <!-- panel-forget start -->
                         <div class="authfy-panel panel-forgot">
                             <div class="row">
@@ -130,7 +141,7 @@
                                         <h3 class="auth-title">Recover your password</h3>
                                         <p>Fill in your e-mail address below and we will send you an email with further instructions.</p>
                                     </div>
-                                    <form name="forgetForm" class="forgetForm" action="#" method="POST">
+                                    <form name="forgetForm" class="forgetForm" action="<c:url value='/forgot-password' />" method="POST">
                                         <div class="form-group">
                                             <input type="email" class="form-control" name="username" placeholder="Email address">
                                         </div>
@@ -155,8 +166,6 @@
         </div>
         <!-- ./row -->
     </div>
-    <!-- ./container -->   
-
+    <!-- ./container -->
 </body>
-
 </html>

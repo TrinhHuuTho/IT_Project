@@ -37,21 +37,21 @@ public class UserDaoImpl extends DBConnectSQL implements IUserDao {
 		}
 		return null;
 	}
-	public static void main(String[] args) {
-        UserDaoImpl userDao = new UserDaoImpl();
-        String usernameToFind = "DuyHao";
-        UserModel user = userDao.findByUserName(usernameToFind);
-        if (user != null) {
-            System.out.println("Thông tin người dùng với username '" + usernameToFind + "':");
-            System.out.println("ID: " + user.getUserid());
-            System.out.println("Email: " + user.getEmail());
-            System.out.println("Username: " + user.getUsername());
-            System.out.println("Password: " + user.getPassword());
-            System.out.println("Role ID: " + user.getRoleid());
-        } else {
-            System.out.println("Không tìm thấy người dùng với username '" + usernameToFind + "'.");
-        }
-    }
+//	public static void main(String[] args) {
+//        UserDaoImpl userDao = new UserDaoImpl();
+//        String usernameToFind = "DuyHao";
+//        UserModel user = userDao.findByUserName(usernameToFind);
+//        if (user != null) {
+//            System.out.println("Thông tin người dùng với username '" + usernameToFind + "':");
+//            System.out.println("ID: " + user.getUserid());
+//            System.out.println("Email: " + user.getEmail());
+//            System.out.println("Username: " + user.getUsername());
+//            System.out.println("Password: " + user.getPassword());
+//            System.out.println("Role ID: " + user.getRoleid());
+//        } else {
+//            System.out.println("Không tìm thấy người dùng với username '" + usernameToFind + "'.");
+//        }
+//    }
 	@Override
 	public void insert(UserModel user) throws SQLException, Exception {
 		String sql = "INSERT INTO USERS (username, email, password)"
@@ -67,6 +67,58 @@ public class UserDaoImpl extends DBConnectSQL implements IUserDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
+	}
+	@Override
+	public UserModel findByEmail(String email) {
+		String sql = "select * from USERS where email = ?";
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				UserModel user = new UserModel();
+				user.setUserid(rs.getInt("users_id"));
+				user.setEmail(rs.getString("email"));
+				user.setUsername(rs.getString("username"));
+				user.setPassword(rs.getString("password"));
+				user.setRoleid(Integer.parseInt(rs.getString("roles")));
+				return user;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static void main(String[] args) {
+        UserDaoImpl userDao = new UserDaoImpl();
+        String emailToFind = "abc@gmail.com";
+        UserModel user = userDao.findByEmail(emailToFind);
+        if (user != null) {
+            System.out.println("Thông tin người dùng với email '" + emailToFind + "':");
+            System.out.println("ID: " + user.getUserid());
+            System.out.println("Email: " + user.getEmail());
+            System.out.println("Username: " + user.getUsername());
+            System.out.println("Password: " + user.getPassword());
+            System.out.println("Role ID: " + user.getRoleid());
+        } else {
+            System.out.println("Không tìm thấy người dùng với email '" + emailToFind + "'.");
+        }
+    }
+	@Override
+	public void resetPassword(String email, String newPassword) {
+		String sql = "UPDATE USERS SET password = ? WHERE email = ?";
+        try {
+            conn = new DBConnectSQL().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, newPassword);
+            ps.setString(2, email);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		
 	}
 
 //	public static void main(String[] args) {

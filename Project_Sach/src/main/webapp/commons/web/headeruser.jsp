@@ -97,11 +97,11 @@
                 </ul>
               </li>
             </ul>
-
+            <span class="navbar-text me-2">Xin chào, ${sessionScope.username}</span>
 				<!-- Nút login với điều chỉnh height và width trực tiếp trong HTML -->
-				<a href="${pageContext.request.contextPath }/authentication/login" 
+				<a href="${pageContext.request.contextPath }/home" 
 				   class="btn btn-primary ms-3"
-				   style="height: 37px; width: 100px;">Login</a>
+				   style="height: 37px; width: 100px;">Logout</a>
 
 
             <div class="form-check form-switch me-3 d-flex align-items-center">
