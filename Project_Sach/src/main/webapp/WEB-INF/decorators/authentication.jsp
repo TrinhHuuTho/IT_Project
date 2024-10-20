@@ -21,7 +21,8 @@
     <meta name="keywords" content="Login Form">
     <meta name="author" content="devforum.info">
 
-    <title>Login Page - TomeKeeper</title>
+
+	<title>Login Page - TomeKeeper</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/icon" href="${URL}login-page-devforum/images/android-icon-36x36.png">
@@ -35,7 +36,7 @@
 	
 	 <!-- Thêm thư viện Google Sign-In -->
     <script src="https://accounts.google.com/gsi/client" async="true" defer></script>
-    <script src="${URL}login-page-devforum/js/loginGoogle.js"></script>											
+    <script src="${URL}login-page-devforum/js/loginGoogle.js"></script>
 </head>
 
 	<!--Nội dung chính-->
@@ -46,7 +47,7 @@
     <!-- Javascript Files -->
 
     <!-- initialize jQuery Library -->
-    <script src="${URL}login-page-devforum/js/jquery-2.2.4.min.js"></script>
+	<script src="${URL}login-page-devforum/js/jquery-2.2.4.min.js"></script>
 
     <!-- for Bootstrap js -->
     <script src="${URL}login-page-devforum/js/bootstrap.min.js"></script>
