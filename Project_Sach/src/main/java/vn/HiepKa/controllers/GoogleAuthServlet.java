@@ -29,7 +29,7 @@ public class GoogleAuthServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final String CLIENT_ID = "1013728767709-o6q514dv1kk6h8eh3asqsalkdi3tbfud.apps.googleusercontent.com";
     private static final String CLIENT_SECRET = "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";
-    private static final String REDIRECT_URI = "http://localhost:8081/Project_Sach/authentication/auth/google";
+    private static final String REDIRECT_URI = "https://localhost:8443/Project_Sach/authentication/auth/google";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -90,9 +90,16 @@ public class GoogleAuthServlet extends HttpServlet {
                         String email = payload.getEmail();
                         boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
                         String name = (String) payload.get("name");
-                        String pasString = (String) payload.get("password");
                         String pictureUrl = (String) payload.get("picture");
 
+                        // Xài trong lúc debug thôi nha Ka                 
+                        System.out.print("Thông tin người dùng lấy được từ Google:" + "\n");
+                        System.out.print(userId +"\n");
+                        System.out.print(email +"\n");
+                        System.out.print(emailVerified +"\n");
+                        System.out.print(name +"\n");
+                        System.out.print(pictureUrl +"\n");
+                        
                         // Lưu thông tin người dùng vào session hoặc xử lý tiếp theo
                         req.getSession().setAttribute("userName", name);
                         req.getSession().setAttribute("email", email);

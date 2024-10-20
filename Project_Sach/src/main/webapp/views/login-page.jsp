@@ -20,20 +20,28 @@
                         <div class="headline">
                             <!-- brand-logo start -->
                             <div class="brand-logo">
-                                <a href="login-page.jsp"><img src="${URL}login-page-devforum/images/devforum.png" width="200" alt="brand-logo"></a>
+                                <a href="login-page.jsp"><img src="${URL}login-page-devforum/images/No-bg logo.png" width="150" alt="brand-logo"></a>
                             </div>
                             <!-- ./brand-logo -->
-                            <p>Login using social media to get quick access</p>
+                            <p>Đăng nhập bằng phương tiện truyền thông xã hội để truy cập nhanh chóng</p>
                             <!-- social login buttons start -->
                             <div class="row social-buttons">
                                 <div class="col-xs-4 col-sm-4 col-md-12">
-                                    <a href="#" class="btn btn-block btn-facebook">
-                                        <i class="fa fa-facebook"></i> <span class="hidden-xs hidden-sm">Signin with facebook</span>
-                                    </a>
-                                </div>
+								    <a href="https://www.facebook.com/v7.0/dialog/oauth?
+								        scope=email,public_profile&
+								        access_type=offline&
+								        include_granted_scopes=true&
+								        response_type=code&
+								        redirect_uri=https://localhost:8443/Project_Sach/authentication/auth/facebook&
+								        client_id=859828519474363" 
+								        class="btn btn-block btn-facebook">
+								        <i class="fa fa-facebook"></i> <span class="hidden-xs hidden-sm">Đăng nhập với Facebook</span>
+								    </a>
+								</div>
                                 <div class="col-xs-4 col-sm-4 col-md-12">
-                                    <a href="#" class="btn btn-block btn-twitter">
-                                        <i class="fa fa-twitter"></i> <span class="hidden-xs hidden-sm">Signin with twitter</span>
+                                    <a href="https://github.com/login/oauth/authorize?scope=user:email,public_profile&access_type=offline&include_granted_scopes=true&response_type=code&redirect_uri=https://localhost:8443/Project_Sach/authentication/auth/github&client_id=Ov23liRlJeDjCQWzTSHR" 
+                                    	class="btn btn-block btn-github" >
+                                        <i class="fa fa-github"></i> <span class="hidden-xs hidden-sm">Đăng nhập với Github</span>
                                     </a>
                                 </div>
                                 <!-- Nút Đăng nhập bằng Google -->
@@ -43,10 +51,10 @@
 											access_type=offline&
 											include_granted_scopes=true&
 											response_type=code&
-											redirect_uri=http://localhost:8081/Project_Sach/authentication/auth/google&
+											redirect_uri=https://localhost:8443/Project_Sach/authentication/auth/google&
 											client_id=1013728767709-o6q514dv1kk6h8eh3asqsalkdi3tbfud.apps.googleusercontent.com"
 								    	class="btn btn-block btn-google">
-									    <i class="fa fa-google"></i> <span class="hidden-xs hidden-sm">Sign in with Google</span>
+									    <i class="fa fa-google"></i> <span class="hidden-xs hidden-sm">Đăng nhập với Google</span>
 									</a>
 								</div>																				                            
                             </div>
@@ -60,8 +68,8 @@
                         <!-- panel-login start -->
                         <div class="authfy-panel panel-login text-center active">
                             <div class="authfy-heading">
-                                <h3 class="auth-title">Login to your account</h3>
-                                <p>Don’t have an account? <a class="lnk-toggler" data-panel=".panel-signup" href="#">Sign Up Free!</a></p>
+                                <h3 class="auth-title">Đăng nhập vào tài khoản của bạn</h3>
+                                <p>Bạn chưa có tài khoản? <a class="lnk-toggler" data-panel=".panel-signup" href="#">Đăng ký miễn phí!</a></p>
                             </div>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12">
@@ -80,18 +88,18 @@
                                             <div class="col-xs-6 col-sm-6">
                                                 <label class="checkbox text-left">
                                                     <input type="checkbox" value="remember-me">
-                                                    <span class="label-text">Remember me</span>
+                                                    <span class="label-text">Ghi nhớ tôi</span>
                                                 </label>
                                             </div>
                                             <div class="col-xs-6 col-sm-6">
                                                 <p class="forgotPwd">
-                                                    <a class="lnk-toggler" data-panel=".panel-forgot" href="#">Forgot password?</a>
+                                                    <a class="lnk-toggler" data-panel=".panel-forgot" href="#">Quên mật khẩu?</a>
                                                 </p>
                                             </div>
                                         </div>
                                         <!-- ./remember-row -->
                                         <div class="form-group">
-                                            <button class="btn btn-lg btn-primary btn-block" type="submit">Login with email</button>
+                                            <button class="btn btn-lg btn-primary btn-block" type="submit">Đăng nhập với email</button>
                                         </div>
                                     </form>
                                 </div>
@@ -103,7 +111,7 @@
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12">
                                     <div class="authfy-heading">
-                                        <h3 class="auth-title">Sign up for free!</h3>
+                                        <h3 class="auth-title">Đăng ký miễn phí!</h3>
                                     </div>
                                     <form name="signupForm" class="signupForm" action="#" method="POST">
                                         <div class="form-group">
@@ -119,13 +127,13 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <p class="term-policy text-muted small">I agree to the <a href="#">privacy policy</a> and <a href="#">terms of service</a>.</p>
+                                            <p class="term-policy text-muted small">Tôi đồng ý với <a href="https://policies.google.com/privacy?hl=vi">chính sách bảo mật</a> và <a href="https://policies.google.com/terms?hl=vi">điều khoản dịch vụ</a>.</p>
                                         </div>
                                         <div class="form-group">
-                                            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up with email</button>
+                                            <button class="btn btn-lg btn-primary btn-block" type="submit">Đăng ký với email</button>
                                         </div>
                                     </form>
-                                    <a class="lnk-toggler" data-panel=".panel-login" href="#">Already have an account?</a>
+                                    <a class="lnk-toggler" data-panel=".panel-login" href="#">Đã có tài khoản?</a>
                                 </div>
                             </div>
                         </div>
@@ -135,21 +143,21 @@
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12">
                                     <div class="authfy-heading">
-                                        <h3 class="auth-title">Recover your password</h3>
-                                        <p>Fill in your e-mail address below and we will send you an email with further instructions.</p>
+                                        <h3 class="auth-title">Khôi phục mật khẩu của bạn</h3>
+                                        <p>Điền địa chỉ email của bạn bên dưới và chúng tôi sẽ gửi cho bạn một email kèm theo hướng dẫn thêm.</p>
                                     </div>
                                     <form name="forgetForm" class="forgetForm" action="#" method="POST">
                                         <div class="form-group">
                                             <input type="email" class="form-control" name="username" placeholder="Email address">
                                         </div>
                                         <div class="form-group">
-                                            <button class="btn btn-lg btn-primary btn-block" type="submit">Recover your password</button>
+                                            <button class="btn btn-lg btn-primary btn-block" type="submit">Khôi phục mật khẩu của bạn</button>
                                         </div>
                                         <div class="form-group">
-                                            <a class="lnk-toggler" data-panel=".panel-login" href="#">Already have an account?</a>
+                                            <a class="lnk-toggler" data-panel=".panel-login" href="#">Đã có tài khoản?</a>
                                         </div>
                                         <div class="form-group">
-                                            <a class="lnk-toggler" data-panel=".panel-signup" href="#">Don’t have an account?</a>
+                                            <a class="lnk-toggler" data-panel=".panel-signup" href="#">Chưa có tài khoản?</a>
                                         </div>
                                     </form>
                                 </div>

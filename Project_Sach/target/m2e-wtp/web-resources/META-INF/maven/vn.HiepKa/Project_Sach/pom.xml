@@ -80,6 +80,7 @@
 			<version>6.6.0.Final</version>
 		</dependency>
 
+		<!--Bộ thư viện đăng nhập với google-->
 		<dependency>
 			<groupId>com.google.api-client</groupId>
 			<artifactId>google-api-client</artifactId>
@@ -95,12 +96,27 @@
 			<artifactId>google-http-client-jackson2</artifactId>
 			<version>1.40.1</version>
 		</dependency>
-		 <!-- Gson library -->
-	    <dependency>
-	        <groupId>com.google.http-client</groupId>
-	        <artifactId>google-http-client-gson</artifactId>
-	        <version>1.40.1</version>
-	    </dependency>
+
+		<!-- Gson library -->
+		<dependency>
+			<groupId>com.google.http-client</groupId>
+			<artifactId>google-http-client-gson</artifactId>
+			<version>1.40.1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20240303</version>
+		</dependency>
+
+		<!--Đăng nhập bằng github-->
+		<dependency>
+			<groupId>org.kohsuke</groupId>
+			<artifactId>github-api</artifactId>
+			<version>1.123</version>
+		</dependency>
 
 	</dependencies>
 
