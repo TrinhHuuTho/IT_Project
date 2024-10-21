@@ -1,4 +1,4 @@
-package vn.HiepKa.controllers;
+package vn.HiepKa.controllers.AuthServlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

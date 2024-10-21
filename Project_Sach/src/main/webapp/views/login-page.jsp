@@ -32,6 +32,7 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                   Đăng nhập bằng phương tiện truyền thông xã hội để truy cập
                   nhanh chóng
                 </p>
+
                 <!-- social login buttons start -->
                 <div class="row social-buttons">
                   <div class="col-xs-4 col-sm-4 col-md-12">
@@ -85,6 +86,7 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
               </div>
             </div>
           </div>
+
           <div class="col-sm-7 authfy-panel-right">
             <!-- authfy-login start -->
             <div class="authfy-login">
@@ -93,26 +95,40 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                 <div class="authfy-heading">
                   <h3 class="auth-title">Đăng nhập vào tài khoản của bạn</h3>
                   <p>
-                    Bạn chưa có tài khoản?
+                    Không có tài khoản?
                     <a class="lnk-toggler" data-panel=".panel-signup" href="#"
                       >Đăng ký miễn phí!</a
                     >
                   </p>
+                </div>
+
+                <!-- Hiển thị thông báo lỗi nếu có -->
+                <div style="height: auto; margin-bottom: 10px">
+                  <c:if test="${not empty errorMessage}">
+                    <div
+                      class="alert alert-danger"
+                      role="alert"
+                      style="font-size: 14px; padding: 6px"
+                    >
+                      ${errorMessage}
+                    </div>
+                  </c:if>
                 </div>
                 <div class="row">
                   <div class="col-xs-12 col-sm-12">
                     <form
                       name="loginForm"
                       class="loginForm"
-                      action="#"
+                      action="<c:url value='/authentication/login' />"
                       method="POST"
                     >
                       <div class="form-group">
                         <input
                           type="email"
                           class="form-control email"
-                          name="username"
+                          name="email"
                           placeholder="Email address"
+                          required
                         />
                       </div>
                       <div class="form-group">
@@ -122,6 +138,7 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                             class="form-control password"
                             name="password"
                             placeholder="Password"
+                            required
                           />
                           <span class="fa fa-eye-slash pwd-toggle"></span>
                         </div>
@@ -130,8 +147,12 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                       <div class="row remember-row">
                         <div class="col-xs-6 col-sm-6">
                           <label class="checkbox text-left">
-                            <input type="checkbox" value="remember-me" />
-                            <span class="label-text">Ghi nhớ tôi</span>
+                            <input
+                              type="checkbox"
+                              value="remember-me"
+                              name="remember"
+                            />
+                            <span class="label-text">nhớ tôi</span>
                           </label>
                         </div>
                         <div class="col-xs-6 col-sm-6">
@@ -151,7 +172,7 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                           class="btn btn-lg btn-primary btn-block"
                           type="submit"
                         >
-                          Đăng nhập với email
+                          Đăng nhập bằng email
                         </button>
                       </div>
                     </form>
@@ -159,6 +180,7 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                 </div>
               </div>
               <!-- ./panel-login -->
+
               <!-- panel-signup start -->
               <div class="authfy-panel panel-signup text-center">
                 <div class="row">
@@ -169,14 +191,14 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                     <form
                       name="signupForm"
                       class="signupForm"
-                      action="#"
+                      action="<c:url value='/authentication/signup' />"
                       method="POST"
                     >
                       <div class="form-group">
                         <input
                           type="email"
                           class="form-control"
-                          name="username"
+                          name="email"
                           placeholder="Email address"
                         />
                       </div>
@@ -216,7 +238,7 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                           class="btn btn-lg btn-primary btn-block"
                           type="submit"
                         >
-                          Đăng ký với email
+                          Đăng ký bằng email
                         </button>
                       </div>
                     </form>
@@ -227,6 +249,7 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                 </div>
               </div>
               <!-- ./panel-signup -->
+
               <!-- panel-forget start -->
               <div class="authfy-panel panel-forgot">
                 <div class="row">
@@ -241,14 +264,14 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                     <form
                       name="forgetForm"
                       class="forgetForm"
-                      action="#"
+                      action="<c:url value='/forgot-password' />"
                       method="POST"
                     >
                       <div class="form-group">
                         <input
                           type="email"
                           class="form-control"
-                          name="username"
+                          name="email"
                           placeholder="Email address"
                         />
                       </div>
@@ -273,7 +296,7 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                           class="lnk-toggler"
                           data-panel=".panel-signup"
                           href="#"
-                          >Chưa có tài khoản?</a
+                          >Không có tài khoản?</a
                         >
                       </div>
                     </form>

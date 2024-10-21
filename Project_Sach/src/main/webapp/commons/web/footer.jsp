@@ -6,7 +6,7 @@
       <div class="container">
         <div class="row">
           <div class="col-12 col-md-5">
-            <strong>Suu Truyện</strong> -
+            <strong>TomeKeeper</strong> -
             <a
               title="Đọc truyện online"
               class="text-dark text-decoration-none"

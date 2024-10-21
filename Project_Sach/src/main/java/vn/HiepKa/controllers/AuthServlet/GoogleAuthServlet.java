@@ -1,4 +1,4 @@
-package vn.HiepKa.controllers;
+package vn.HiepKa.controllers.AuthServlet;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
@@ -86,17 +86,13 @@ public class GoogleAuthServlet extends HttpServlet {
                         GoogleIdToken.Payload payload = idToken.getPayload();
 
                         // Lấy thông tin người dùng từ payload
-                        String userId = payload.getSubject(); // ID duy nhất của người dùng Google
-                        String email = payload.getEmail();
-                        boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
+                        String email = payload.getEmail();                   
                         String name = (String) payload.get("name");
                         String pictureUrl = (String) payload.get("picture");
 
-                        // Xài trong lúc debug thôi nha Ka                 
+                        // Xài trong lúc debug               
                         System.out.print("Thông tin người dùng lấy được từ Google:" + "\n");
-                        System.out.print(userId +"\n");
                         System.out.print(email +"\n");
-                        System.out.print(emailVerified +"\n");
                         System.out.print(name +"\n");
                         System.out.print(pictureUrl +"\n");
                         
