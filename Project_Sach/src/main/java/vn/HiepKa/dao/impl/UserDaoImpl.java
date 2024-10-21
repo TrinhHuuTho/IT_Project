@@ -5,11 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import vn.HiepKa.configs.DBConnectSQL;
+import vn.HiepKa.configs.AzureConnectSQL;
 import vn.HiepKa.dao.IUserDao;
 import vn.HiepKa.models.UserModel;
 
-public class UserDaoImpl extends DBConnectSQL implements IUserDao {
+public class UserDaoImpl extends AzureConnectSQL implements IUserDao {
 
 	public Connection conn = null;
 	public PreparedStatement ps = null;
@@ -58,7 +58,8 @@ public class UserDaoImpl extends DBConnectSQL implements IUserDao {
 				+ "VALUES (?, ?, ?)";
 
 		try {
-			conn = new DBConnectSQL().getConnection();
+			new AzureConnectSQL();
+			conn = AzureConnectSQL.getConnection();
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, user.getUsername());
 			ps.setString(2, user.getEmail());
@@ -110,7 +111,8 @@ public class UserDaoImpl extends DBConnectSQL implements IUserDao {
 	public void resetPassword(String email, String newPassword) {
 		String sql = "UPDATE USERS SET password = ? WHERE email = ?";
         try {
-            conn = new DBConnectSQL().getConnection();
+            new AzureConnectSQL();
+			conn = AzureConnectSQL.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, newPassword);
             ps.setString(2, email);

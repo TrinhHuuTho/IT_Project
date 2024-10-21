@@ -20,11 +20,11 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
 
     <!-- Bootstrap CSS v5.2.1 -->
 
-    <link href="${URL}assets/bootstrap.min.css" rel="stylesheet" />
+   <link href="${URL}assets/bootstrap.min.css" rel="stylesheet" />
 
     <link
       rel="shortcut icon"
-      href="https://suustore.com/assets/frontend/images/favicon.ico"
+      href="${URL}assets/images/No-bg-logo.ico"
       type="image/x-icon"
     />
     <link rel="stylesheet" href="${URL}assets/app.css" />
@@ -37,7 +37,7 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
       };
     </script>
 
-    <title>Demo Sách</title>
+    <title>TomeKeeper</title>
     <meta
       name="description"
       content="Đọc sách online, truyện hay. Demo sách luôn tổng hợp và cập nhật sách một cách nhanh nhất."
@@ -48,7 +48,8 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
     <!--Begin header-->
    <%@ include file="/commons/web/header.jsp"%>
     <!--End header-->
-<!--Nội dung chính-->
+    
+	<!--Nội dung chính-->
 	<sitemesh:write property="body" />
     <!--Kết thúc nội dung chính-->
 

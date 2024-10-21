@@ -1,3 +1,4 @@
+
 package vn.HiepKa.controllers;
 
 import java.io.File;
@@ -24,7 +25,7 @@ public class DownloadFileController extends HttpServlet {
 		resp.setContentType("image/jpeg");
 		if (file.exists()) {
 			IOUtils.copy(new FileInputStream(file), resp.getOutputStream());
-			
+
 		}
 	}
 }

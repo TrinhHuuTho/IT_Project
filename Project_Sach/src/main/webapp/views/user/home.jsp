@@ -8,7 +8,7 @@
         <div class="container-fluid">
           <a class="navbar-brand" href="home.jsp">
             <img
-              src="${URL}assets/images/logo.png"
+              src="${URL}assets/images/No-bg logo.png"
               alt="Logo Sach"
               srcset=""
               class="img-fluid"
@@ -32,7 +32,7 @@
           >
             <div class="offcanvas-header">
               <img
-                src="${URL}assets/images/logo.png"
+                src="${URL}assets/images/No-bg logo.png"
                 alt="Logo Sach"
                 srcset=""
                 class="img-fluid"

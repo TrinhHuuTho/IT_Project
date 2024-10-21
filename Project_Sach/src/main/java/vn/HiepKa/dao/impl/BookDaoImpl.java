@@ -6,45 +6,43 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import vn.HiepKa.configs.DBConnectSQL;
+
+import vn.HiepKa.configs.AzureConnectSQL;
 import vn.HiepKa.dao.IBookDao;
 import vn.HiepKa.models.BookModel;
 
-public class BookDaoImpl extends DBConnectSQL implements IBookDao {
+public class BookDaoImpl extends AzureConnectSQL implements IBookDao {
 
-    private Connection conn = null;
-    private PreparedStatement ps = null;
-    private ResultSet rs = null;
+	private Connection conn = null;
+	private PreparedStatement ps = null;
+	private ResultSet rs = null;
 
-    @Override
-    public BookModel findById(int bookId) {
-        String sql = "SELECT B.*, A.author_name FROM BOOK B "
-                   + "JOIN AUTHOR A ON B.author_id = A.author_id "
-                   + "WHERE B.book_id = ?";
-        try {
-            conn = super.getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, bookId);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                BookModel book = new BookModel();
-                book.setBookid(rs.getInt("book_id"));
-                book.setTitle(rs.getString("title"));
-                book.setAuthorid(rs.getInt("author_id"));
-                book.setAuthorname(rs.getString("author_name"));
-                book.setContent(rs.getString("content"));
-                book.setCreatedat(rs.getDate("created_at"));
-                book.setImagesbook(rs.getString("images_book"));
-                return book;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-    
-    
-    
+	@Override
+	public BookModel findById(int bookId) {
+		String sql = "SELECT B.*, A.author_name FROM BOOK B " + "JOIN AUTHOR A ON B.author_id = A.author_id "
+				+ "WHERE B.book_id = ?";
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, bookId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				BookModel book = new BookModel();
+				book.setBookid(rs.getInt("book_id"));
+				book.setTitle(rs.getString("title"));
+				book.setAuthorid(rs.getInt("author_id"));
+				book.setAuthorname(rs.getString("author_name"));
+				book.setContent(rs.getString("content"));
+				book.setCreatedat(rs.getDate("created_at"));
+				book.setImagesbook(rs.getString("images_book"));
+				return book;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 //    public static void main(String[] args) {
 //        BookDaoImpl bookDao = new BookDaoImpl();
 //        int bookIdToFind = 1;
@@ -63,37 +61,31 @@ public class BookDaoImpl extends DBConnectSQL implements IBookDao {
 //        }
 //
 //    }
-    
-    
 
-    @Override
-    public void insert(BookModel book) throws SQLException {
-        String sql = "INSERT INTO BOOK (title, author_id, content, created_at, images_book) "
-                   + "VALUES (?, ?, ?, ?, ?)";
-        try {
-            conn = super.getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, book.getTitle());
-            ps.setInt(2, book.getAuthorid());
-            ps.setString(3, book.getContent());
+	@Override
+	public void insert(BookModel book) throws SQLException {
+		String sql = "INSERT INTO BOOK (title, author_id, content, created_at, images_book) "
+				+ "VALUES (?, ?, ?, ?, ?)";
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, book.getTitle());
+			ps.setInt(2, book.getAuthorid());
+			ps.setString(3, book.getContent());
 
-            // Lấy ngày hiện tại nếu `created_at` chưa được gán
-            if (book.getCreatedat() == null) {
-                book.setCreatedat(new java.sql.Date(new java.util.Date().getTime())); // Gán ngày hiện tại
-            }
+			// Lấy ngày hiện tại nếu `created_at` chưa được gán
+			if (book.getCreatedat() == null) {
+				book.setCreatedat(new java.sql.Date(new java.util.Date().getTime())); // Gán ngày hiện tại
+			}
 
-            ps.setDate(4, new java.sql.Date(book.getCreatedat().getTime())); // Gán ngày vào câu truy vấn
-            ps.setString(5, book.getImagesbook());
-            ps.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+			ps.setDate(4, new java.sql.Date(book.getCreatedat().getTime())); // Gán ngày vào câu truy vấn
+			ps.setString(5, book.getImagesbook());
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    
-    
-    
-    
 //    public static void main(String[] args) {
 //        // Tạo đối tượng BookDaoImpl
 //        BookDaoImpl bookDao = new BookDaoImpl();
@@ -116,105 +108,95 @@ public class BookDaoImpl extends DBConnectSQL implements IBookDao {
 //        }
 //    }
 
+	@Override
+	public void update(BookModel book) throws SQLException {
+		String sql = "UPDATE BOOK SET title = ?, author_id = ?, content = ?, created_at = ?, images_book = ? "
+				+ "WHERE book_id = ?";
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, book.getTitle());
+			ps.setInt(2, book.getAuthorid());
+			ps.setString(3, book.getContent());
+			ps.setDate(4, new java.sql.Date(book.getCreatedat().getTime()));
+			ps.setString(5, book.getImagesbook());
+			ps.setInt(6, book.getBookid());
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    
-    
-    
+	@Override
+	public void delete(int bookId) throws SQLException {
+		String sql = "DELETE FROM BOOK WHERE book_id = ?";
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, bookId);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    @Override
-    public void update(BookModel book) throws SQLException {
-        String sql = "UPDATE BOOK SET title = ?, author_id = ?, content = ?, created_at = ?, images_book = ? "
-                   + "WHERE book_id = ?";
-        try {
-            conn = super.getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, book.getTitle());
-            ps.setInt(2, book.getAuthorid());
-            ps.setString(3, book.getContent());
-            ps.setDate(4, new java.sql.Date(book.getCreatedat().getTime()));
-            ps.setString(5, book.getImagesbook());
-            ps.setInt(6, book.getBookid());
-            ps.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	@Override
+	public List<BookModel> findAll() {
+		List<BookModel> books = new ArrayList<>();
+		String sql = "SELECT B.book_id, B.title, B.content, B.created_at, B.images_book, B.author_id, A.author_name "
+				+ "FROM BOOK B " + "JOIN AUTHOR A ON B.author_id = A.author_id";
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				BookModel book = new BookModel();
+				book.setBookid(rs.getInt("book_id"));
+				book.setTitle(rs.getString("title"));
+				book.setAuthorid(rs.getInt("author_id"));
+				book.setAuthorname(rs.getString("author_name"));
+				book.setContent(rs.getString("content"));
+				book.setCreatedat(rs.getDate("created_at"));
+				book.setImagesbook(rs.getString("images_book"));
+				books.add(book);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return books;
+	}
 
-    @Override
-    public void delete(int bookId) throws SQLException {
-        String sql = "DELETE FROM BOOK WHERE book_id = ?";
-        try {
-            conn = super.getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, bookId);
-            ps.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	public static void main(String[] args) {
+		BookDaoImpl bookDao = new BookDaoImpl();
 
-    @Override
-    public List<BookModel> findAll() {
-    	List<BookModel> books = new ArrayList<>();
-        String sql = "SELECT B.book_id, B.title, B.content, B.created_at, B.images_book, B.author_id, A.author_name "
-                   + "FROM BOOK B "
-                   + "JOIN AUTHOR A ON B.author_id = A.author_id";
-        try {
-            conn = super.getConnection();
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                BookModel book = new BookModel();
-                book.setBookid(rs.getInt("book_id"));
-                book.setTitle(rs.getString("title"));
-                book.setAuthorid(rs.getInt("author_id"));
-                book.setAuthorname(rs.getString("author_name"));
-                book.setContent(rs.getString("content"));
-                book.setCreatedat(rs.getDate("created_at"));
-                book.setImagesbook(rs.getString("images_book"));
-                books.add(book);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return books;
-    }
-    
-    public static void main(String[] args) { 
-        BookDaoImpl bookDao = new BookDaoImpl();
-        
-        // Gọi phương thức findAll() để lấy tất cả các sách
-        List<BookModel> books = bookDao.findAll();
-        
-        // Kiểm tra nếu danh sách sách không rỗng thì in ra
-        if (books != null && !books.isEmpty()) {
-            System.out.println("Danh sách các cuốn sách:");
-            for (BookModel book : books) {
-                // In từng thuộc tính của sách, nếu null thì in "null"
-                System.out.println("Book ID: " + (book.getBookid() != 0 ? book.getBookid() : "null"));
-                System.out.println("Title: " + (book.getTitle() != null ? book.getTitle() : "null"));
-                System.out.println("Author ID: " + (book.getAuthorid() != 0 ? book.getAuthorid() : "null"));
-                System.out.println("Author Name: " + (book.getAuthorname() != null ? book.getAuthorname() : "null"));
-                System.out.println("Content: " + (book.getContent() != null ? book.getContent() : "null"));
-                System.out.println("Created At: " + (book.getCreatedat() != null ? book.getCreatedat() : "null"));
-                
-                // Kiểm tra và in thông tin URL ảnh sách (nếu có)
-                if (book.getImagesbook() != null && !book.getImagesbook().isEmpty()) {
-                    System.out.println("Images Book URL: " + book.getImagesbook());
-                } else {
-                    System.out.println("Images Book: null");
-                }
-                
-                System.out.println("----------");
-            }
-        } else {
-            System.out.println("Không có sách nào trong cơ sở dữ liệu.");
-        }
-    }
+		// Gọi phương thức findAll() để lấy tất cả các sách
+		List<BookModel> books = bookDao.findAll();
 
-    
-    
-    
+		// Kiểm tra nếu danh sách sách không rỗng thì in ra
+		if (books != null && !books.isEmpty()) {
+			System.out.println("Danh sách các cuốn sách:");
+			for (BookModel book : books) {
+				// In từng thuộc tính của sách, nếu null thì in "null"
+				System.out.println("Book ID: " + (book.getBookid() != 0 ? book.getBookid() : "null"));
+				System.out.println("Title: " + (book.getTitle() != null ? book.getTitle() : "null"));
+				System.out.println("Author ID: " + (book.getAuthorid() != 0 ? book.getAuthorid() : "null"));
+				System.out.println("Author Name: " + (book.getAuthorname() != null ? book.getAuthorname() : "null"));
+				System.out.println("Content: " + (book.getContent() != null ? book.getContent() : "null"));
+				System.out.println("Created At: " + (book.getCreatedat() != null ? book.getCreatedat() : "null"));
+
+				// Kiểm tra và in thông tin URL ảnh sách (nếu có)
+				if (book.getImagesbook() != null && !book.getImagesbook().isEmpty()) {
+					System.out.println("Images Book URL: " + book.getImagesbook());
+				} else {
+					System.out.println("Images Book: null");
+				}
+
+				System.out.println("----------");
+			}
+		} else {
+			System.out.println("Không có sách nào trong cơ sở dữ liệu.");
+		}
+	}
 
 	@Override
 	public List<BookModel> findByTitle(String title) {

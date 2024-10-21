@@ -10,7 +10,7 @@
         <div class="container">
           <a class="navbar-brand" href="${pageContext.request.contextPath }/home">
             <img
-              src="${URL}assets/images/logo.png"
+              src="${URL}assets/images/No-bg logo.png"
               alt="Logo Sach"
               srcset=""
               class="img-fluid"
@@ -101,8 +101,7 @@
 				<!-- Nút login với điều chỉnh height và width trực tiếp trong HTML -->
 				<a href="${pageContext.request.contextPath }/authentication/login" 
 				   class="btn btn-primary ms-3"
-				   style="height: 37px; width: 100px;">Login</a>
-
+				   style="height: 37px; width: 120px;">Đăng nhập</a>
 
             <div class="form-check form-switch me-3 d-flex align-items-center">
               <label class="form-check-label">

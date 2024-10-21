@@ -16,14 +16,15 @@ public class HomeController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private BookService bookService = new BookService();
-	@Override 
+
+	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+
 		// Lấy danh sách sách từ tầng service
-        List<BookModel> books = bookService.findAll();
-        
-        // Set danh sách sách vào attribute để truy cập trong JSP
-        req.setAttribute("books", books);
+		List<BookModel> books = bookService.findAll();
+
+		// Set danh sách sách vào attribute để truy cập trong JSP
+		req.setAttribute("books", books);
 		req.getRequestDispatcher("/views/user/home.jsp").forward(req, resp);
 	}
 }

@@ -21,18 +21,22 @@
     <meta name="keywords" content="Login Form">
     <meta name="author" content="devforum.info">
 
-    <title>Login Page - DevForum</title>
+
+	<title>Login Page - TomeKeeper</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/icon" href="images\android-icon-36x36.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="${URL}login-page-devforum\images\android-icon-36x36.png">
-    <link rel="icon" type="image/png" sizes="48x48" href="${URL}login-page-devforum\images\android-icon-48x48.png">
-    <link rel="icon" type="image/png" sizes="72x72" href="${URL}login-page-devforum\images\android-icon-72x72.png">
+    <link rel="shortcut icon" type="image/icon" href="${URL}login-page-devforum/images/android-icon-36x36.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="${URL}login-page-devforum/images/android-icon-36x36.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="${URL}login-page-devforum/images/android-icon-48x48.png">
+    <link rel="icon" type="image/png" sizes="72x72" href="${URL}login-page-devforum/images/android-icon-72x72.png">
 
     <!-- Main structure css file -->
-    <link rel="stylesheet" href="${URL}login-page-devforum\css\login-style.css">
+    <link rel="stylesheet" href="${URL}login-page-devforum/css/login-style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-
+	
+	 <!-- Thêm thư viện Google Sign-In -->
+    <script src="https://accounts.google.com/gsi/client" async="true" defer></script>
+    <script src="${URL}login-page-devforum/js/loginGoogle.js"></script>
 </head>
 
 	<!--Nội dung chính-->
@@ -43,12 +47,12 @@
     <!-- Javascript Files -->
 
     <!-- initialize jQuery Library -->
-    <script src="${URL}login-page-devforum\js\jquery-2.2.4.min.js"></script>
+	<script src="${URL}login-page-devforum/js/jquery-2.2.4.min.js"></script>
 
     <!-- for Bootstrap js -->
-    <script src="${URL}login-page-devforum\js\bootstrap.min.js"></script>
+    <script src="${URL}login-page-devforum/js/bootstrap.min.js"></script>
 
     <!-- Custom js-->
-    <script src="${URL}login-page-devforum\js\custom.js"></script>
+    <script src="${URL}login-page-devforum/js/custom.js"></script>
 
 </html>

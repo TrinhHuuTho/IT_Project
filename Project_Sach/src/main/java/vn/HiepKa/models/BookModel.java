@@ -6,15 +6,15 @@ import java.sql.Date;
 public class BookModel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private int bookid;
-    private String title;
-    private int authorid; // Khóa ngoại từ bảng Author
-    private String authorname; // Lưu tên tác giả để thuận tiện
-    private String content;
-    private Date createdat;
-    private String imagesbook;
-    
+	private String title;
+	private int authorid; // Khóa ngoại từ bảng Author
+	private String authorname; // Lưu tên tác giả để thuận tiện
+	private String content;
+	private Date createdat;
+	private String imagesbook;
+
 	public BookModel() {
 		super();
 	}
@@ -93,7 +93,4 @@ public class BookModel implements Serializable {
 				+ authorname + ", content=" + content + ", createdat=" + createdat + ", imagesbook=" + imagesbook + "]";
 	}
 
-
-    
-    
 }
