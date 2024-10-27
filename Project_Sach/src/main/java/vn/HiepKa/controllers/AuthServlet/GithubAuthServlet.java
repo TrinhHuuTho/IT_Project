@@ -5,6 +5,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import vn.HiepKa.models.UserModel;
+import vn.HiepKa.services.IUserService;
+import vn.HiepKa.services.impl.UserService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,10 +27,11 @@ import com.google.gson.JsonParser;
 public class GithubAuthServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private static final String CLIENT_ID = "Ov23liRlJeDjCQWzTSHR"; // Thay bằng Client ID của bạn
+	private static final String CLIENT_ID = "Ov23liRlJeDjCQWzTSHR"; // Thay bằng Client ID
 	private static final String CLIENT_SECRET = "b0af81692e070f78880fd35ba15355aec802a27c"; // Thay bằng Client Secret
-																							// của bạn
 	private static final String REDIRECT_URI = "https://localhost:8443/Project_Sach/authentication/auth/github";
+
+	IUserService userService = new UserService();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -117,17 +122,43 @@ public class GithubAuthServlet extends HttpServlet {
 			email = getUserPrimaryEmail(accessToken);
 		}
 
-		// Lưu thông tin người dùng vào session
-		req.getSession().setAttribute("userName", name);
-		req.getSession().setAttribute("email", email);
+		// Kiểm tra người dùng
+		UserModel user = userService.FindByEmail(email);
+		if (user != null) { // Người dùng đã tồn tại
+			if (user.getPassword() == null) { // Người dùng chưa có mật khẩu
+				// Chuyển hướng đến trang reset-password.jsp
+				req.getSession().setAttribute("email", email); // Đưa email vào session
+				// Sau khi xác định người dùng chưa có mật khẩu, chuyển hướng với action=create
+				resp.sendRedirect(req.getContextPath() + "/authentication/reset-password?action=create");
+
+				return;
+			} else {// Nếu người dùng đã có tài khoản và mật khẩu, tiến hành đăng nhập
+				req.getSession().setAttribute("username", name);
+				req.getSession().setAttribute("email", email);
+
+				userService.login(email, user.getPassword());
+
+				HttpSession session = req.getSession(true);
+				session.setAttribute("account", user);
+
+				resp.sendRedirect(req.getContextPath() + "/waiting");
+			}
+
+		} else { // Người dùng chưa tồn tại
+			// Đăng ký tài khoản mới cho người dùng mà chưa tạo mật khẩu
+			userService.register(email, name, null);
+			req.getSession().setAttribute("email", email);
+			// Sau khi xác định người dùng chưa có mật khẩu, chuyển hướng với action=create
+			resp.sendRedirect(req.getContextPath() + "/authentication/reset-password?action=create");
+
+			return;
+		}
 
 		// Debug: Hiển thị thông tin người dùng
 		System.out.print("Thông tin người dùng từ GitHub:\n");
 		System.out.print("Tên đăng nhập: " + name + "\n");
 		System.out.print("Email: " + email + "\n");
 
-		// Chuyển hướng người dùng đến trang chính sau khi đăng nhập thành công
-		resp.sendRedirect(req.getContextPath() + "/views/user/home.jsp");
 	}
 
 	private String getUserPrimaryEmail(String accessToken) throws IOException {

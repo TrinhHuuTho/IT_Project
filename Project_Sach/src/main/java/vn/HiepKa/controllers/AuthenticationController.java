@@ -93,6 +93,33 @@ public class AuthenticationController extends HttpServlet {
 				req.setAttribute("errorMessage", "Email đã tồn tại hoặc có lỗi xảy ra.");
 				req.getRequestDispatcher("/views/login-page.jsp").forward(req, resp);
 			}
+		} else if (url.contains("/forgotpassword")) {
+		    String email = req.getParameter("email");
+
+		    if (email.isEmpty()) {
+		        req.setAttribute("errorMessage", "Vui lòng nhập email.");
+		        req.getRequestDispatcher("/views/login-page.jsp").forward(req, resp);
+		        return;
+		    }
+
+		    // Tìm người dùng theo email
+		    UserModel user = userService.FindByEmail(email);
+
+		    if (user != null) {
+		        // Gọi service để tạo token và gửi email
+		        try {
+		            userService.sendResetToken(email);
+		            req.setAttribute("successMessage", "Email đặt lại mật khẩu đã được gửi.");
+		        } catch (Exception e) {
+		            req.setAttribute("errorMessage", "Có lỗi xảy ra trong quá trình gửi email. Vui lòng thử lại.");
+		        }
+		    } else {
+		        req.setAttribute("errorMessage", "Không tìm thấy người dùng với email này.");
+		    }
+
+		    // Quay về trang forgot password với thông báo
+		    req.getRequestDispatcher("/views/login-page.jsp").forward(req, resp);
 		}
+
 	}
 }

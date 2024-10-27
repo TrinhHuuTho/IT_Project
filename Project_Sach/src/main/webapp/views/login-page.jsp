@@ -102,6 +102,16 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                   </p>
                 </div>
 
+				<!-- Hiển thị thông báo thành công -->
+					<c:if test="${not empty successMessage}">
+					    <div class="alert alert-success" class="alert alert-danger"
+		                      role="alert"
+		                      style="font-size: 14px; padding: 6px"
+		                      >
+                      		${successMessage}
+                     	</div>
+					</c:if>
+
                 <!-- Hiển thị thông báo lỗi nếu có -->
                 <div style="height: auto; margin-bottom: 10px">
                   <c:if test="${not empty errorMessage}">
@@ -264,9 +274,20 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                     <form
                       name="forgetForm"
                       class="forgetForm"
-                      action="<c:url value='/forgot-password' />"
+                      action="<c:url value='/authentication/forgotpassword' />"
                       method="POST"
                     >
+                    
+	                    <!-- Hiển thị thông báo thành công -->
+						<c:if test="${not empty successMessage}">
+						    <div class="alert alert-success">${successMessage}</div>
+						</c:if>
+						
+						<!-- Hiển thị thông báo lỗi -->
+						<c:if test="${not empty errorMessage}">
+						    <div class="alert alert-danger">${errorMessage}</div>
+						</c:if>
+                                       
                       <div class="form-group">
                         <input
                           type="email"
