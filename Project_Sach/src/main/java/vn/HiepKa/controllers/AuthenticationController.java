@@ -20,7 +20,7 @@ public class AuthenticationController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	IUserService userService = new UserService();
-
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String url = req.getRequestURI();
