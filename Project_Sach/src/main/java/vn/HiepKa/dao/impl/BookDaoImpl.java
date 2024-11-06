@@ -166,41 +166,91 @@ public class BookDaoImpl extends AzureConnectSQL implements IBookDao {
 		return books;
 	}
 
-	public static void main(String[] args) {
-		BookDaoImpl bookDao = new BookDaoImpl();
+//	public static void main(String[] args) {
+//		BookDaoImpl bookDao = new BookDaoImpl();
+//
+//		// Gọi phương thức findAll() để lấy tất cả các sách
+//		List<BookModel> books = bookDao.findAll();
+//
+//		// Kiểm tra nếu danh sách sách không rỗng thì in ra
+//		if (books != null && !books.isEmpty()) {
+//			System.out.println("Danh sách các cuốn sách:");
+//			for (BookModel book : books) {
+//				// In từng thuộc tính của sách, nếu null thì in "null"
+//				System.out.println("Book ID: " + (book.getBookid() != 0 ? book.getBookid() : "null"));
+//				System.out.println("Title: " + (book.getTitle() != null ? book.getTitle() : "null"));
+//				System.out.println("Author ID: " + (book.getAuthorid() != 0 ? book.getAuthorid() : "null"));
+//				System.out.println("Author Name: " + (book.getAuthorname() != null ? book.getAuthorname() : "null"));
+//				System.out.println("Content: " + (book.getContent() != null ? book.getContent() : "null"));
+//				System.out.println("Created At: " + (book.getCreatedat() != null ? book.getCreatedat() : "null"));
+//
+//				// Kiểm tra và in thông tin URL ảnh sách (nếu có)
+//				if (book.getImagesbook() != null && !book.getImagesbook().isEmpty()) {
+//					System.out.println("Images Book URL: " + book.getImagesbook());
+//				} else {
+//					System.out.println("Images Book: null");
+//				}
+//
+//				System.out.println("----------");
+//			}
+//		} else {
+//			System.out.println("Không có sách nào trong cơ sở dữ liệu.");
+//		}
+//	}
 
-		// Gọi phương thức findAll() để lấy tất cả các sách
-		List<BookModel> books = bookDao.findAll();
 
-		// Kiểm tra nếu danh sách sách không rỗng thì in ra
-		if (books != null && !books.isEmpty()) {
-			System.out.println("Danh sách các cuốn sách:");
-			for (BookModel book : books) {
-				// In từng thuộc tính của sách, nếu null thì in "null"
-				System.out.println("Book ID: " + (book.getBookid() != 0 ? book.getBookid() : "null"));
-				System.out.println("Title: " + (book.getTitle() != null ? book.getTitle() : "null"));
-				System.out.println("Author ID: " + (book.getAuthorid() != 0 ? book.getAuthorid() : "null"));
-				System.out.println("Author Name: " + (book.getAuthorname() != null ? book.getAuthorname() : "null"));
-				System.out.println("Content: " + (book.getContent() != null ? book.getContent() : "null"));
-				System.out.println("Created At: " + (book.getCreatedat() != null ? book.getCreatedat() : "null"));
+	    public static void main(String[] args) {
+	        // Tạo đối tượng BookDaoImpl
+	        BookDaoImpl bookDao = new BookDaoImpl();
 
-				// Kiểm tra và in thông tin URL ảnh sách (nếu có)
-				if (book.getImagesbook() != null && !book.getImagesbook().isEmpty()) {
-					System.out.println("Images Book URL: " + book.getImagesbook());
-				} else {
-					System.out.println("Images Book: null");
-				}
+	        // Tiêu đề sách cần tìm
+	        String titleToSearch = "Nhật ký trong tù"; // Thay đổi tiêu đề theo sách bạn muốn tìm
 
-				System.out.println("----------");
-			}
-		} else {
-			System.out.println("Không có sách nào trong cơ sở dữ liệu.");
-		}
-	}
+	        // Gọi phương thức findByTitle
+	        List<BookModel> books = bookDao.findByTitle(titleToSearch);
+
+	        // Kiểm tra và in kết quả
+	        if (books.isEmpty()) {
+	            System.out.println("Không tìm thấy sách nào với tiêu đề: " + titleToSearch);
+	        } else {
+	            System.out.println("Kết quả tìm kiếm cho tiêu đề: " + titleToSearch);
+	            for (BookModel book : books) {
+	                System.out.println("ID: " + book.getBookid());
+	                System.out.println("Tiêu đề: " + book.getTitle());
+	                System.out.println("Tác giả: " + book.getAuthorname());
+	                System.out.println("Nội dung: " + book.getContent());
+	                System.out.println("Ngày tạo: " + book.getCreatedat());
+	                System.out.println("Hình ảnh: " + book.getImagesbook());
+	                System.out.println("-----------------------------------");
+	            }
+	        }
+	    }
 
 	@Override
 	public List<BookModel> findByTitle(String title) {
-		// TODO Auto-generated method stub
-		return null;
+		List<BookModel> books = new ArrayList<>();
+	    String sql = "SELECT B.*, A.author_name FROM BOOK B " +
+	                 "JOIN AUTHOR A ON B.author_id = A.author_id " +
+	                 "WHERE B.title LIKE ?";
+	    try {
+	        conn = super.getConnection();
+	        ps = conn.prepareStatement(sql);
+	        ps.setString(1, "%" + title + "%");
+	        rs = ps.executeQuery();
+	        while (rs.next()) {
+	            BookModel book = new BookModel();
+	            book.setBookid(rs.getInt("book_id"));
+	            book.setTitle(rs.getString("title"));
+	            book.setAuthorid(rs.getInt("author_id"));
+	            book.setAuthorname(rs.getString("author_name"));
+	            book.setContent(rs.getString("content"));
+	            book.setCreatedat(rs.getDate("created_at"));
+	            book.setImagesbook(rs.getString("images_book"));
+	            books.add(book);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return books;
 	}
 }

@@ -208,7 +208,7 @@
 
                 <c:forEach var="book" items="${books}">
     <div class="story-item">
-        <a href="story.html" class="d-block text-decoration-none">
+        <a href="${pageContext.request.contextPath }/users/story/${book.bookid}" class="d-block text-decoration-none">
             <div class="story-item__image">
                 <!-- Nếu đường dẫn ảnh là từ URL (bắt đầu bằng https) -->
                 <c:if test="${book.imagesbook != null && book.imagesbook.startsWith('https')}">

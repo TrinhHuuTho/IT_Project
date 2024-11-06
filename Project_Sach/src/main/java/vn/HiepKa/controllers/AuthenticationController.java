@@ -31,8 +31,6 @@ public class AuthenticationController extends HttpServlet {
 		if (url.contains("/authentication/") || url.contains("/login") || url.contains("/signup")
 				|| url.contains("/forgotpassword")) {
 			req.getRequestDispatcher("/views/login-page.jsp").forward(req, resp);
-		} else {
-			req.getRequestDispatcher("/views/home.jsp").forward(req, resp);
 		}
 	}
 

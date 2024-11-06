@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import vn.HiepKa.models.BookModel;
 import vn.HiepKa.services.impl.BookService;
 
-@WebServlet(urlPatterns = { "/user/home" })
+@WebServlet(urlPatterns = { "/user/home",  })
 public class HomeController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -19,12 +19,16 @@ public class HomeController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+		String url = req.getRequestURI();
+		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
+		if (url.contains("/user/home")) {
 		// Lấy danh sách sách từ tầng service
 		List<BookModel> books = bookService.findAll();
 
 		// Set danh sách sách vào attribute để truy cập trong JSP
 		req.setAttribute("books", books);
 		req.getRequestDispatcher("/views/user/home.jsp").forward(req, resp);
+		}
 	}
 }
