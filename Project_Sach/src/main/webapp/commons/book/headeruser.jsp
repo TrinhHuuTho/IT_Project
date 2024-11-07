@@ -98,8 +98,8 @@
               </li>
             </ul>
             <span class="navbar-text me-2">Xin chào, ${sessionScope.username}</span>
-				<!-- Nút logout với điều chỉnh height và width trực tiếp trong HTML -->
-				<a href="${pageContext.request.contextPath }/authentication/logout" 
+				<!-- Nút login với điều chỉnh height và width trực tiếp trong HTML -->
+				<a href="${pageContext.request.contextPath }/home" 
 				   class="btn btn-primary ms-3"
 				   style="height: 37px; width: 100px;">Đăng xuất</a>
 

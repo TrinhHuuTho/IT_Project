@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/commons/taglib.jsp"%>
-<c:url value="/" var="URL"></c:url>
     <div class="header-mobile d-sm-block d-lg-none">
       <!--Begin nav-->
       <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
           <a class="navbar-brand" href="home.jsp">
             <img
-              src="${URL}assets/images/No-bg logo.png"
+              src="${URL}assets/images/logo.png"
               alt="Logo Sach"
               srcset=""
               class="img-fluid"
@@ -32,7 +30,7 @@
           >
             <div class="offcanvas-header">
               <img
-                src="${URL}assets/images/No-bg logo.png"
+                src="${URL}assets/images/logo.png"
                 alt="Logo Sach"
                 srcset=""
                 class="img-fluid"
@@ -65,13 +63,7 @@
                   </ul>
                 </li>
               </ul>
-              
-					<span class="navbar-text me-2">Xin chào, ${sessionScope.username}</span>
-					<!-- Nút login với điều chỉnh height và width trực tiếp trong HTML -->
-					<a href="${pageContext.request.contextPath }/authentication/logout" 
-					   class="btn btn-primary ms-3"
-					   style="height: 37px; width: 100px;">Logout</a>
-					   
+
               <div
                 class="form-check form-switch d-flex align-items-center mb-3 p-0"
               >
@@ -203,54 +195,39 @@
           <div class="row">
             <div class="col-12">
               <div class="section-stories-hot__list">
-              
-              
-
-                <c:forEach var="book" items="${books}">
-    <div class="story-item">
-        <a href="story.html" class="d-block text-decoration-none">
-            <div class="story-item__image">
-                <!-- Nếu đường dẫn ảnh là từ URL (bắt đầu bằng https) -->
-                <c:if test="${book.imagesbook != null && book.imagesbook.startsWith('https')}">
-                    <img
-                        src="${book.imagesbook}"
-                        alt="${book.title}"
+                <div class="story-item">
+                  <a href="story.html" class="d-block text-decoration-none">
+                    <div class="story-item__image">
+                      <img
+                        src="${URL}assets/images/tu_cam.jpg"
+                        alt="Tự Cẩm"
                         class="img-fluid"
                         width="150"
                         height="230"
                         loading="lazy"
-                    />
-                </c:if>
+                      />
+                    </div>
+                    <h3 class="story-item__name text-one-row story-name">
+                      Tự Cẩm
+                    </h3>
 
-                <!-- Nếu đường dẫn ảnh là từ thư mục cục bộ (không bắt đầu bằng https) -->
-                <c:if test="${book.imagesbook != null && !book.imagesbook.startsWith('https')}">
-                    <c:url value="/image?fname=${book.imagesbook}" var="imgUrl"></c:url>
-                    <img
-                        src="${imgUrl}"
-                        alt="${book.title}"
-                        class="img-fluid"
-                        width="150"
-                        height="230"
-                        loading="lazy"
-                    />
-                </c:if>
-            </div>
-            <h3 class="story-item__name text-one-row story-name">
-                ${book.title}
-            </h3>
+                    <div class="list-badge">
+                      <span class="story-item__badge badge text-bg-success"
+                        >Full</span
+                      >
 
-            <div class="list-badge">
-                <span class="story-item__badge badge text-bg-success">Full</span>
-                <span class="story-item__badge story-item__badge-hot badge text-bg-danger">Hot</span>
-                <span class="story-item__badge story-item__badge-new badge text-bg-info text-light">New</span>
-            </div>
-        </a>
-    </div>
-</c:forEach>
-                
-                   
-                
-                
+                      <span
+                        class="story-item__badge story-item__badge-hot badge text-bg-danger"
+                        >Hot</span
+                      >
+
+                      <span
+                        class="story-item__badge story-item__badge-new badge text-bg-info text-light"
+                        >New</span
+                      >
+                    </div>
+                  </a>
+                </div>
                 <div class="story-item">
                   <a href="story.html" class="d-block text-decoration-none">
                     <div class="story-item__image">

@@ -39,8 +39,8 @@ public class WaitingController extends HttpServlet {
 				resp.sendRedirect(req.getContextPath() + "/authentication/");
 			}
 		} else {
-			// Nếu không có session hoặc không đăng nhập, chuyển hướng đến trang đăng nhập
-			resp.sendRedirect(req.getContextPath() + "/home.jsp");
+			// Nếu không có session hoặc không đăng nhập, chuyển hướng đến trang chủ
+			resp.sendRedirect(req.getContextPath() + "/home");
 		}
 	}
 }
