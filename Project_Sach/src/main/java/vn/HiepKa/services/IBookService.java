@@ -14,4 +14,5 @@ public interface IBookService {
 	void update(BookModel book) throws Exception;
 
 	void delete(int bookid) throws Exception;
+
 }

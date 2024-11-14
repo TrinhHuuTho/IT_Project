@@ -46,14 +46,15 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
 
   <body>
     <!--Begin header-->
-   <%@ include file="/commons/web/headeruser.jsp"%>
+    <%@ include file="/commons/user/header.jsp"%>
     <!--End header-->
-<!--Nội dung chính-->
-	<sitemesh:write property="body" />
+
+    <!--Nội dung chính-->
+    <sitemesh:write property="body" />
     <!--Kết thúc nội dung chính-->
 
     <!--Begin footer-->
-	<%@ include file="/commons/web/footer.jsp"%>
+    <%@ include file="/commons/web/footer.jsp"%>
     <!--End footer-->
 
     <script src="${URL}assets/jquery.min.js"></script>
