@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class AzureConnectSQL {
 
-	private static final String URL = "jdbc:sqlserver://tomekeeperserver.database.windows.net:1433;database=TomeKeeper";
+	private static final String URL = "jdbc:sqlserver://tomekeeperserver.database.windows.net:1433;database=TomeKeeper;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;";
 	private static final String USER = "HTho@tomekeeperserver";
 	private static final String PASSWORD = "0379282465Tho";
 

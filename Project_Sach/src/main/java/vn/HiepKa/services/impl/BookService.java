@@ -1,5 +1,7 @@
 package vn.HiepKa.services.impl;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import vn.HiepKa.dao.IBookDao;
@@ -18,7 +20,28 @@ public class BookService implements IBookService {
 
 	@Override
 	public List<BookModel> findAll() {
-		return bookDao.findAll();
+		List<BookModel> books = bookDao.findAll();
+
+		// Đặt cờ `isNew` cho từng sách
+		for (BookModel book : books) {
+			checkIsNew(book);
+		}
+
+		return books;
+	}
+
+	public void checkIsNew(BookModel book) {
+		// Tính ngày 6 tháng trước
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, -6);
+		Date sixMonthsAgo = calendar.getTime();
+
+		// Kiểm tra ngày tạo
+		if (book.getCreatedat() != null && book.getCreatedat().after(sixMonthsAgo)) {
+			book.setIsNew(true);
+		} else {
+			book.setIsNew(false);
+		}
 	}
 
 	@Override
@@ -47,6 +70,6 @@ public class BookService implements IBookService {
 		if (book != null) {
 			bookDao.delete(bookid);
 		}
-	}
 
+	}
 }

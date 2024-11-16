@@ -20,7 +20,7 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
 
     <!-- Bootstrap CSS v5.2.1 -->
 
-   <link href="${URL}assets/bootstrap.min.css" rel="stylesheet" />
+    <link href="${URL}assets/bootstrap.min.css" rel="stylesheet" />
 
     <link
       rel="shortcut icon"
@@ -46,15 +46,15 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
 
   <body>
     <!--Begin header-->
-   <%@ include file="/commons/web/header.jsp"%>
+    <%@ include file="/commons/web/header.jsp"%>
     <!--End header-->
-    
-	<!--Nội dung chính-->
-	<sitemesh:write property="body" />
+
+    <!--Nội dung chính-->
+    <sitemesh:write property="body" />
     <!--Kết thúc nội dung chính-->
 
     <!--Begin footer-->
-	<%@ include file="/commons/web/footer.jsp"%>
+    <%@ include file="/commons/web/footer.jsp"%>
     <!--End footer-->
 
     <script src="${URL}assets/jquery.min.js"></script>
@@ -64,6 +64,7 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
     <script src="${URL}assets/bootstrap.min.js"></script>
 
     <script src="${URL}assets/app.js"></script>
+
     <script src="${URL}assets/common.js"></script>
 
     <div id="loadingPage" class="loading-full">

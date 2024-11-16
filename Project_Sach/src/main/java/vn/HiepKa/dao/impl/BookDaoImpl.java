@@ -43,24 +43,24 @@ public class BookDaoImpl extends AzureConnectSQL implements IBookDao {
 		return null;
 	}
 
-//    public static void main(String[] args) {
-//        BookDaoImpl bookDao = new BookDaoImpl();
-//        int bookIdToFind = 1;
-//        BookModel book = bookDao.findById(bookIdToFind);
-//        if (book != null) {
-//            System.out.println("Thông tin cuốn sách:");
-//            System.out.println("Book ID: " + book.getBookid());
-//            System.out.println("Title: " + book.getTitle());
-//            System.out.println("Author ID: " + (book.getAuthorid() != 0 ? String.valueOf(book.getAuthorid()) : "null"));
-//            System.out.println("Author Name: " + (book.getAuthorname() != null ? book.getAuthorname() : "null"));
-//            System.out.println("Content: " + (book.getContent() != null ? book.getContent() : "null"));
-//            System.out.println("Created At: " + (book.getCreatedat() != null ? book.getCreatedat() : "null"));
-//            System.out.println("Images Book: " + (book.getImagesbook() != null ? "Có ảnh" : "null"));
-//        } else {
-//            System.out.println("Không tìm thấy cuốn sách với ID: " + bookIdToFind);
-//        }
-//
-//    }
+    public static void main(String[] args) {
+        BookDaoImpl bookDao = new BookDaoImpl();
+        int bookIdToFind = 1;
+        BookModel book = bookDao.findById(bookIdToFind);
+        if (book != null) {
+            System.out.println("Thông tin cuốn sách:");
+            System.out.println("Book ID: " + book.getBookid());
+            System.out.println("Title: " + book.getTitle());
+            System.out.println("Author ID: " + (book.getAuthorid() != 0 ? String.valueOf(book.getAuthorid()) : "null"));
+            System.out.println("Author Name: " + (book.getAuthorname() != null ? book.getAuthorname() : "null"));
+            System.out.println("Content: " + (book.getContent() != null ? book.getContent() : "null"));
+            System.out.println("Created At: " + (book.getCreatedat() != null ? book.getCreatedat() : "null"));
+            System.out.println("Images Book: " + (book.getImagesbook() != null ? "Có ảnh" : "null"));
+        } else {
+            System.out.println("Không tìm thấy cuốn sách với ID: " + bookIdToFind);
+        }
+
+    }
 
 	@Override
 	public void insert(BookModel book) throws SQLException {
@@ -199,32 +199,32 @@ public class BookDaoImpl extends AzureConnectSQL implements IBookDao {
 //	}
 
 
-	    public static void main(String[] args) {
-	        // Tạo đối tượng BookDaoImpl
-	        BookDaoImpl bookDao = new BookDaoImpl();
-
-	        // Tiêu đề sách cần tìm
-	        String titleToSearch = "Nhật ký trong tù"; // Thay đổi tiêu đề theo sách bạn muốn tìm
-
-	        // Gọi phương thức findByTitle
-	        List<BookModel> books = bookDao.findByTitle(titleToSearch);
-
-	        // Kiểm tra và in kết quả
-	        if (books.isEmpty()) {
-	            System.out.println("Không tìm thấy sách nào với tiêu đề: " + titleToSearch);
-	        } else {
-	            System.out.println("Kết quả tìm kiếm cho tiêu đề: " + titleToSearch);
-	            for (BookModel book : books) {
-	                System.out.println("ID: " + book.getBookid());
-	                System.out.println("Tiêu đề: " + book.getTitle());
-	                System.out.println("Tác giả: " + book.getAuthorname());
-	                System.out.println("Nội dung: " + book.getContent());
-	                System.out.println("Ngày tạo: " + book.getCreatedat());
-	                System.out.println("Hình ảnh: " + book.getImagesbook());
-	                System.out.println("-----------------------------------");
-	            }
-	        }
-	    }
+//	    public static void main(String[] args) {
+//	        // Tạo đối tượng BookDaoImpl
+//	        BookDaoImpl bookDao = new BookDaoImpl();
+//
+//	        // Tiêu đề sách cần tìm
+//	        String titleToSearch = "Nhật ký trong tù"; // Thay đổi tiêu đề theo sách bạn muốn tìm
+//
+//	        // Gọi phương thức findByTitle
+//	        List<BookModel> books = bookDao.findByTitle(titleToSearch);
+//
+//	        // Kiểm tra và in kết quả
+//	        if (books.isEmpty()) {
+//	            System.out.println("Không tìm thấy sách nào với tiêu đề: " + titleToSearch);
+//	        } else {
+//	            System.out.println("Kết quả tìm kiếm cho tiêu đề: " + titleToSearch);
+//	            for (BookModel book : books) {
+//	                System.out.println("ID: " + book.getBookid());
+//	                System.out.println("Tiêu đề: " + book.getTitle());
+//	                System.out.println("Tác giả: " + book.getAuthorname());
+//	                System.out.println("Nội dung: " + book.getContent());
+//	                System.out.println("Ngày tạo: " + book.getCreatedat());
+//	                System.out.println("Hình ảnh: " + book.getImagesbook());
+//	                System.out.println("-----------------------------------");
+//	            }
+//	        }
+//	    }
 
 	@Override
 	public List<BookModel> findByTitle(String title) {

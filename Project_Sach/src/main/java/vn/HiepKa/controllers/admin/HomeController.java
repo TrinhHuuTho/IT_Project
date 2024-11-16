@@ -29,7 +29,7 @@ public class HomeController extends HttpServlet {
 			// Set danh sách sách vào attribute để truy cập trong JSP
 			req.setAttribute("books", books);
 			req.getRequestDispatcher("/views/admin/home.jsp").forward(req, resp);
-		}else if(url.contains("delete")) {
+		} else if (url.contains("delete")) {
 			String id = req.getParameter("id");
 			try {
 				bookService.delete(Integer.parseInt(id));

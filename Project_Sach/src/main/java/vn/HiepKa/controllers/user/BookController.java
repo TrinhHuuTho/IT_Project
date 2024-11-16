@@ -1,4 +1,4 @@
-package vn.HiepKa.controllers.book;
+package vn.HiepKa.controllers.user;
 
 import java.io.IOException;
 
@@ -8,13 +8,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import vn.HiepKa.models.BookModel;
+import vn.HiepKa.services.IBookService;
 import vn.HiepKa.services.impl.BookService;
 
 @WebServlet(urlPatterns = { "/users/story/*" })
 public class BookController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private BookService bookService = new BookService();
+	private IBookService bookService = new BookService();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// Lấy ID từ URL
@@ -38,7 +39,7 @@ public class BookController extends HttpServlet {
         if (book != null) {
             // Nếu tìm thấy sách, lưu vào attribute để truy cập trong JSP
             req.setAttribute("book", book);
-            req.getRequestDispatcher("/views/book/story.jsp").forward(req, resp); // Chuyển đến trang JSP
+            req.getRequestDispatcher("/views/user/story.jsp").forward(req, resp); // Chuyển đến trang JSP
         } else {
             // Nếu không tìm thấy sách, trả về lỗi 404
             resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Book not found");

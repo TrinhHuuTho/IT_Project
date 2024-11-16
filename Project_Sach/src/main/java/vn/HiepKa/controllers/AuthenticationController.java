@@ -20,7 +20,7 @@ public class AuthenticationController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	IUserService userService = new UserService();
-
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String url = req.getRequestURI();
@@ -31,6 +31,8 @@ public class AuthenticationController extends HttpServlet {
 		if (url.contains("/authentication/") || url.contains("/login") || url.contains("/signup")
 				|| url.contains("/forgotpassword")) {
 			req.getRequestDispatcher("/views/login-page.jsp").forward(req, resp);
+		} else {
+			req.getRequestDispatcher("/views/home.jsp").forward(req, resp);
 		}
 	}
 
@@ -91,6 +93,33 @@ public class AuthenticationController extends HttpServlet {
 				req.setAttribute("errorMessage", "Email đã tồn tại hoặc có lỗi xảy ra.");
 				req.getRequestDispatcher("/views/login-page.jsp").forward(req, resp);
 			}
+		} else if (url.contains("/forgotpassword")) {
+		    String email = req.getParameter("email");
+
+		    if (email.isEmpty()) {
+		        req.setAttribute("errorMessage", "Vui lòng nhập email.");
+		        req.getRequestDispatcher("/views/login-page.jsp").forward(req, resp);
+		        return;
+		    }
+
+		    // Tìm người dùng theo email
+		    UserModel user = userService.FindByEmail(email);
+
+		    if (user != null) {
+		        // Gọi service để tạo token và gửi email
+		        try {
+		            userService.sendResetToken(email);
+		            req.setAttribute("successMessage", "Email đặt lại mật khẩu đã được gửi.");
+		        } catch (Exception e) {
+		            req.setAttribute("errorMessage", "Có lỗi xảy ra trong quá trình gửi email. Vui lòng thử lại.");
+		        }
+		    } else {
+		        req.setAttribute("errorMessage", "Không tìm thấy người dùng với email này.");
+		    }
+
+		    // Quay về trang forgot password với thông báo
+		    req.getRequestDispatcher("/views/login-page.jsp").forward(req, resp);
 		}
+
 	}
 }
