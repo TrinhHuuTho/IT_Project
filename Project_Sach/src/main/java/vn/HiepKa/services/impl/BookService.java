@@ -19,30 +19,30 @@ public class BookService implements IBookService {
 	}
 
 	@Override
-    public List<BookModel> findAll() {
-        List<BookModel> books = bookDao.findAll();
-        
-        // Đặt cờ `isNew` cho từng sách
-        for (BookModel book : books) {
-            checkIsNew(book);
-        }
+	public List<BookModel> findAll() {
+		List<BookModel> books = bookDao.findAll();
 
-        return books;
-    }
-       
+		// Đặt cờ `isNew` cho từng sách
+		for (BookModel book : books) {
+			checkIsNew(book);
+		}
+
+		return books;
+	}
+
 	public void checkIsNew(BookModel book) {
-        // Tính ngày 6 tháng trước
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, -6);
-        Date sixMonthsAgo = calendar.getTime();
+		// Tính ngày 6 tháng trước
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, -6);
+		Date sixMonthsAgo = calendar.getTime();
 
-        // Kiểm tra ngày tạo
-        if (book.getCreatedat() != null && book.getCreatedat().after(sixMonthsAgo)) {
-            book.setIsNew(true);
-        } else {
-            book.setIsNew(false);
-        }
-    }
+		// Kiểm tra ngày tạo
+		if (book.getCreatedat() != null && book.getCreatedat().after(sixMonthsAgo)) {
+			book.setIsNew(true);
+		} else {
+			book.setIsNew(false);
+		}
+	}
 
 	@Override
 	public void insert(BookModel book) throws Exception {
@@ -65,7 +65,11 @@ public class BookService implements IBookService {
 
 	@Override
 	public void delete(int bookid) throws Exception {
-		bookDao.delete(bookid);
-	}
+		BookModel book = new BookModel();
+		book = bookDao.findById(bookid);
+		if (book != null) {
+			bookDao.delete(bookid);
+		}
 
+	}
 }
