@@ -42,7 +42,11 @@ public class BookService implements IBookService {
 
 	@Override
 	public void delete(int bookid) throws Exception {
-		bookDao.delete(bookid);
+		BookModel book = new BookModel();
+		book = bookDao.findById(bookid);
+		if (book != null) {
+			bookDao.delete(bookid);
+		}
 	}
 
 }
