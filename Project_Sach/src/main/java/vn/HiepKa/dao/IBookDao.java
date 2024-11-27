@@ -23,4 +23,6 @@ public interface IBookDao {
 
     // Xóa sách theo ID
     void delete(int bookid) throws SQLException, Exception;
+
+	List<BookModel> findBooksByIds(List<Integer> bookIds);
 }

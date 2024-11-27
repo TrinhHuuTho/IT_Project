@@ -44,8 +44,8 @@
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Xin chào</div>
-                        Start Bootstrap
+                        <div class="small">Xin chào, ${sessionScope.username}</div>
+                        
                     </div>
                 </nav>
             </div>

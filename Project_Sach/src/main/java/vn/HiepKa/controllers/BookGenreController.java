@@ -22,6 +22,7 @@ import vn.HiepKa.services.impl.GenreServiceImpl;
 public class BookGenreController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	
 	private IBookGenreService bookGenreService = new BookGenreServiceImpl();
 	private IBookService bookService = new BookService();
 	private IGenreService genreService = new GenreServiceImpl();

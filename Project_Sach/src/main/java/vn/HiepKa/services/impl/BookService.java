@@ -58,7 +58,6 @@ public class BookService implements IBookService {
 		try {
 			bookDao.update(book);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -72,4 +71,13 @@ public class BookService implements IBookService {
 		}
 
 	}
+
+	@Override
+	public List<BookModel> findBooksByIds(List<Integer> bookIds) {
+	    if (bookIds == null || bookIds.isEmpty()) {
+	        return List.of(); // Trả về danh sách rỗng nếu không có bookIds
+	    }
+	    return bookDao.findBooksByIds(bookIds);
+	}
+
 }

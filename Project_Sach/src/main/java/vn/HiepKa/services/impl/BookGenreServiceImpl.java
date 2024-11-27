@@ -6,6 +6,7 @@ import java.util.List;
 import vn.HiepKa.dao.IBookGenreDao;
 import vn.HiepKa.dao.impl.BookGenreDaoImpl;
 import vn.HiepKa.models.BookGenreModel;
+import vn.HiepKa.models.GenreModel;
 import vn.HiepKa.services.IBookGenreService;
 
 public class BookGenreServiceImpl implements IBookGenreService {
@@ -30,13 +31,19 @@ public class BookGenreServiceImpl implements IBookGenreService {
 		}
 	}
 
+//	@Override
+//	public List<Integer> getGenresByBookId(int bookId) {
+//		return bookGenreDao.findGenresByBookId(bookId);
+//	}
+
 	@Override
-	public List<Integer> getGenresByBookId(int bookId) {
+	public List<GenreModel> getGenresByBookId(int bookId) {
 		return bookGenreDao.findGenresByBookId(bookId);
 	}
-
+	
 	@Override
 	public List<Integer> getBooksByGenreId(int genreId) {
 		return bookGenreDao.findBooksByGenreId(genreId);
 	}
+	
 }

@@ -7,6 +7,6 @@ public class Constant {
 	// Folder của Ka
 	//public static final String DIR = "C:\\Sach";
 	// Folder của Thọ
-	public static final String DIR = "F:\\IT_Project\\Sach";
+	public static final String DIR = "E:\\IT_Project\\Sach";
 	public static final String EMAIL_REGEX = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
 }

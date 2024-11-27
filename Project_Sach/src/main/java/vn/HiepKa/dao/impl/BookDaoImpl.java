@@ -253,4 +253,37 @@ public class BookDaoImpl extends AzureConnectSQL implements IBookDao {
 	    }
 	    return books;
 	}
+
+	@Override
+	public List<BookModel> findBooksByIds(List<Integer> bookIds) {
+	    StringBuilder sql = new StringBuilder("SELECT * FROM BOOK WHERE book_id IN (");
+	    for (int i = 0; i < bookIds.size(); i++) {
+	        sql.append("?");
+	        if (i < bookIds.size() - 1) {
+	            sql.append(",");
+	        }
+	    }
+	    sql.append(")");
+
+	    List<BookModel> books = new ArrayList<>();
+	    try (Connection conn = getConnection();
+	         PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+	        for (int i = 0; i < bookIds.size(); i++) {
+	            ps.setInt(i + 1, bookIds.get(i));
+	        }
+	        try (ResultSet rs = ps.executeQuery()) {
+	            while (rs.next()) {
+	                BookModel book = new BookModel();
+	                book.setBookid(rs.getInt("book_id"));
+	                book.setTitle(rs.getString("title"));
+	                book.setImagesbook(rs.getString("images_book"));
+	                books.add(book);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return books;
+	}
+
 }
