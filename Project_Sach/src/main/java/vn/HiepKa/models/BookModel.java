@@ -16,13 +16,14 @@ public class BookModel implements Serializable {
 	private String imagesbook;
 
 	private boolean isNew;// Trường phụ không có trong Table tương ứng ở db
+	private boolean isHot;// Trường phụ không có trong Table tương ứng ở db
 
 	public BookModel() {
 		super();
 	}
 
 	public BookModel(int bookid, String title, int authorid, String authorname, String content, Date createdat,
-			String imagesbook, boolean isNew) {
+			String imagesbook, boolean isNew, boolean isHot) {
 		super();
 		this.bookid = bookid;
 		this.title = title;
@@ -32,6 +33,7 @@ public class BookModel implements Serializable {
 		this.createdat = createdat;
 		this.imagesbook = imagesbook;
 		this.isNew = isNew;
+		this.isHot = isHot;
 	}
 
 	public int getBookid() {
@@ -98,11 +100,19 @@ public class BookModel implements Serializable {
 		this.isNew = isNew;
 	}
 
+	public boolean getIsHot() {
+		return isHot;
+	}
+
+	public void setIsHot(boolean isHot) {
+		this.isHot = isHot;
+	}
+
 	@Override
 	public String toString() {
 		return "BookModel [bookid=" + bookid + ", title=" + title + ", authorid=" + authorid + ", authorname="
 				+ authorname + ", content=" + content + ", createdat=" + createdat + ", imagesbook=" + imagesbook
-				+ ", isNew=" + isNew + "]";
+				+ ", isNew=" + isNew + ", isHot=" + isHot + "]";
 	}
 
 }

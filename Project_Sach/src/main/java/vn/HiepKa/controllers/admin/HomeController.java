@@ -9,13 +9,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import vn.HiepKa.models.BookModel;
-import vn.HiepKa.services.impl.BookService;
+import vn.HiepKa.services.IBookService;
+import vn.HiepKa.services.impl.BookServiceImpl;
 
 @WebServlet(urlPatterns = { "/admin/home", "/admin/delete" })
 public class HomeController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private BookService bookService = new BookService();
+	private IBookService bookService = new BookServiceImpl();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

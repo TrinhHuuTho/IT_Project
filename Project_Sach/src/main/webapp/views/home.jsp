@@ -118,11 +118,15 @@
                   </div>
                   <h3 class="story-item__name text-one-row story-name">${book.title}</h3>
                   <div class="list-badge">
-                    <span class="story-item__badge story-item__badge-hot badge text-bg-danger">Hot</span>
-                    <c:if test="${book.isNew}">
-                      <span class="story-item__badge story-item__badge-new badge text-bg-info text-light">New</span>
-                    </c:if>
-                  </div>
+				    <!-- Hiển thị nhãn Hot nếu sách đáp ứng điều kiện -->
+				    <c:if test="${book.isHot}">
+				        <span class="story-item__badge story-item__badge-hot badge text-bg-danger">Hot</span>
+				    </c:if>
+				    <!-- Hiển thị nhãn New nếu sách mới -->
+				    <c:if test="${book.isNew}">
+				        <span class="story-item__badge story-item__badge-new badge text-bg-info text-light">New</span>
+				    </c:if>
+				</div>
                 </a>
               </div>
             </c:forEach>

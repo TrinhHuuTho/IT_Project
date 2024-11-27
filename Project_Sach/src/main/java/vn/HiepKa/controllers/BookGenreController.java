@@ -15,7 +15,7 @@ import vn.HiepKa.services.IBookGenreService;
 import vn.HiepKa.services.IBookService;
 import vn.HiepKa.services.IGenreService;
 import vn.HiepKa.services.impl.BookGenreServiceImpl;
-import vn.HiepKa.services.impl.BookService;
+import vn.HiepKa.services.impl.BookServiceImpl;
 import vn.HiepKa.services.impl.GenreServiceImpl;
 
 @WebServlet(urlPatterns = { "/genreDetails" })
@@ -24,7 +24,7 @@ public class BookGenreController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private IBookGenreService bookGenreService = new BookGenreServiceImpl();
-	private IBookService bookService = new BookService();
+	private IBookService bookService = new BookServiceImpl();
 	private IGenreService genreService = new GenreServiceImpl();
 
 	@Override

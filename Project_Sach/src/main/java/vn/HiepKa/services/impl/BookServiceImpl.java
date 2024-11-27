@@ -9,7 +9,7 @@ import vn.HiepKa.dao.impl.BookDaoImpl;
 import vn.HiepKa.models.BookModel;
 import vn.HiepKa.services.IBookService;
 
-public class BookService implements IBookService {
+public class BookServiceImpl implements IBookService {
 
 	IBookDao bookDao = new BookDaoImpl();
 

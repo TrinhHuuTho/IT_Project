@@ -7,12 +7,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import vn.HiepKa.models.BookModel;
 import vn.HiepKa.models.GenreModel;
+import vn.HiepKa.models.ReviewModel;
 import vn.HiepKa.services.IBookGenreService;
 import vn.HiepKa.services.IBookService;
 import vn.HiepKa.services.IGenreService;
+import vn.HiepKa.services.IReviewService;
 import vn.HiepKa.services.impl.BookGenreServiceImpl;
-import vn.HiepKa.services.impl.BookService;
+import vn.HiepKa.services.impl.BookServiceImpl;
 import vn.HiepKa.services.impl.GenreServiceImpl;
+import vn.HiepKa.services.impl.ReviewServiceImpl;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,9 +24,10 @@ import java.util.List;
 public class HomeControllers extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private IBookService bookService = new BookService();
+    private IBookService bookService = new BookServiceImpl();
     private IGenreService genreService = new GenreServiceImpl();
     private IBookGenreService bookGenreService = new BookGenreServiceImpl();
+    private IReviewService reviewService = new ReviewServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,8 +37,8 @@ public class HomeControllers extends HttpServlet {
 
         // Lấy genreId từ request
         String genreIdParam = req.getParameter("genreId");
-        List<BookModel> hotBooks; // Sách trong danh sách thư viện (có filter)
-        List<BookModel> newBooks; // Sách mới (không có filter)
+        List<BookModel> hotBooks;
+        List<BookModel> newBooks;
 
         if (genreIdParam != null && !genreIdParam.isEmpty()) {
             int genreId = Integer.parseInt(genreIdParam);
@@ -46,11 +50,24 @@ public class HomeControllers extends HttpServlet {
             hotBooks = bookService.findBooksByIds(bookIds);
             req.setAttribute("selectedGenreId", genreId);
         } else {
-            // Nếu không có genreId, lấy tất cả sách
             hotBooks = bookService.findAll();
         }
 
-        // Lấy danh sách sách mới (luôn cố định, không áp dụng filter)
+        // Đánh giá sách (averageRating, totalReviews)
+        for (BookModel book : hotBooks) {
+            ReviewModel reviewSummary = reviewService.getReviewSummary(book.getBookid());
+            if (reviewSummary != null) {
+                double averageRating = reviewSummary.getAverageRating();
+                int totalReviews = reviewSummary.getTotalReviews();
+
+                // Đánh dấu sách "Hot"
+                book.setIsHot(averageRating >= 4.0 && totalReviews >= 1);             
+            } else {
+                book.setIsHot(false); // Không có đánh giá
+            }
+        }
+
+        // Lấy danh sách sách mới
         newBooks = bookService.findAll();
 
         // Gán dữ liệu vào request attribute
@@ -60,4 +77,5 @@ public class HomeControllers extends HttpServlet {
         // Chuyển hướng đến trang JSP
         req.getRequestDispatcher("/views/home.jsp").forward(req, resp);
     }
+
 }
