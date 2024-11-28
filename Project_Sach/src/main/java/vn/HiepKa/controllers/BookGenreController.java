@@ -11,12 +11,15 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import vn.HiepKa.models.BookModel;
 import vn.HiepKa.models.GenreModel;
+import vn.HiepKa.models.ReviewModel;
 import vn.HiepKa.services.IBookGenreService;
 import vn.HiepKa.services.IBookService;
 import vn.HiepKa.services.IGenreService;
+import vn.HiepKa.services.IReviewService;
 import vn.HiepKa.services.impl.BookGenreServiceImpl;
 import vn.HiepKa.services.impl.BookServiceImpl;
 import vn.HiepKa.services.impl.GenreServiceImpl;
+import vn.HiepKa.services.impl.ReviewServiceImpl;
 
 @WebServlet(urlPatterns = { "/genreDetails" })
 public class BookGenreController extends HttpServlet {
@@ -26,6 +29,7 @@ public class BookGenreController extends HttpServlet {
 	private IBookGenreService bookGenreService = new BookGenreServiceImpl();
 	private IBookService bookService = new BookServiceImpl();
 	private IGenreService genreService = new GenreServiceImpl();
+	private IReviewService reviewService = new ReviewServiceImpl();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -55,6 +59,18 @@ public class BookGenreController extends HttpServlet {
 			for (int bookId : bookIds) {
 				BookModel book = bookService.findById(bookId);
 				if (book != null) {
+					
+					ReviewModel reviewSummary = reviewService.getReviewSummary(book.getBookid());
+		            if (reviewSummary != null) {
+		                double averageRating = reviewSummary.getAverageRating();
+		                int totalReviews = reviewSummary.getTotalReviews();
+
+		                // Đánh dấu sách "Hot"
+		                book.setIsHot(averageRating >= 4.0 && totalReviews >= 1);             
+		            } else {
+		                book.setIsHot(false); // Không có đánh giá
+		            }
+					
 					books.add(book);
 				}
 			}

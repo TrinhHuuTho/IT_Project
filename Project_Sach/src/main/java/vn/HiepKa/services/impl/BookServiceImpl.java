@@ -15,7 +15,11 @@ public class BookServiceImpl implements IBookService {
 
 	@Override
 	public BookModel findById(int bookid) {
-		return bookDao.findById(bookid);
+	    BookModel book = bookDao.findById(bookid);
+	    if (book != null) {
+	        checkIsNew(book);
+	    }
+	    return book;
 	}
 
 	@Override
@@ -77,7 +81,11 @@ public class BookServiceImpl implements IBookService {
 	    if (bookIds == null || bookIds.isEmpty()) {
 	        return List.of(); // Trả về danh sách rỗng nếu không có bookIds
 	    }
-	    return bookDao.findBooksByIds(bookIds);
+	    List<BookModel> books = bookDao.findBooksByIds(bookIds);
+	    for (BookModel book : books) {
+	        checkIsNew(book);
+	    }
+	    return books;
 	}
 
 }
