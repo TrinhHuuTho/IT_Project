@@ -1,6 +1,7 @@
 package vn.HiepKa.controllers.user;
 
 import java.io.IOException;
+import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -8,41 +9,75 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import vn.HiepKa.models.BookModel;
+import vn.HiepKa.models.GenreModel;
+import vn.HiepKa.models.ReviewModel;
+import vn.HiepKa.services.IBookGenreService;
 import vn.HiepKa.services.IBookService;
+import vn.HiepKa.services.IReviewService;
+import vn.HiepKa.services.impl.BookGenreServiceImpl;
 import vn.HiepKa.services.impl.BookServiceImpl;
+import vn.HiepKa.services.impl.ReviewServiceImpl;
 
-@WebServlet(urlPatterns = { "/users/story/*" })
+@WebServlet(urlPatterns = { "/user/story", "/user/read" })
 public class BookController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private IBookService bookService = new BookServiceImpl();
+	private IBookGenreService bookGenreService = new BookGenreServiceImpl();
+	private IReviewService reviewService = new ReviewServiceImpl();
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// Lấy ID từ URL
-        String pathInfo = req.getPathInfo();
-        String idString = pathInfo != null && pathInfo.length() > 1 ? pathInfo.substring(1) : null;
-     // Khởi tạo ID
-        int id = 0;
-        if (idString != null) {
-            try {
-                id = Integer.parseInt(idString); // Chuyển đổi ID từ chuỗi sang số nguyên
-            } catch (NumberFormatException e) {
-                // Xử lý nếu ID không hợp lệ (có thể log lỗi)
-                e.printStackTrace();
-                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid book ID");
-                return;
-            }
-        }
-     // Tìm kiếm sách theo ID
-        BookModel book = bookService.findById(id); // Giả sử phương thức này trả về một đối tượng BookModel
+		String url = req.getRequestURI();
+		// Lấy ID từ tham số query string
+		String idString = req.getParameter("id");
+		int id = 0;
 
-        if (book != null) {
-            // Nếu tìm thấy sách, lưu vào attribute để truy cập trong JSP
-            req.setAttribute("book", book);
-            req.getRequestDispatcher("/views/user/story.jsp").forward(req, resp); // Chuyển đến trang JSP
-        } else {
-            // Nếu không tìm thấy sách, trả về lỗi 404
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Book not found");
-        }
+		if (idString != null) {
+			try {
+				id = Integer.parseInt(idString); // Chuyển đổi ID từ chuỗi sang số nguyên
+			} catch (NumberFormatException e) {
+				resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid book ID");
+				return;
+			}
+		}
+
+		// Tìm kiếm sách theo ID
+		BookModel book = bookService.findById(id);
+
+		// Tìm kiếm đánh giá theo Id sách
+		ReviewModel reviewSummary = reviewService.getReviewSummary(id);
+
+		// Truy vấn tất cả các loại top rated books
+		List<ReviewModel> topRatedBooksMonth = reviewService.getTopRatedBooks("month");
+		List<ReviewModel> topRatedBooksYear = reviewService.getTopRatedBooks("year");
+		List<ReviewModel> topRatedBooksAll = reviewService.getTopRatedBooks("all");
+
+		// Set các dữ liệu vào request
+		req.setAttribute("topRatedBooksMonth", topRatedBooksMonth);
+		req.setAttribute("topRatedBooksYear", topRatedBooksYear);
+		req.setAttribute("topRatedBooksAll", topRatedBooksAll);
+
+		if (reviewSummary != null) {
+			req.setAttribute("averageRating", reviewSummary.getAverageRating());
+			req.setAttribute("totalReviews", reviewSummary.getTotalReviews());
+		}
+
+		if (book != null) {
+			req.setAttribute("book", book);
+			List<GenreModel> genres = bookGenreService.getGenresByBookId(id);
+			req.setAttribute("genres", genres);
+			req.setAttribute("pdfFileName", book.getTitle());
+
+			if (url.contains("/read")) {
+				req.getRequestDispatcher("/views/user/read.jsp").forward(req, resp);
+			} else if (url.contains("/story")) {
+				req.getRequestDispatcher("/views/user/story.jsp").forward(req, resp);
+			}
+		} else {
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Book not found");
+		}
+
 	}
+
 }

@@ -8,14 +8,14 @@
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="home.jsp">
-                <img src="${URL}assets/images/No-bg logo.png" alt="Logo Sach" class="img-fluid" style="width: 50px" />
+                <img src="${URL}assets/images/NoBgLogo.png" alt="Logo Sach" class="img-fluid" style="width: 50px" />
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="offcanvas offcanvas-end text-bg-dark w-75" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
                 <div class="offcanvas-header">
-                    <img src="${URL}assets/images/No-bg logo.png" alt="Logo Sach" class="img-fluid" style="width: 200px" />
+                    <img src="${URL}assets/images/NoBgLogo.png" alt="Logo Sach" class="img-fluid" style="width: 200px" />
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">

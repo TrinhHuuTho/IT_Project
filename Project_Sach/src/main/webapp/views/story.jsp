@@ -180,6 +180,7 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
             </div>
           </div>
 
+		
           <div class="story-detail__list-chapter">
             <div class="head-title-global d-flex justify-content-between mb-4">
               <div
@@ -195,12 +196,12 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                 </h2>
               </div>
             </div>
-
             <div class="story-detail__list-chapter--list">
               <div class="row">
                 <div
                   class="col-12 col-sm-6 col-lg-6 story-detail__list-chapter--list__item"
                 >
+                <!--
                   <ul>
                     <li>
                       <a
@@ -211,10 +212,12 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                       >
                     </li>
                   </ul>
+                -->
                 </div>
                 <div
                   class="col-12 col-sm-6 col-lg-6 story-detail__list-chapter--list__item"
                 >
+                <!--
                   <ul>
                     <li>
                       <a
@@ -224,6 +227,7 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                       >
                     </li>
                   </ul>
+                -->
                 </div>
               </div>
             </div>
@@ -231,6 +235,7 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
 
           <div class="pagination" style="justify-content: center">
             <ul>
+              <!--
               <li class="pagination__item page-current">
                 <a
                   class="page-link story-ajax-paginate"
@@ -276,7 +281,7 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                   &gt;&gt;
                 </a>
               </li>
-
+              -->
               <!-- Nút Đọc sách -->
               <a
                 href="${pageContext.request.contextPath}/read?id=${book.bookid}&pdfName=${book.content}"
