@@ -15,5 +15,7 @@ public interface IBookService {
 	void delete(int bookid) throws Exception;
 
 	void update(BookModel book, String authorName) throws SQLException;
+	
+	List<BookModel> findBooksByIds(List<Integer> bookIds);
 
 }

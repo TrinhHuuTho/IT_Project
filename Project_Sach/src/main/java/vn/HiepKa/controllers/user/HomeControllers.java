@@ -1,4 +1,4 @@
-package vn.HiepKa.controllers;
+package vn.HiepKa.controllers.user;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,7 +20,7 @@ import vn.HiepKa.services.impl.ReviewServiceImpl;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(urlPatterns = { "/home" })
+@WebServlet(urlPatterns = { "/user/home" })
 public class HomeControllers extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -75,7 +75,7 @@ public class HomeControllers extends HttpServlet {
         req.setAttribute("newBooks", newBooks);
 
         // Chuyển hướng đến trang JSP
-        req.getRequestDispatcher("/views/home.jsp").forward(req, resp);
+        req.getRequestDispatcher("/views/user/home.jsp").forward(req, resp);
     }
 
 }

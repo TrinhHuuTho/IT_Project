@@ -43,24 +43,6 @@ public class BookDaoImpl extends AzureConnectSQL implements IBookDao {
 		return null;
 	}
 
-//    public static void main(String[] args) {
-//        BookDaoImpl bookDao = new BookDaoImpl();
-//        int bookIdToFind = 1;
-//        BookModel book = bookDao.findById(bookIdToFind);
-//        if (book != null) {
-//            System.out.println("Thông tin cuốn sách:");
-//            System.out.println("Book ID: " + book.getBookid());
-//            System.out.println("Title: " + book.getTitle());
-//            System.out.println("Author ID: " + (book.getAuthorid() != 0 ? String.valueOf(book.getAuthorid()) : "null"));
-//            System.out.println("Author Name: " + (book.getAuthorname() != null ? book.getAuthorname() : "null"));
-//            System.out.println("Content: " + (book.getContent() != null ? book.getContent() : "null"));
-//            System.out.println("Created At: " + (book.getCreatedat() != null ? book.getCreatedat() : "null"));
-//            System.out.println("Images Book: " + (book.getImagesbook() != null ? "Có ảnh" : "null"));
-//        } else {
-//            System.out.println("Không tìm thấy cuốn sách với ID: " + bookIdToFind);
-//        }
-//
-//    }
 
 	@Override
 	public void insert(BookModel book) throws SQLException {
@@ -121,28 +103,6 @@ public class BookDaoImpl extends AzureConnectSQL implements IBookDao {
 	}
 
 
-//    public static void main(String[] args) {
-//        // Tạo đối tượng BookDaoImpl
-//        BookDaoImpl bookDao = new BookDaoImpl();
-//
-//        // Tạo đối tượng BookModel với các giá trị cụ thể
-//        BookModel newBook = new BookModel();
-//        newBook.setTitle("Cô gái đến từ hôm qua");
-//        newBook.setAuthorid(1); // ID của tác giả, bạn có thể thay thế bằng ID thực tế trong bảng AUTHOR
-//        newBook.setContent("Nội dung của cuốn sách này...");
-//        // Không cần setCreatedat nếu bạn muốn tự động lấy ngày hiện tại
-//        newBook.setImagesbook("https://vcdn1-giaitri.vnecdn.net/2018/03/20/co-gai-den-tu-hom-qua3-2984-14-6777-2518-1521549733.jpg?w=460&h=0&q=100&dpr=2&fit=crop&s=u8TzC1ZXZ6dyPZfTp3J_3Q"); // Không có ảnh, đặt giá trị null
-//
-//        try {
-//            // Gọi hàm insert để thêm sách vào cơ sở dữ liệu
-//            bookDao.insert(newBook);
-//            System.out.println("Đã chèn cuốn sách mới vào cơ sở dữ liệu.");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            System.out.println("Lỗi trong quá trình chèn sách.");
-//        }
-//    }
-
 	@Override
 	public void update(BookModel book, String authorName) throws SQLException {
 	    String findAuthorSql = "SELECT author_id FROM AUTHOR WHERE author_name = ?";
@@ -196,38 +156,6 @@ public class BookDaoImpl extends AzureConnectSQL implements IBookDao {
 	    }
 	}
 
-	
-	public static void main(String[] args) {
-	    // Tạo đối tượng BookDaoImpl
-	    BookDaoImpl bookDao = new BookDaoImpl();
-
-	    // Tạo một đối tượng BookModel cần cập nhật
-	    BookModel bookToUpdate = new BookModel();
-
-	    // Thiết lập các giá trị cần cập nhật cho sách
-	    bookToUpdate.setBookid(18); // ID sách cần cập nhật (ví dụ: ID = 18)
-	    bookToUpdate.setTitle("Nhật ký trong tù - Cập nhật");
-	    bookToUpdate.setContent("Nội dung sách cập nhật");
-
-	    // Chuyển đổi từ java.util.Date sang java.sql.Date
-	    bookToUpdate.setCreatedat(new java.sql.Date(new java.util.Date().getTime())); // Ngày tạo (ví dụ: ngày hiện tại)
-
-	    bookToUpdate.setImagesbook("updated_image_url.jpg"); // Hình ảnh sách
-	    bookToUpdate.setStatus(false); // Trạng thái (true = hoạt động, false = không hoạt động)
-
-	    // Nhập tên tác giả từ người dùng hoặc logic của bạn
-	    String authorName = "Nguyễn Ái Quốc"; // Tên tác giả cần kiểm tra hoặc thêm mới
-
-	    // Gọi phương thức update để cập nhật thông tin sách
-	    try {
-	        bookDao.update(bookToUpdate, authorName);
-	        System.out.println("Thông tin sách đã được cập nhật thành công!");
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        System.out.println("Đã xảy ra lỗi khi cập nhật thông tin sách!");
-	    }
-	}
-
 
 	@Override
 	public void delete(int bookId) throws SQLException {
@@ -268,65 +196,6 @@ public class BookDaoImpl extends AzureConnectSQL implements IBookDao {
 		return books;
 	}
 
-//	public static void main(String[] args) {
-//		BookDaoImpl bookDao = new BookDaoImpl();
-//
-//		// Gọi phương thức findAll() để lấy tất cả các sách
-//		List<BookModel> books = bookDao.findAll();
-//
-//		// Kiểm tra nếu danh sách sách không rỗng thì in ra
-//		if (books != null && !books.isEmpty()) {
-//			System.out.println("Danh sách các cuốn sách:");
-//			for (BookModel book : books) {
-//				// In từng thuộc tính của sách, nếu null thì in "null"
-//				System.out.println("Book ID: " + (book.getBookid() != 0 ? book.getBookid() : "null"));
-//				System.out.println("Title: " + (book.getTitle() != null ? book.getTitle() : "null"));
-//				System.out.println("Author ID: " + (book.getAuthorid() != 0 ? book.getAuthorid() : "null"));
-//				System.out.println("Author Name: " + (book.getAuthorname() != null ? book.getAuthorname() : "null"));
-//				System.out.println("Content: " + (book.getContent() != null ? book.getContent() : "null"));
-//				System.out.println("Created At: " + (book.getCreatedat() != null ? book.getCreatedat() : "null"));
-//
-//				// Kiểm tra và in thông tin URL ảnh sách (nếu có)
-//				if (book.getImagesbook() != null && !book.getImagesbook().isEmpty()) {
-//					System.out.println("Images Book URL: " + book.getImagesbook());
-//				} else {
-//					System.out.println("Images Book: null");
-//				}
-//
-//				System.out.println("----------");
-//			}
-//		} else {
-//			System.out.println("Không có sách nào trong cơ sở dữ liệu.");
-//		}
-//	}
-
-
-//	    public static void main(String[] args) {
-//	        // Tạo đối tượng BookDaoImpl
-//	        BookDaoImpl bookDao = new BookDaoImpl();
-//
-//	        // Tiêu đề sách cần tìm
-//	        String titleToSearch = "Nhật ký trong tù"; // Thay đổi tiêu đề theo sách bạn muốn tìm
-//
-//	        // Gọi phương thức findByTitle
-//	        List<BookModel> books = bookDao.findByTitle(titleToSearch);
-//
-//	        // Kiểm tra và in kết quả
-//	        if (books.isEmpty()) {
-//	            System.out.println("Không tìm thấy sách nào với tiêu đề: " + titleToSearch);
-//	        } else {
-//	            System.out.println("Kết quả tìm kiếm cho tiêu đề: " + titleToSearch);
-//	            for (BookModel book : books) {
-//	                System.out.println("ID: " + book.getBookid());
-//	                System.out.println("Tiêu đề: " + book.getTitle());
-//	                System.out.println("Tác giả: " + book.getAuthorname());
-//	                System.out.println("Nội dung: " + book.getContent());
-//	                System.out.println("Ngày tạo: " + book.getCreatedat());
-//	                System.out.println("Hình ảnh: " + book.getImagesbook());
-//	                System.out.println("-----------------------------------");
-//	            }
-//	        }
-//	    }
 
 	@Override
 	public List<BookModel> findByTitle(String title) {
@@ -355,4 +224,37 @@ public class BookDaoImpl extends AzureConnectSQL implements IBookDao {
 	    }
 	    return books;
 	}
+
+	@Override
+	public List<BookModel> findBooksByIds(List<Integer> bookIds) {
+	    StringBuilder sql = new StringBuilder("SELECT * FROM BOOK WHERE book_id IN (");
+	    for (int i = 0; i < bookIds.size(); i++) {
+	        sql.append("?");
+	        if (i < bookIds.size() - 1) {
+	            sql.append(",");
+	        }
+	    }
+	    sql.append(")");
+
+	    List<BookModel> books = new ArrayList<>();
+	    try (Connection conn = getConnection();
+	         PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+	        for (int i = 0; i < bookIds.size(); i++) {
+	            ps.setInt(i + 1, bookIds.get(i));
+	        }
+	        try (ResultSet rs = ps.executeQuery()) {
+	            while (rs.next()) {
+	                BookModel book = new BookModel();
+	                book.setBookid(rs.getInt("book_id"));
+	                book.setTitle(rs.getString("title"));
+	                book.setImagesbook(rs.getString("images_book"));
+	                books.add(book);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return books;
+	}
+
 }

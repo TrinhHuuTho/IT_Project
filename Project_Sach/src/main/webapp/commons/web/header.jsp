@@ -9,7 +9,7 @@ pageEncoding="UTF-8"%> <%@taglib prefix = "c" uri="jakarta.tags.core" %>
     <div class="container">
       <a class="navbar-brand" href="${pageContext.request.contextPath }/home">
         <img
-          src="${URL}assets/images/No-bg logo.png"
+          src="${URL}assets/images/NoBgLogo.png"
           alt="Logo Sach"
           srcset=""
           class="img-fluid"

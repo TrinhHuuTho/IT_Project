@@ -1,4 +1,4 @@
-package vn.HiepKa.controllers;
+package vn.HiepKa.controllers.user;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import vn.HiepKa.services.impl.BookServiceImpl;
 import vn.HiepKa.services.impl.GenreServiceImpl;
 import vn.HiepKa.services.impl.ReviewServiceImpl;
 
-@WebServlet(urlPatterns = { "/genreDetails" })
+@WebServlet(urlPatterns = { "/user/genreDetails" })
 public class BookGenreController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -77,7 +77,7 @@ public class BookGenreController extends HttpServlet {
 
 			// Set các attribute để truy cập trong JSP
 			req.setAttribute("books", books);
-			req.getRequestDispatcher("/views/genre.jsp").forward(req, resp);
+			req.getRequestDispatcher("/views/user/genre.jsp").forward(req, resp);
 		} else {
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Genre not found");
 		}

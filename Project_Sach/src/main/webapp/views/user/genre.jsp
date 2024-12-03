@@ -26,7 +26,7 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
             <div class="story-item">
               <!-- Sửa href để đảm bảo có đường dẫn chính xác cho mỗi sách -->
               <a
-                href="${pageContext.request.contextPath}/story?id=${book.bookid}"
+                href="${pageContext.request.contextPath}/user/story?id=${book.bookid}"
                 class="d-block text-decoration-none"
               >
                 <div class="story-item__image">

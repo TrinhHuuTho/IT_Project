@@ -21,4 +21,5 @@ public interface IBookDao {
     void delete(int bookid) throws SQLException, Exception;
     void update(BookModel book, String authorName) throws SQLException;
 
+	List<BookModel> findBooksByIds(List<Integer> bookIds);
 }

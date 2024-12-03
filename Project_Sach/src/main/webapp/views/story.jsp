@@ -60,46 +60,41 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
               <div class="col-12 col-md-12 col-lg-9">
                 <h3 class="text-center story-name">${book.title}</h3>
                 <div class="rate-story mb-2">
-                  <div class="rate-story__holder" data-score="7.0">
-                    <img alt="1" src="${URL}assets/images/star-on.png" />
+                  <c:url
+                    value="/review?bookId=${book.bookid}"
+                    var="ratingUrl"
+                  ></c:url>
 
-                    <img alt="2" src="${URL}assets/images/star-on.png" />
+                  <div class="rate-story__holder" data-score="${averageRating}">
+                    <c:forEach begin="1" end="5" var="i">
+                      <c:choose>
+                        <c:when test="${i <= averageRating}">
+                          <img
+                            alt="${i}"
+                            src="${URL}assets/images/star-on.png"
+                          />
+                        </c:when>
 
-                    <img alt="3" src="${URL}assets/images/star-on.png" />
+                        <c:when test="${i - averageRating <= 0.5}">
+                          <img
+                            alt="${i}"
+                            src="${URL}assets/images/star-half.png"
+                          />
+                        </c:when>
 
-                    <img alt="4" src="${URL}assets/images/star-on.png" />
-
-                    <img alt="5" src="${URL}assets/images/star-on.png" />
-
-                    <img alt="6" src="${URL}assets/images/star-on.png" />
-
-                    <img alt="7" src="${URL}assets/images/star-half.png" />
-
-                    <img alt="8" src="${URL}assets/images/star-off.png" />
-
-                    <img alt="9" src="${URL}assets/images/star-off.png" />
-
-                    <img alt="10" src="${URL}assets/images/star-off.png" />
+                        <c:otherwise>
+                          <img
+                            alt="${i}"
+                            src="${URL}assets/images/star-off.png"
+                          />
+                        </c:otherwise>
+                      </c:choose>
+                    </c:forEach>
                   </div>
-                  <em class="rate-story__text"></em>
-                  <div
-                    class="rate-story__value"
-                    itemprop="aggregateRating"
-                    itemscope=""
-                    itemtype="https://schema.org/AggregateRating"
-                  >
-                    <em
-                      >Đánh giá:
-                      <strong>
-                        <span itemprop="ratingValue">7.0</span>
-                      </strong>
-                      /
-                      <span class="" itemprop="bestRating">10</span>
-                      từ
-                      <strong>
-                        <span itemprop="ratingCount">415</span>
-                        lượt
-                      </strong>
+                  <div class="rate-story__value">
+                    <em>
+                      Đánh giá: <strong>${averageRating}</strong> /
+                      <span>5</span> từ <strong>${totalReviews} lượt</strong>
                     </em>
                   </div>
                 </div>
@@ -162,621 +157,279 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                 </p>
                 <div class="d-flex align-items-center mb-1 flex-wrap">
                   <strong class="me-1">Thể loại:</strong>
-                  <div class="d-flex align-items-center flex-warp">
-                    <a
-                      href="#"
-                      class="text-decoration-none text-dark hover-title me-1"
-                      style="width: max-content"
-                      >Ngôn Tình ,
-                    </a>
-
-                    <a
-                      href="#"
-                      class="text-decoration-none text-dark hover-title"
-                      style="width: max-content"
-                      >Khác
-                    </a>
+                  <div class="d-flex align-items-center flex-wrap">
+                    <c:forEach var="genre" items="${genres}">
+                      <a
+                        href="${pageContext.request.contextPath}/genreDetails?genreId=${genre.genreid}"
+                        class="text-decoration-none text-dark hover-title me-1"
+                        style="width: max-content"
+                      >
+                        ${genre.genreName}
+                      </a>
+                    </c:forEach>
                   </div>
+                </div>
+                <p class="mb-1">
+                  <strong>Số trang:</strong>
+                  <a
+                    href="#"
+                    class="text-decoration-none text-dark hover-title"
+                  ></a>
+                </p>
+              </div>
+            </div>
+          </div>
+
+		
+          <div class="story-detail__list-chapter">
+            <div class="head-title-global d-flex justify-content-between mb-4">
+              <div
+                class="col-6 col-md-12 col-lg-4 head-title-global__left d-flex"
+              >
+                <h2 class="me-2 mb-0 border-bottom border-secondary pb-1">
+                  <span
+                    href="#"
+                    class="d-block text-decoration-none text-dark fs-4 title-head-name"
+                    title="Truyện hot"
+                    >Danh sách chương</span
+                  >
+                </h2>
+              </div>
+            </div>
+            <div class="story-detail__list-chapter--list">
+              <div class="row">
+                <div
+                  class="col-12 col-sm-6 col-lg-6 story-detail__list-chapter--list__item"
+                >
+                <!--
+                  <ul>
+                    <li>
+                      <a
+                        href="#"
+                        class="text-decoration-none text-dark hover-title"
+                        >Chương 1: Nàng không tin Yến Đình lại lừa nàng chuyện
+                        lớn đến vậy!</a
+                      >
+                    </li>
+                  </ul>
+                -->
+                </div>
+                <div
+                  class="col-12 col-sm-6 col-lg-6 story-detail__list-chapter--list__item"
+                >
+                <!--
+                  <ul>
+                    <li>
+                      <a
+                        href="#"
+                        class="text-decoration-none text-dark hover-title"
+                        >Chương 26: Mỹ nhân!</a
+                      >
+                    </li>
+                  </ul>
+                -->
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Nút Đọc sách -->
-          <a
-            href="${pageContext.request.contextPath}/read?id=${book.bookid}&pdfName=${book.content}"
-            class="btn btn-primary"
-            >Đọc sách</a
-          >
+          <div class="pagination" style="justify-content: center">
+            <ul>
+              <!--
+              <li class="pagination__item page-current">
+                <a
+                  class="page-link story-ajax-paginate"
+                  data-url="https://suustore.com/truyen/nang-khong-muon-lam-hoang-hau?page=1"
+                  style="cursor: pointer"
+                  >1</a
+                >
+              </li>
+              <li class="pagination__item">
+                <a
+                  class="page-link story-ajax-paginate"
+                  data-url="https://suustore.com/truyen/nang-khong-muon-lam-hoang-hau?page=2"
+                  style="cursor: pointer"
+                  >2</a
+                >
+              </li>
+
+              <div class="dropup-center dropup choose-paginate me-1">
+                <button
+                  class="btn btn-success dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Chọn chương
+                </button>
+                <div class="dropdown-menu">
+                  <input
+                    type="number"
+                    class="form-control input-paginate me-1"
+                    value=""
+                  />
+                  <button class="btn btn-success btn-go-paginate">Đi</button>
+                </div>
+              </div>
+
+              <li class="pagination__arrow pagination__item">
+                <a
+                  data-url="https://suustore.com/truyen/nang-khong-muon-lam-hoang-hau?page=2"
+                  style="cursor: pointer"
+                  class="text-decoration-none w-100 h-100 d-flex justify-content-center align-items-center story-ajax-paginate"
+                >
+                  &gt;&gt;
+                </a>
+              </li>
+              -->
+              <!-- Nút Đọc sách -->
+              <a
+                href="${pageContext.request.contextPath}/read?id=${book.bookid}&pdfName=${book.content}"
+                class="btn btn-primary"
+                >Đọc sách</a
+              >
+            </ul>
+          </div>
         </div>
       </div>
 
       <div class="col-12 col-md-5 col-lg-4 sticky-md-top">
-        <div class="row top-ratings">
-          <div class="col-12 top-ratings__tab mb-2">
-            <div
-              class="list-group d-flex flex-row"
-              id="list-tab"
-              role="tablist"
-            >
-              <a
-                class="list-group-item list-group-item-action active"
-                id="top-day-list"
-                data-bs-toggle="list"
-                href="https://suustore.com/truyen/nang-khong-muon-lam-hoang-hau#top-day"
-                role="tab"
-                aria-controls="top-day"
-                aria-selected="true"
-                >Tháng</a
-              >
-              <a
-                class="list-group-item list-group-item-action"
-                id="top-month-list"
-                data-bs-toggle="list"
-                href="https://suustore.com/truyen/nang-khong-muon-lam-hoang-hau#top-month"
-                role="tab"
-                aria-controls="top-month"
-                aria-selected="false"
-                tabindex="-1"
-                >Năm</a
-              >
-              <a
-                class="list-group-item list-group-item-action"
-                id="top-all-time-list"
-                data-bs-toggle="list"
-                href="https://suustore.com/truyen/nang-khong-muon-lam-hoang-hau#top-all-time"
-                role="tab"
-                aria-controls="top-all-time"
-                aria-selected="false"
-                tabindex="-1"
-                >Bất hủ</a
-              >
-            </div>
-          </div>
-          <div class="col-12 top-ratings__content">
-            <div class="tab-content" id="nav-tabContent">
-              <div
-                class="tab-pane fade show active"
-                id="top-day"
-                role="tabpanel"
-                aria-labelledby="top-day-list"
-              >
-                <ul>
-                  <li>
-                    <div class="rating-item d-flex align-items-center">
-                      <div class="rating-item__number bg-danger rounded-circle">
-                        <span class="text-light">1</span>
-                      </div>
-                      <div class="rating-item__story">
-                        <a
-                          href="https://suustore.com/truyen/linh-vu-thien-ha"
-                          class="text-decoration-none hover-title rating-item__story--name text-one-row"
-                          >Linh Vũ Thiên Hạ</a
-                        >
-                        <div
-                          class="d-flex flex-wrap rating-item__story--categories"
-                        >
-                          <a
-                            href="https://suustore.com/the-loai/tien-hiep"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Tiên Hiệp ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/di-gioi"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Dị Giới ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/huyen-huyen"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Huyền Huyễn ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/xuyen-khong"
-                            class="text-decoration-none text-dark hover-title"
-                            >Xuyên Không
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="rating-item d-flex align-items-center">
-                      <div
-                        class="rating-item__number bg-success rounded-circle"
-                      >
-                        <span class="text-light">2</span>
-                      </div>
-                      <div class="rating-item__story">
-                        <a
-                          href="https://suustore.com/truyen/than-dao-dan-ton"
-                          class="text-decoration-none hover-title rating-item__story--name text-one-row"
-                          >Thần Đạo Đan Tôn</a
-                        >
-                        <div
-                          class="d-flex flex-wrap rating-item__story--categories"
-                        >
-                          <a
-                            href="https://suustore.com/the-loai/tien-hiep"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Tiên Hiệp ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/huyen-huyen"
-                            class="text-decoration-none text-dark hover-title"
-                            >Huyền Huyễn
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="rating-item d-flex align-items-center">
-                      <div class="rating-item__number bg-info rounded-circle">
-                        <span class="text-light">3</span>
-                      </div>
-                      <div class="rating-item__story">
-                        <a
-                          href="https://suustore.com/truyen/me-vo-khong-loi-ve"
-                          class="text-decoration-none hover-title rating-item__story--name text-one-row"
-                          >Mê Vợ Không Lối Về</a
-                        >
-                        <div
-                          class="d-flex flex-wrap rating-item__story--categories"
-                        >
-                          <a
-                            href="https://suustore.com/the-loai/ngon-tinh"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Ngôn Tình ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/nguoc"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Ngược ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/sung"
-                            class="text-decoration-none text-dark hover-title"
-                            >Sủng
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="rating-item d-flex align-items-center">
-                      <div
-                        class="rating-item__number bg-light border rounded-circle"
-                      >
-                        <span class="text-dark">4</span>
-                      </div>
-                      <div class="rating-item__story">
-                        <a
-                          href="https://suustore.com/truyen/dau-pha-thuong-khung"
-                          class="text-decoration-none hover-title rating-item__story--name text-one-row"
-                          >Đấu Phá Thương Khung</a
-                        >
-                        <div
-                          class="d-flex flex-wrap rating-item__story--categories"
-                        >
-                          <a
-                            href="https://suustore.com/the-loai/tien-hiep"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Tiên Hiệp ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/di-gioi"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Dị Giới ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/huyen-huyen"
-                            class="text-decoration-none text-dark hover-title"
-                            >Huyền Huyễn
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="rating-item d-flex align-items-center">
-                      <div
-                        class="rating-item__number bg-light border rounded-circle"
-                      >
-                        <span class="text-dark">5</span>
-                      </div>
-                      <div class="rating-item__story">
-                        <a
-                          href="https://suustore.com/truyen/the-gioi-hoan-my"
-                          class="text-decoration-none hover-title rating-item__story--name text-one-row"
-                          >Thế Giới Hoàn Mỹ</a
-                        >
-                        <div
-                          class="d-flex flex-wrap rating-item__story--categories"
-                        >
-                          <a
-                            href="https://suustore.com/the-loai/tien-hiep"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Tiên Hiệp ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/kiem-hiep"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Kiếm Hiệp ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/huyen-huyen"
-                            class="text-decoration-none text-dark hover-title"
-                            >Huyền Huyễn
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
+		<div class="row top-ratings">
+		  <div class="col-12 top-ratings__tab mb-2">
+			<div class="list-group d-flex flex-row" id="list-tab" role="tablist">
+			  <a class="list-group-item list-group-item-action ${timePeriod == 'month' ? 'active' : ''}"
+				 id="top-day-list" data-bs-toggle="tab"
+				 data-bs-target="#top-day" role="tab"
+				 aria-controls="top-day" aria-selected="${timePeriod == 'month'}">Tháng</a>
+			  <a class="list-group-item list-group-item-action ${timePeriod == 'year' ? 'active' : ''}"
+				 id="top-month-list" data-bs-toggle="tab"
+				 data-bs-target="#top-month" role="tab"
+				 aria-controls="top-month" aria-selected="${timePeriod == 'year'}" tabindex="-1">Năm</a>
+			  <a class="list-group-item list-group-item-action ${timePeriod == 'all' ? 'active' : ''}"
+				 id="top-all-time-list" data-bs-toggle="tab"
+				 data-bs-target="#top-all-time" role="tab"
+				 aria-controls="top-all-time" aria-selected="${timePeriod == 'all'}" tabindex="-1">Bất hủ</a>
+			</div>
+		  </div>
+	  
+		  <div class="col-12 top-ratings__content">
+			<div class="tab-content" id="nav-tabContent">
+			  <!-- Tab "Tháng" -->
+			  <div class="tab-pane fade ${timePeriod == 'month' ? 'show active' : ''}" id="top-day" role="tabpanel" aria-labelledby="top-day-list">
+				<ul>
+				  <!-- Lặp qua danh sách top-rated books của tháng -->
+				  <c:forEach var="review" items="${topRatedBooksMonth}" varStatus="status">
+					<li>
+					  <div class="rating-item d-flex align-items-center">
+						<div class="rating-item__number 
+						  <c:choose>
+							<c:when test="${status.index == 0}">bg-danger</c:when>
+							<c:when test="${status.index == 1}">bg-success</c:when>
+							<c:when test="${status.index == 2}">bg-info</c:when>
+							<c:otherwise>bg-light border</c:otherwise>
+						  </c:choose>
+						  rounded-circle">
+						  <span class="<c:if test='${status.index > 2}'>text-dark</c:if><c:if test='${status.index <= 2}'>text-light</c:if>">
+							${status.index + 1}
+						  </span>
+						</div>
+						<div class="rating-item__story">
+						  <a href="${pageContext.request.contextPath}/story?id=${review.bookId}"
+							 class="text-decoration-none hover-title">
+							${review.bookTitle}
+						  </a>
+						  <div class="d-flex flex-wrap rating-item__story--categories">
+							<c:forEach var="genre" items="${review.genres}">
+							  <a href="#/genreDetails?genreId=${genre}"
+								 class="text-decoration-none text-dark"> ${genre}, </a>
+							</c:forEach>
+						  </div>
+						</div>
+					  </div>
+					</li>
+				  </c:forEach>
+				</ul>
+			  </div>
+	  
+			  <!-- Tab "Năm" -->
+			  <div class="tab-pane fade ${timePeriod == 'year' ? 'show active' : ''}" id="top-month" role="tabpanel" aria-labelledby="top-month-list">
+				<ul>
+				  <!-- Lặp qua danh sách top-rated books của năm -->
+				  <c:forEach var="review" items="${topRatedBooksYear}" varStatus="status">
+					<li>
+					  <div class="rating-item d-flex align-items-center">
+						<div class="rating-item__number 
+						  <c:choose>
+							<c:when test="${status.index == 0}">bg-danger</c:when>
+							<c:when test="${status.index == 1}">bg-success</c:when>
+							<c:when test="${status.index == 2}">bg-info</c:when>
+							<c:otherwise>bg-light border</c:otherwise>
+						  </c:choose>
+						  rounded-circle">
+						  <span class="<c:if test='${status.index > 2}'>text-dark</c:if><c:if test='${status.index <= 2}'>text-light</c:if>">
+							${status.index + 1}
+						  </span>
+						</div>
+						<div class="rating-item__story">
+						  <a href="${pageContext.request.contextPath}/story?id=${review.bookId}"
+							 class="text-decoration-none hover-title">
+							${review.bookTitle}
+						  </a>
+						  <div class="d-flex flex-wrap rating-item__story--categories">
+							<c:forEach var="genre" items="${review.genres}">
+							  <a href="#/genreDetails?genreId=${genre}"
+								 class="text-decoration-none text-dark"> ${genre}, </a>
+							</c:forEach>
+						  </div>
+						</div>
+					  </div>
+					</li>
+				  </c:forEach>
+				</ul>
+			  </div>
+	  
+			  <!-- Tab "Bất hủ" -->
+			  <div class="tab-pane fade ${timePeriod == 'all' ? 'show active' : ''}" id="top-all-time" role="tabpanel" aria-labelledby="top-all-time-list">
+				<ul>
+				  <!-- Lặp qua danh sách top-rated books bất hủ -->
+				  <c:forEach var="review" items="${topRatedBooksAll}" varStatus="status">
+					<li>
+					  <div class="rating-item d-flex align-items-center">
+						<div class="rating-item__number 
+						  <c:choose>
+							<c:when test="${status.index == 0}">bg-danger</c:when>
+							<c:when test="${status.index == 1}">bg-success</c:when>
+							<c:when test="${status.index == 2}">bg-info</c:when>
+							<c:otherwise>bg-light border</c:otherwise>
+						  </c:choose>
+						  rounded-circle">
+						  <span class="<c:if test='${status.index > 2}'>text-dark</c:if><c:if test='${status.index <= 2}'>text-light</c:if>">
+							${status.index + 1}
+						  </span>
+						</div>
+						<div class="rating-item__story">
+						  <a href="${pageContext.request.contextPath}/story?id=${review.bookId}"
+							 class="text-decoration-none hover-title">
+							${review.bookTitle}
+						  </a>
+						  <div class="d-flex flex-wrap rating-item__story--categories">
+							<c:forEach var="genre" items="${review.genres}">
+							  <a href="#/genreDetails?genreId=${genre}"
+								 class="text-decoration-none text-dark"> ${genre}, </a>
+							</c:forEach>
+						  </div>
+						</div>
+					  </div>
+					</li>
+				  </c:forEach>
+				</ul>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  
 
-              <div
-                class="tab-pane fade"
-                id="top-month"
-                role="tabpanel"
-                aria-labelledby="top-month-list"
-              >
-                <ul>
-                  <li>
-                    <div class="rating-item d-flex align-items-center">
-                      <div class="rating-item__number bg-danger rounded-circle">
-                        <span class="text-light">1</span>
-                      </div>
-                      <div class="rating-item__story">
-                        <a
-                          href="https://suustore.com/truyen/linh-vu-thien-ha"
-                          class="text-decoration-none hover-title rating-item__story--name text-one-row"
-                          >Linh Vũ Thiên Hạ</a
-                        >
-                        <div
-                          class="d-flex flex-wrap rating-item__story--categories"
-                        >
-                          <a
-                            href="https://suustore.com/the-loai/tien-hiep"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Tiên Hiệp ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/di-gioi"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Dị Giới ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/huyen-huyen"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Huyền Huyễn ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/xuyen-khong"
-                            class="text-decoration-none text-dark hover-title"
-                            >Xuyên Không
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="rating-item d-flex align-items-center">
-                      <div
-                        class="rating-item__number bg-success rounded-circle"
-                      >
-                        <span class="text-light">2</span>
-                      </div>
-                      <div class="rating-item__story">
-                        <a
-                          href="https://suustore.com/truyen/than-dao-dan-ton"
-                          class="text-decoration-none hover-title rating-item__story--name text-one-row"
-                          >Thần Đạo Đan Tôn</a
-                        >
-                        <div
-                          class="d-flex flex-wrap rating-item__story--categories"
-                        >
-                          <a
-                            href="https://suustore.com/the-loai/tien-hiep"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Tiên Hiệp ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/huyen-huyen"
-                            class="text-decoration-none text-dark hover-title"
-                            >Huyền Huyễn
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="rating-item d-flex align-items-center">
-                      <div class="rating-item__number bg-info rounded-circle">
-                        <span class="text-light">3</span>
-                      </div>
-                      <div class="rating-item__story">
-                        <a
-                          href="https://suustore.com/truyen/me-vo-khong-loi-ve"
-                          class="text-decoration-none hover-title rating-item__story--name text-one-row"
-                          >Mê Vợ Không Lối Về</a
-                        >
-                        <div
-                          class="d-flex flex-wrap rating-item__story--categories"
-                        >
-                          <a
-                            href="https://suustore.com/the-loai/ngon-tinh"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Ngôn Tình ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/nguoc"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Ngược ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/sung"
-                            class="text-decoration-none text-dark hover-title"
-                            >Sủng
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="rating-item d-flex align-items-center">
-                      <div
-                        class="rating-item__number bg-light border rounded-circle"
-                      >
-                        <span class="text-dark">4</span>
-                      </div>
-                      <div class="rating-item__story">
-                        <a
-                          href="https://suustore.com/truyen/dau-pha-thuong-khung"
-                          class="text-decoration-none hover-title rating-item__story--name text-one-row"
-                          >Đấu Phá Thương Khung</a
-                        >
-                        <div
-                          class="d-flex flex-wrap rating-item__story--categories"
-                        >
-                          <a
-                            href="https://suustore.com/the-loai/tien-hiep"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Tiên Hiệp ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/di-gioi"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Dị Giới ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/huyen-huyen"
-                            class="text-decoration-none text-dark hover-title"
-                            >Huyền Huyễn
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="rating-item d-flex align-items-center">
-                      <div
-                        class="rating-item__number bg-light border rounded-circle"
-                      >
-                        <span class="text-dark">5</span>
-                      </div>
-                      <div class="rating-item__story">
-                        <a
-                          href="https://suustore.com/truyen/the-gioi-hoan-my"
-                          class="text-decoration-none hover-title rating-item__story--name text-one-row"
-                          >Thế Giới Hoàn Mỹ</a
-                        >
-                        <div
-                          class="d-flex flex-wrap rating-item__story--categories"
-                        >
-                          <a
-                            href="https://suustore.com/the-loai/tien-hiep"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Tiên Hiệp ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/kiem-hiep"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Kiếm Hiệp ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/huyen-huyen"
-                            class="text-decoration-none text-dark hover-title"
-                            >Huyền Huyễn
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-
-              <div
-                class="tab-pane fade"
-                id="top-all-time"
-                role="tabpanel"
-                aria-labelledby="top-all-time-list"
-              >
-                <ul>
-                  <li>
-                    <div class="rating-item d-flex align-items-center">
-                      <div class="rating-item__number bg-danger rounded-circle">
-                        <span class="text-light">1</span>
-                      </div>
-                      <div class="rating-item__story">
-                        <a
-                          href="https://suustore.com/truyen/linh-vu-thien-ha"
-                          class="text-decoration-none hover-title rating-item__story--name text-one-row"
-                          >Linh Vũ Thiên Hạ</a
-                        >
-                        <div
-                          class="d-flex flex-wrap rating-item__story--categories"
-                        >
-                          <a
-                            href="https://suustore.com/the-loai/tien-hiep"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Tiên Hiệp ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/di-gioi"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Dị Giới ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/huyen-huyen"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Huyền Huyễn ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/xuyen-khong"
-                            class="text-decoration-none text-dark hover-title"
-                            >Xuyên Không
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="rating-item d-flex align-items-center">
-                      <div
-                        class="rating-item__number bg-success rounded-circle"
-                      >
-                        <span class="text-light">2</span>
-                      </div>
-                      <div class="rating-item__story">
-                        <a
-                          href="https://suustore.com/truyen/than-dao-dan-ton"
-                          class="text-decoration-none hover-title rating-item__story--name text-one-row"
-                          >Thần Đạo Đan Tôn</a
-                        >
-                        <div
-                          class="d-flex flex-wrap rating-item__story--categories"
-                        >
-                          <a
-                            href="https://suustore.com/the-loai/tien-hiep"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Tiên Hiệp ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/huyen-huyen"
-                            class="text-decoration-none text-dark hover-title"
-                            >Huyền Huyễn
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="rating-item d-flex align-items-center">
-                      <div class="rating-item__number bg-info rounded-circle">
-                        <span class="text-light">3</span>
-                      </div>
-                      <div class="rating-item__story">
-                        <a
-                          href="https://suustore.com/truyen/dau-pha-thuong-khung"
-                          class="text-decoration-none hover-title rating-item__story--name text-one-row"
-                          >Đấu Phá Thương Khung</a
-                        >
-                        <div
-                          class="d-flex flex-wrap rating-item__story--categories"
-                        >
-                          <a
-                            href="https://suustore.com/the-loai/tien-hiep"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Tiên Hiệp ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/di-gioi"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Dị Giới ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/huyen-huyen"
-                            class="text-decoration-none text-dark hover-title"
-                            >Huyền Huyễn
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="rating-item d-flex align-items-center">
-                      <div
-                        class="rating-item__number bg-light border rounded-circle"
-                      >
-                        <span class="text-dark">4</span>
-                      </div>
-                      <div class="rating-item__story">
-                        <a
-                          href="https://suustore.com/truyen/co-vo-ngot-ngao-co-chut-bat-luong-vo-moi-bat-luong-co-chut-ngot"
-                          class="text-decoration-none hover-title rating-item__story--name text-one-row"
-                          >Cô Vợ Ngọt Ngào Có Chút Bất Lương (Vợ Mới Bất Lương
-                          Có Chút Ngọt)</a
-                        >
-                        <div
-                          class="d-flex flex-wrap rating-item__story--categories"
-                        >
-                          <a
-                            href="https://suustore.com/the-loai/ngon-tinh"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Ngôn Tình ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/trong-sinh"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Trọng Sinh ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/sung"
-                            class="text-decoration-none text-dark hover-title"
-                            >Sủng
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="rating-item d-flex align-items-center">
-                      <div
-                        class="rating-item__number bg-light border rounded-circle"
-                      >
-                        <span class="text-dark">5</span>
-                      </div>
-                      <div class="rating-item__story">
-                        <a
-                          href="https://suustore.com/truyen/pham-nhan-tu-tien"
-                          class="text-decoration-none hover-title rating-item__story--name text-one-row"
-                          >Phàm Nhân Tu Tiên</a
-                        >
-                        <div
-                          class="d-flex flex-wrap rating-item__story--categories"
-                        >
-                          <a
-                            href="https://suustore.com/the-loai/tien-hiep"
-                            class="text-decoration-none text-dark hover-title me-1"
-                            >Tiên Hiệp ,
-                          </a>
-                          <a
-                            href="https://suustore.com/the-loai/kiem-hiep"
-                            class="text-decoration-none text-dark hover-title"
-                            >Kiếm Hiệp
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </main>

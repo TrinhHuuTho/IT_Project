@@ -4,12 +4,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 import vn.HiepKa.models.BookGenreModel;
+import vn.HiepKa.models.GenreModel;
 
 public interface IBookGenreDao {
 
 	List<Integer> findBooksByGenreId(int genreId);
-
-	List<Integer> findGenresByBookId(int bookId);
+	
+	List<GenreModel> findGenresByBookId(int bookId);
 
 	void delete(int bookId, int genreId) throws SQLException;
 
