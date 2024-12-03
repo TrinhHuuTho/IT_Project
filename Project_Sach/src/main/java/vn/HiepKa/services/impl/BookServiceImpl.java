@@ -1,5 +1,6 @@
 package vn.HiepKa.services.impl;
 
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -58,10 +59,11 @@ public class BookServiceImpl implements IBookService {
 	}
 
 	@Override
-	public void update(BookModel book) throws Exception {
+	public void update(BookModel book, String authorName) throws SQLException {
 		try {
-			bookDao.update(book);
+			bookDao.update(book, authorName);
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
