@@ -134,12 +134,13 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                     >
                       <div class="form-group">
                         <input
-                          type="email"
-                          class="form-control email"
-                          name="email"
-                          placeholder="Email address"
-                          required
-                        />
+						    type="email"
+						    class="form-control email"
+						    name="email"
+						    placeholder="Email address"
+						    value="${rememberedEmail != null ? rememberedEmail : ''}"
+						    required
+						/>
                       </div>
                       <div class="form-group">
                         <div class="pwdMask">
@@ -158,10 +159,11 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                         <div class="col-xs-6 col-sm-6">
                           <label class="checkbox text-left">
                             <input
-                              type="checkbox"
-                              value="remember-me"
-                              name="remember"
-                            />
+							    type="checkbox"
+							    value="remember-me"
+							    name="remember"
+							    ${rememberChecked != null && rememberChecked ? "checked" : ""}
+							/>
                             <span class="label-text">nhớ tôi</span>
                           </label>
                         </div>
