@@ -43,48 +43,83 @@ public class BookDaoImpl extends AzureConnectSQL implements IBookDao {
 		return null;
 	}
 
-    public static void main(String[] args) {
-        BookDaoImpl bookDao = new BookDaoImpl();
-        int bookIdToFind = 1;
-        BookModel book = bookDao.findById(bookIdToFind);
-        if (book != null) {
-            System.out.println("Thông tin cuốn sách:");
-            System.out.println("Book ID: " + book.getBookid());
-            System.out.println("Title: " + book.getTitle());
-            System.out.println("Author ID: " + (book.getAuthorid() != 0 ? String.valueOf(book.getAuthorid()) : "null"));
-            System.out.println("Author Name: " + (book.getAuthorname() != null ? book.getAuthorname() : "null"));
-            System.out.println("Content: " + (book.getContent() != null ? book.getContent() : "null"));
-            System.out.println("Created At: " + (book.getCreatedat() != null ? book.getCreatedat() : "null"));
-            System.out.println("Images Book: " + (book.getImagesbook() != null ? "Có ảnh" : "null"));
-        } else {
-            System.out.println("Không tìm thấy cuốn sách với ID: " + bookIdToFind);
-        }
-
-    }
+//    public static void main(String[] args) {
+//        BookDaoImpl bookDao = new BookDaoImpl();
+//        int bookIdToFind = 1;
+//        BookModel book = bookDao.findById(bookIdToFind);
+//        if (book != null) {
+//            System.out.println("Thông tin cuốn sách:");
+//            System.out.println("Book ID: " + book.getBookid());
+//            System.out.println("Title: " + book.getTitle());
+//            System.out.println("Author ID: " + (book.getAuthorid() != 0 ? String.valueOf(book.getAuthorid()) : "null"));
+//            System.out.println("Author Name: " + (book.getAuthorname() != null ? book.getAuthorname() : "null"));
+//            System.out.println("Content: " + (book.getContent() != null ? book.getContent() : "null"));
+//            System.out.println("Created At: " + (book.getCreatedat() != null ? book.getCreatedat() : "null"));
+//            System.out.println("Images Book: " + (book.getImagesbook() != null ? "Có ảnh" : "null"));
+//        } else {
+//            System.out.println("Không tìm thấy cuốn sách với ID: " + bookIdToFind);
+//        }
+//
+//    }
 
 	@Override
 	public void insert(BookModel book) throws SQLException {
-		String sql = "INSERT INTO BOOK (title, author_id, content, created_at, images_book) "
-				+ "VALUES (?, ?, ?, ?, ?)";
-		try {
-			conn = super.getConnection();
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, book.getTitle());
-			ps.setInt(2, book.getAuthorid());
-			ps.setString(3, book.getContent());
+	    // SQL để kiểm tra tác giả đã tồn tại chưa
+	    String findAuthorSql = "SELECT author_id FROM AUTHOR WHERE author_name = ?";
+	    // SQL để thêm tác giả mới nếu chưa có
+	    String insertAuthorSql = "INSERT INTO AUTHOR (author_name) VALUES (?)";
+	    // SQL để chèn sách mới
+	    String insertBookSql = "INSERT INTO BOOK (title, author_id, content, created_at, images_book) VALUES (?, ?, ?, ?, ?)";
 
-			// Lấy ngày hiện tại nếu `created_at` chưa được gán
-			if (book.getCreatedat() == null) {
-				book.setCreatedat(new java.sql.Date(new java.util.Date().getTime())); // Gán ngày hiện tại
-			}
+	    Connection conn = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
 
-			ps.setDate(4, new java.sql.Date(book.getCreatedat().getTime())); // Gán ngày vào câu truy vấn
-			ps.setString(5, book.getImagesbook());
-			ps.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	    try {
+	        conn = super.getConnection();
+	        
+	        // Kiểm tra xem tác giả đã tồn tại chưa
+	        int authorId = -1;
+	        ps = conn.prepareStatement(findAuthorSql);
+	        ps.setString(1, book.getAuthorname());
+	        rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            // Nếu tác giả đã tồn tại, lấy author_id
+	            authorId = rs.getInt("author_id");
+	        } else {
+	            // Nếu tác giả không tồn tại, thêm mới tác giả vào bảng AUTHOR
+	            ps.close(); // Đóng PreparedStatement trước khi mở mới
+	            ps = conn.prepareStatement(insertAuthorSql, PreparedStatement.RETURN_GENERATED_KEYS);
+	            ps.setString(1, book.getAuthorname());
+	            ps.executeUpdate();
+
+	            // Lấy author_id của tác giả vừa thêm
+	            rs = ps.getGeneratedKeys();
+	            if (rs.next()) {
+	                authorId = rs.getInt(1);
+	            }
+	        }
+
+	        // Sau khi có author_id, chèn sách vào bảng BOOK
+	        ps.close(); // Đóng PreparedStatement trước khi mở mới
+	        ps = conn.prepareStatement(insertBookSql);
+	        ps.setString(1, book.getTitle());               // Tiêu đề sách
+	        ps.setInt(2, authorId);                         // ID tác giả
+	        ps.setString(3, book.getContent());             // Nội dung sách
+
+	        // Nếu created_at chưa được gán, lấy ngày hiện tại
+	        if (book.getCreatedat() == null) {
+	            book.setCreatedat(new java.sql.Date(new java.util.Date().getTime())); // Gán ngày hiện tại
+	        }
+	        ps.setDate(4, new java.sql.Date(book.getCreatedat().getTime())); // Ngày tạo
+	        ps.setString(5, book.getImagesbook());          // Hình ảnh sách
+	        ps.executeUpdate();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
+
 
 //    public static void main(String[] args) {
 //        // Tạo đối tượng BookDaoImpl
@@ -109,23 +144,90 @@ public class BookDaoImpl extends AzureConnectSQL implements IBookDao {
 //    }
 
 	@Override
-	public void update(BookModel book) throws SQLException {
-		String sql = "UPDATE BOOK SET title = ?, author_id = ?, content = ?, created_at = ?, images_book = ? "
-				+ "WHERE book_id = ?";
-		try {
-			conn = super.getConnection();
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, book.getTitle());
-			ps.setInt(2, book.getAuthorid());
-			ps.setString(3, book.getContent());
-			ps.setDate(4, new java.sql.Date(book.getCreatedat().getTime()));
-			ps.setString(5, book.getImagesbook());
-			ps.setInt(6, book.getBookid());
-			ps.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void update(BookModel book, String authorName) throws SQLException {
+	    String findAuthorSql = "SELECT author_id FROM AUTHOR WHERE author_name = ?";
+	    String insertAuthorSql = "INSERT INTO AUTHOR (author_name) VALUES (?)";
+	    String updateBookSql = "UPDATE BOOK SET title = ?, author_id = ?, content = ?, created_at = ?, images_book = ?, status = ? WHERE book_id = ?";
+	    
+	    Connection conn = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+
+	    try {
+	        conn = super.getConnection();
+
+	        // Kiểm tra xem tác giả đã tồn tại hay chưa
+	        int authorId = -1;
+	        ps = conn.prepareStatement(findAuthorSql);
+	        ps.setString(1, authorName);
+	        rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            // Nếu tác giả tồn tại, lấy ID
+	            authorId = rs.getInt("author_id");
+	        } else {
+	            // Nếu tác giả không tồn tại, thêm mới
+	            ps.close(); // Đóng PreparedStatement trước khi mở mới
+	            ps = conn.prepareStatement(insertAuthorSql, PreparedStatement.RETURN_GENERATED_KEYS);
+	            ps.setString(1, authorName);
+	            ps.executeUpdate();
+
+	            // Lấy ID tác giả vừa thêm
+	            rs = ps.getGeneratedKeys();
+	            if (rs.next()) {
+	                authorId = rs.getInt(1);
+	            }
+	        }
+
+	        // Cập nhật sách
+	        ps.close(); // Đóng PreparedStatement trước khi mở mới
+	        ps = conn.prepareStatement(updateBookSql);
+	        ps.setString(1, book.getTitle());               // Tiêu đề
+	        ps.setInt(2, authorId);                         // ID tác giả
+	        ps.setString(3, book.getContent());             // Nội dung
+	        ps.setDate(4, new java.sql.Date(book.getCreatedat().getTime())); // Ngày tạo
+	        ps.setString(5, book.getImagesbook());          // Hình ảnh
+	        ps.setInt(6, book.isStatus() ? 1 : 0);          // Trạng thái
+	        ps.setInt(7, book.getBookid());                 // ID sách
+	        ps.executeUpdate();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
+
+	
+	public static void main(String[] args) {
+	    // Tạo đối tượng BookDaoImpl
+	    BookDaoImpl bookDao = new BookDaoImpl();
+
+	    // Tạo một đối tượng BookModel cần cập nhật
+	    BookModel bookToUpdate = new BookModel();
+
+	    // Thiết lập các giá trị cần cập nhật cho sách
+	    bookToUpdate.setBookid(18); // ID sách cần cập nhật (ví dụ: ID = 18)
+	    bookToUpdate.setTitle("Nhật ký trong tù - Cập nhật");
+	    bookToUpdate.setContent("Nội dung sách cập nhật");
+
+	    // Chuyển đổi từ java.util.Date sang java.sql.Date
+	    bookToUpdate.setCreatedat(new java.sql.Date(new java.util.Date().getTime())); // Ngày tạo (ví dụ: ngày hiện tại)
+
+	    bookToUpdate.setImagesbook("updated_image_url.jpg"); // Hình ảnh sách
+	    bookToUpdate.setStatus(false); // Trạng thái (true = hoạt động, false = không hoạt động)
+
+	    // Nhập tên tác giả từ người dùng hoặc logic của bạn
+	    String authorName = "Nguyễn Ái Quốc"; // Tên tác giả cần kiểm tra hoặc thêm mới
+
+	    // Gọi phương thức update để cập nhật thông tin sách
+	    try {
+	        bookDao.update(bookToUpdate, authorName);
+	        System.out.println("Thông tin sách đã được cập nhật thành công!");
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        System.out.println("Đã xảy ra lỗi khi cập nhật thông tin sách!");
+	    }
+	}
+
 
 	@Override
 	public void delete(int bookId) throws SQLException {

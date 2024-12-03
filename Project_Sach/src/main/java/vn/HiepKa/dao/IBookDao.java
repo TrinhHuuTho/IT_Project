@@ -17,10 +17,8 @@ public interface IBookDao {
 
     // Thêm mới một cuốn sách
     void insert(BookModel book) throws SQLException, Exception;
-
-    // Cập nhật thông tin sách
-    void update(BookModel book) throws SQLException, Exception;
-
     // Xóa sách theo ID
     void delete(int bookid) throws SQLException, Exception;
+    void update(BookModel book, String authorName) throws SQLException;
+
 }

@@ -6,9 +6,9 @@
                 <main>
                     <div class="container-fluid px-4">
                         <div class="card mb-4">
-                            <div class="card-header">
-
+                            <div class="card-header d-flex justify-content-between align-items-center">
                                 <strong style="font-size: 20px;">DANH SÁCH CÁC BỘ SÁCH ĐÃ ĐƯỢC DUYỆT</strong>
+                                <a href="${pageContext.request.contextPath}/admin/add" class="btn btn-success ms-auto" style="width: 150px; text-align: center;">Thêm Sách</a>
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
@@ -37,20 +37,24 @@
                                         <tr>
                                             <td>${book.title}</td>
                                             <td>${book.authorname}</td>
-                                            <td>${book.content}</td>
+                                            <td>
+                                            <a
+								            href="${pageContext.request.contextPath}/admin/read?id=${book.bookid}&pdfName=${book.content}" 
+								            >${book.content}
+            								</a>
+            								</td>
                                             <td>${book.createdat}</td>
                                             <td>
 												<!-- Nếu đường dẫn ảnh là từ URL (bắt đầu bằng https) -->
 								                <c:if test="${book.imagesbook != null && book.imagesbook.startsWith('https')}">
 								                    <img
-								                        src="${book.imagesbook}"
-								                        alt="${book.title}"
-								                        class="img-fluid w-100"
-								                        width="50"
-								                        height="100"
-								                        
-								                        loading="lazy"
-								                    />
+												    src="${book.imagesbook}"
+												    alt="${book.title}"
+												    class="img-fluid"
+												    style="max-width: 150px; max-height: 230px;"
+												    loading="lazy"
+												/>
+
 								                </c:if>
 						
 								                <!-- Nếu đường dẫn ảnh là từ thư mục cục bộ (không bắt đầu bằng https) -->
@@ -59,11 +63,9 @@
 								                    <img
 								                        src="${imgUrl}"
 								                        alt="${book.title}"
-								                        class="img-fluid w-100"
-								                        width="50"
-								                        height="100"
-								                        
-								                        loading="lazy"
+													    class="img-fluid"
+													    style="max-width: 150px; max-height: 230px;"
+													    loading="lazy"
 								                    />
 								                </c:if>
 											</td>
@@ -83,3 +85,4 @@
                         </div>
                     </div>
                 </main>
+                

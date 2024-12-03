@@ -23,7 +23,7 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
         <sitemesh:write property="body" />
         <!-- Body-->
         <!-- footer-->
-		<%@ include file="/commons/admin/footer.jsp"%>
+
         <!--footer-->
             </div>
         </div>
