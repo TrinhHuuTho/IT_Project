@@ -1,5 +1,6 @@
 package vn.HiepKa.services.impl;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import vn.HiepKa.dao.IReviewDao;
@@ -21,4 +22,13 @@ public class ReviewServiceImpl implements IReviewService{
 	    return reviewDao.getTopRatedBooks(timePeriod);
 	}
 
+	@Override
+	public List<ReviewModel> findAll() {
+		return reviewDao.findAll();
+	}
+	
+	@Override
+    public void deleteReview(int reviewId) throws SQLException {
+        reviewDao.delete(reviewId); // Gọi phương thức xóa trong DAO
+    }
 }

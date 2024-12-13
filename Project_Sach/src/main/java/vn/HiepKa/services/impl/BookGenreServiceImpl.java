@@ -7,6 +7,7 @@ import vn.HiepKa.dao.IBookGenreDao;
 import vn.HiepKa.dao.impl.BookGenreDaoImpl;
 import vn.HiepKa.models.BookGenreModel;
 import vn.HiepKa.models.GenreModel;
+import vn.HiepKa.models.GenreWithBooksModel;
 import vn.HiepKa.services.IBookGenreService;
 
 public class BookGenreServiceImpl implements IBookGenreService {
@@ -45,5 +46,9 @@ public class BookGenreServiceImpl implements IBookGenreService {
 	public List<Integer> getBooksByGenreId(int genreId) {
 		return bookGenreDao.findBooksByGenreId(genreId);
 	}
-	
+
+	@Override
+	public List<GenreWithBooksModel> findAllGenresWithBooks() throws SQLException {
+		return bookGenreDao.findAllGenresWithBooks();
+	}
 }

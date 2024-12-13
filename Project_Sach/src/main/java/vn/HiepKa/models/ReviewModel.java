@@ -19,13 +19,14 @@ public class ReviewModel implements Serializable {
 	private int totalReviews; // Tổng số lượt đánh giá
 	private String bookTitle;
 	private String genres;
+	private String username;
 	
 	public ReviewModel() {
 		super();
 	}
 
 	public ReviewModel(int reviewId, int userId, int bookId, int rating, String comment, Date createdAtReview,
-			double averageRating, int totalReviews, String bookTitle, String genres) {
+			double averageRating, int totalReviews, String bookTitle, String genres, String username) {
 		super();
 		this.reviewId = reviewId;
 		this.userId = userId;
@@ -37,7 +38,9 @@ public class ReviewModel implements Serializable {
 		this.totalReviews = totalReviews;
 		this.bookTitle = bookTitle;
 		this.genres = genres;
+		this.username = username;
 	}
+	
 
 	public ReviewModel(double averageRating, int totalReviews) {
 		this.averageRating = averageRating;
@@ -124,11 +127,22 @@ public class ReviewModel implements Serializable {
 		this.genres = genres;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	@Override
 	public String toString() {
 		return "ReviewModel [reviewId=" + reviewId + ", userId=" + userId + ", bookId=" + bookId + ", rating=" + rating
 				+ ", comment=" + comment + ", createdAtReview=" + createdAtReview + ", averageRating=" + averageRating
-				+ ", totalReviews=" + totalReviews + ", bookTitle=" + bookTitle + ", genres=" + genres + "]";
+				+ ", totalReviews=" + totalReviews + ", bookTitle=" + bookTitle + ", genres=" + genres + ", username="
+				+ username + "]";
 	}
+
+	
 
 }

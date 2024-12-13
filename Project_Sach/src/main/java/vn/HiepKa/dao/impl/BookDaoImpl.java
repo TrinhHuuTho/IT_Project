@@ -17,6 +17,7 @@ public class BookDaoImpl extends AzureConnectSQL implements IBookDao {
 	private PreparedStatement ps = null;
 	private ResultSet rs = null;
 
+
 	@Override
 	public BookModel findById(int bookId) {
 		String sql = "SELECT B.*, A.author_name FROM BOOK B " + "JOIN AUTHOR A ON B.author_id = A.author_id "

@@ -11,6 +11,8 @@ public class BookModel implements Serializable {
 	private String title;
 	private int authorid; // Khóa ngoại từ bảng Author
 	private String authorname; // Lưu tên tác giả để thuận tiện
+	private String genreName;
+	private int genreId;
 	private String content;
 	private Date createdat;
 	private String imagesbook;
@@ -22,16 +24,16 @@ public class BookModel implements Serializable {
 		super();
 	}
 
-
-
-	public BookModel(int bookid, String title, int authorid, String authorname, String content, Date createdat,
-			String imagesbook, boolean status, boolean isNew, boolean isHot) {
+	public BookModel(int bookid, String title, int authorid, String authorname, String genreName, int genreId,
+			String content, Date createdat, String imagesbook, boolean status, boolean isNew, boolean isHot) {
 
 		super();
 		this.bookid = bookid;
 		this.title = title;
 		this.authorid = authorid;
 		this.authorname = authorname;
+		this.genreName = genreName;
+		this.genreId = genreId;
 		this.content = content;
 		this.createdat = createdat;
 		this.imagesbook = imagesbook;
@@ -76,6 +78,22 @@ public class BookModel implements Serializable {
 		return content;
 	}
 
+	public String getGenreName() {
+		return genreName;
+	}
+
+	public void setGenreName(String genreName) {
+		this.genreName = genreName;
+	}
+
+	public int getGenreId() {
+		return genreId;
+	}
+
+	public void setGenreId(int genreId) {
+		this.genreId = genreId;
+	}
+
 	public void setContent(String content) {
 		this.content = content;
 	}
@@ -95,6 +113,7 @@ public class BookModel implements Serializable {
 	public void setImagesbook(String imagesbook) {
 		this.imagesbook = imagesbook;
 	}
+
 	public boolean isStatus() {
 		return status;
 	}
@@ -104,7 +123,7 @@ public class BookModel implements Serializable {
 	}
 
 	public boolean getIsNew() {
-	    return isNew;
+		return isNew;
 	}
 
 	public void setIsNew(boolean isNew) {
@@ -122,8 +141,9 @@ public class BookModel implements Serializable {
 	@Override
 	public String toString() {
 		return "BookModel [bookid=" + bookid + ", title=" + title + ", authorid=" + authorid + ", authorname="
-				+ authorname + ", content=" + content + ", createdat=" + createdat + ", imagesbook=" + imagesbook
-				+ ", status=" + status + ", isNew=" + isNew + ", isHot=" + isHot + "]";
+				+ authorname + ", genreName=" + genreName + ", genreId=" + genreId + ", content=" + content
+				+ ", createdat=" + createdat + ", imagesbook=" + imagesbook + ", status=" + status + ", isNew=" + isNew
+				+ ", isHot=" + isHot + "]";
 	}
 
 }

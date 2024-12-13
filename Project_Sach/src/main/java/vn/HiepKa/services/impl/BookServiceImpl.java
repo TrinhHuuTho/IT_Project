@@ -13,7 +13,6 @@ import vn.HiepKa.services.IBookService;
 public class BookServiceImpl implements IBookService {
 
 	IBookDao bookDao = new BookDaoImpl();
-
 	@Override
 	public BookModel findById(int bookid) {
 	    BookModel book = bookDao.findById(bookid);

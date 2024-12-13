@@ -17,5 +17,4 @@ public interface IBookService {
 	void update(BookModel book, String authorName) throws SQLException;
 	
 	List<BookModel> findBooksByIds(List<Integer> bookIds);
-
 }

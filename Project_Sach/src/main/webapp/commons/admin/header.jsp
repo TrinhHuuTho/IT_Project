@@ -3,7 +3,7 @@
 <%@taglib prefix = "c" uri="jakarta.tags.core"  %>
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="${pageContext.request.contextPath }/home">Trang chủ</a>
+            <a class="navbar-brand ps-3" href="${pageContext.request.contextPath }/authentication/logout">Trang chủ</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             
@@ -22,16 +22,18 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
                             <a class="nav-link" href="${pageContext.request.contextPath }/admin/home">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Trang chủ
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
+                                Danh sách các bộ sách
                             </a>
                             
-                            <div class="sb-sidenav-menu-heading">Addons</div>
-                            <a class="nav-link" href="charts.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                Yêu cầu phê duyệt
+                            <a class="nav-link" href="${pageContext.request.contextPath }/admin/review">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-comment"></i></i></div>
+                                Danh sách các đánh giá
+                            </a>
+                            <a class="nav-link" href="${pageContext.request.contextPath }/admin/genre">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-layer-group"></i></i></div>
+                                Danh sách các thể loại
                             </a>
                             
                         </div>

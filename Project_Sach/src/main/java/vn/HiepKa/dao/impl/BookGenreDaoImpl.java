@@ -10,7 +10,9 @@ import java.util.List;
 import vn.HiepKa.configs.AzureConnectSQL;
 import vn.HiepKa.dao.IBookGenreDao;
 import vn.HiepKa.models.BookGenreModel;
+import vn.HiepKa.models.BookModel;
 import vn.HiepKa.models.GenreModel;
+import vn.HiepKa.models.GenreWithBooksModel;
 
 public class BookGenreDaoImpl extends AzureConnectSQL implements IBookGenreDao {
 
@@ -18,6 +20,82 @@ public class BookGenreDaoImpl extends AzureConnectSQL implements IBookGenreDao {
 	private PreparedStatement ps = null;
 	private ResultSet rs = null;
 
+	@Override
+	public List<GenreWithBooksModel> findAllGenresWithBooks() throws SQLException {
+	    List<GenreWithBooksModel> genreWithBooksList = new ArrayList<>();
+	    String sql = "SELECT g.genre_id, g.genre_name, b.book_id, b.title " +
+	                 "FROM GENRE g " +
+	                 "LEFT JOIN BOOKGENRE bg ON g.genre_id = bg.genre_id " +
+	                 "LEFT JOIN BOOK b ON bg.book_id = b.book_id " +
+	                 "ORDER BY g.genre_name";
+
+	    try {
+	        conn = super.getConnection();
+	        ps = conn.prepareStatement(sql);
+	        rs = ps.executeQuery();
+
+	        GenreWithBooksModel currentGenre = null;
+
+	        while (rs.next()) {
+	            int genreId = rs.getInt("genre_id");
+	            String genreName = rs.getString("genre_name");
+	            int bookId = rs.getInt("book_id");
+	            String bookTitle = rs.getString("title");
+
+	            // Nếu thể loại mới thì tạo mới đối tượng GenreWithBooksModel
+	            if (currentGenre == null || currentGenre.getGenreId() != genreId) {
+	                if (currentGenre != null) {
+	                    genreWithBooksList.add(currentGenre);  // Thêm thể loại cũ vào danh sách
+	                }
+
+	                // Tạo đối tượng GenreWithBooksModel mới cho thể loại hiện tại
+	                currentGenre = new GenreWithBooksModel();
+	                currentGenre.setGenreId(genreId);
+	                currentGenre.setGenreName(genreName);
+	                currentGenre.setBooks(new ArrayList<>());
+	            }
+
+	            // Thêm sách vào danh sách của thể loại
+	            if (bookId != 0) {
+	                BookModel book = new BookModel();
+	                book.setBookid(bookId);
+	                book.setTitle(bookTitle);
+	                currentGenre.getBooks().add(book);
+	            }
+	        }
+
+	        // Thêm genre cuối cùng vào danh sách
+	        if (currentGenre != null) {
+	            genreWithBooksList.add(currentGenre);
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        closeResources();
+	    }
+	    return genreWithBooksList;
+	}
+
+	public static void main(String[] args) {
+        BookGenreDaoImpl dao = new BookGenreDaoImpl();
+
+        try {
+            // Test phương thức lấy danh sách thể loại với sách
+            List<GenreWithBooksModel> genresWithBooks = dao.findAllGenresWithBooks();
+
+            // In kết quả ra màn hình
+            for (GenreWithBooksModel genre : genresWithBooks) {
+                System.out.println("Genre: " + genre.getGenreName());
+                for (BookModel book : genre.getBooks()) {
+                    System.out.println("  - Book: " + book.getTitle());
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+	
 	@Override
 	public void insert(BookGenreModel bookGenre) throws SQLException {
 		String sql = "INSERT INTO BOOKGENRE (book_id, genre_id) VALUES (?, ?)";
@@ -33,6 +111,7 @@ public class BookGenreDaoImpl extends AzureConnectSQL implements IBookGenreDao {
 			closeResources();
 		}
 	}
+	
 
 	@Override
 	public void delete(int bookId, int genreId) throws SQLException {
@@ -112,19 +191,19 @@ public class BookGenreDaoImpl extends AzureConnectSQL implements IBookGenreDao {
 	}
 
 	// Test phương thức trong main
-	public static void main(String[] args) {
-	    IBookGenreDao bookGenreDao = new BookGenreDaoImpl();
-
-	    // Lấy danh sách thể loại của sách có ID 1
-	    List<GenreModel> genres = bookGenreDao.findGenresByBookId(1);
-	    if (genres.isEmpty()) {
-	        System.out.println("Không tìm thấy thể loại nào cho sách với ID 1.");
-	    } else {
-	        System.out.println("Thể loại của sách có ID 1:");
-	        for (GenreModel genre : genres) {
-	            System.out.println("- " + genre.getGenreName());
-	        }
-	    }
-	}
+//	public static void main(String[] args) {
+//	    IBookGenreDao bookGenreDao = new BookGenreDaoImpl();
+//
+//	    // Lấy danh sách thể loại của sách có ID 1
+//	    List<GenreModel> genres = bookGenreDao.findGenresByBookId(1);
+//	    if (genres.isEmpty()) {
+//	        System.out.println("Không tìm thấy thể loại nào cho sách với ID 1.");
+//	    } else {
+//	        System.out.println("Thể loại của sách có ID 1:");
+//	        for (GenreModel genre : genres) {
+//	            System.out.println("- " + genre.getGenreName());
+//	        }
+//	    }
+//	}
 
 }
