@@ -26,21 +26,18 @@ public class BookServiceImpl implements IBookService {
 	@Override
 	public List<BookModel> findAll() {
 		List<BookModel> books = bookDao.findAll();
-
 		// Đặt cờ `isNew` cho từng sách
 		for (BookModel book : books) {
 			checkIsNew(book);
 		}
-
 		return books;
 	}
 
 	public void checkIsNew(BookModel book) {
 		// Tính ngày 6 tháng trước
 		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.MONTH, -6);
+		calendar.add(Calendar.MONTH, -1);
 		Date sixMonthsAgo = calendar.getTime();
-
 		// Kiểm tra ngày tạo
 		if (book.getCreatedat() != null && book.getCreatedat().after(sixMonthsAgo)) {
 			book.setIsNew(true);
@@ -89,5 +86,4 @@ public class BookServiceImpl implements IBookService {
 		}
 		return books;
 	}
-
 }

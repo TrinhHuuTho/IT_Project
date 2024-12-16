@@ -25,7 +25,11 @@
 	<title>Login Page - TomeKeeper</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/icon" href="${URL}login-page-devforum/images/android-icon-36x36.png">
+    <link
+      rel="shortcut icon"
+      href="${URL}assets/images/No-bg-logo.ico"
+      type="image/x-icon"
+    />
     <link rel="icon" type="image/png" sizes="32x32" href="${URL}login-page-devforum/images/android-icon-36x36.png">
     <link rel="icon" type="image/png" sizes="48x48" href="${URL}login-page-devforum/images/android-icon-48x48.png">
     <link rel="icon" type="image/png" sizes="72x72" href="${URL}login-page-devforum/images/android-icon-72x72.png">

@@ -67,14 +67,12 @@ public class ReviewDaoImpl extends DBConnectSQL implements IReviewDao {
 				review.setCreatedAtReview(rs.getDate("created_at_review"));
 				review.setBookTitle(rs.getString("title")); // Lấy tên sách từ bảng BOOK
 				review.setUsername(rs.getString("username")); // Lấy username từ bảng USER
-
 				// Thêm đối tượng vào danh sách
 				reviews.add(review);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return reviews;
 	}
 
@@ -134,39 +132,4 @@ public class ReviewDaoImpl extends DBConnectSQL implements IReviewDao {
 		}
 		return topRatedBooks;
 	}
-
-//	public static void main(String[] args) {
-//		// Khởi tạo ReviewDaoImpl
-//		ReviewDaoImpl reviewDao = new ReviewDaoImpl();
-//
-//		// Test với một bookId cụ thể
-//		int bookId = 1; // Thay bằng book_id có dữ liệu thực tế trong DB
-//		ReviewModel reviewSummary = reviewDao.getReviewSummaryByBookId(bookId);
-//
-//		// Kiểm tra và in kết quả
-//		if (reviewSummary != null) {
-//			System.out.println("Book ID: " + bookId);
-//			System.out.println("Average Rating: " + reviewSummary.getAverageRating());
-//			System.out.println("Total Reviews: " + reviewSummary.getTotalReviews());
-//		} else {
-//			System.out.println("No review data found for Book ID: " + bookId);
-//		}
-
-//		IReviewDao mainTest = new ReviewDaoImpl();
-//		String timePeriod = "month"; // Thử với "month", "year", hoặc null
-//		List<ReviewModel> topRatedBooks = mainTest.getTopRatedBooks(timePeriod);
-//
-//		// In kết quả ra console
-//		System.out.println("Top Rated Books for Time Period: " + timePeriod);
-//		for (ReviewModel book : topRatedBooks) {
-//			System.out.println("Book ID: " + book.getBookId());
-//			System.out.println("Title: " + book.getBookTitle());
-//			System.out.println("Genres: " + book.getGenres());
-//			System.out.println("Average Rating: " + book.getAverageRating());
-//			System.out.println("Total Reviews: " + book.getTotalReviews());
-//			System.out.println("--------------------------------------");
-//
-//		}
-//	}
-
 }

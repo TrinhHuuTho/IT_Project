@@ -18,7 +18,6 @@ public class BookDaoImpl extends DBConnectSQL implements IBookDao {
 	private PreparedStatement ps = null;
 	private ResultSet rs = null;
 
-
 	@Override
 	public BookModel findById(int bookId) {
 		String sql = "SELECT B.*, A.author_name FROM BOOK B " + "JOIN AUTHOR A ON B.author_id = A.author_id "
@@ -37,6 +36,7 @@ public class BookDaoImpl extends DBConnectSQL implements IBookDao {
 				book.setContent(rs.getString("content"));
 				book.setCreatedat(rs.getDate("created_at"));
 				book.setImagesbook(rs.getString("images_book"));
+				book.setStatus(rs.getBoolean("status"));
 				return book;
 			}
 		} catch (Exception e) {
@@ -44,7 +44,6 @@ public class BookDaoImpl extends DBConnectSQL implements IBookDao {
 		}
 		return null;
 	}
-
 
 	@Override
 	public void insert(BookModel book) throws SQLException {
@@ -54,14 +53,11 @@ public class BookDaoImpl extends DBConnectSQL implements IBookDao {
 	    String insertGenreSql = "INSERT INTO GENRE (genre_name) VALUES (?)";
 	    String insertBookSql = "INSERT INTO BOOK (title, author_id, content, created_at, images_book) VALUES (?, ?, ?, ?, ?)";
 	    String insertBookGenreSql = "INSERT INTO BOOKGENRE (book_id, genre_id) VALUES (?, ?)";
-
 	    Connection conn = null;
 	    PreparedStatement ps = null;
 	    ResultSet rs = null;
-
 	    try {
 	        conn = super.getConnection();
-
 	        // Kiểm tra tác giả đã tồn tại chưa
 	        int authorId = -1;
 	        ps = conn.prepareStatement(findAuthorSql);
@@ -80,7 +76,6 @@ public class BookDaoImpl extends DBConnectSQL implements IBookDao {
 	                authorId = rs.getInt(1);
 	            }
 	        }
-
 	        // Chèn sách vào bảng BOOK
 	        ps.close();
 	        ps = conn.prepareStatement(insertBookSql, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -101,7 +96,6 @@ public class BookDaoImpl extends DBConnectSQL implements IBookDao {
 	        if (rs.next()) {
 	            bookId = rs.getInt(1);
 	        }
-
 	        // Kiểm tra thể loại và chèn nếu cần
 	        if (book.getGenreName() != null && !book.getGenreName().isEmpty()) {
 	            ps.close();
@@ -123,7 +117,6 @@ public class BookDaoImpl extends DBConnectSQL implements IBookDao {
 	                    genreId = rs.getInt(1);
 	                }
 	            }
-
 	            // Liên kết sách với thể loại trong bảng BOOKGENRE
 	            ps.close();
 	            ps = conn.prepareStatement(insertBookGenreSql);
@@ -131,13 +124,10 @@ public class BookDaoImpl extends DBConnectSQL implements IBookDao {
 	            ps.setInt(2, genreId);
 	            ps.executeUpdate();
 	        }
-
 	    } catch (Exception e) {
 	        e.printStackTrace();  // Cần xử lý lỗi cụ thể hơn
 	    } 
 	}
-
-
 
 	@Override
 	public void update(BookModel book, String authorName, String genreName) throws SQLException {
@@ -155,7 +145,6 @@ public class BookDaoImpl extends DBConnectSQL implements IBookDao {
 
 	    try {
 	        conn = super.getConnection();
-
 	        // Kiểm tra xem tác giả đã tồn tại hay chưa
 	        int authorId = -1;
 	        ps = conn.prepareStatement(findAuthorSql);
@@ -178,7 +167,6 @@ public class BookDaoImpl extends DBConnectSQL implements IBookDao {
 	                authorId = rs.getInt(1);
 	            }
 	        }
-
 	        // Kiểm tra thể loại
 	        int genreId = -1;
 	        ps = conn.prepareStatement(findGenreSql);
@@ -201,7 +189,6 @@ public class BookDaoImpl extends DBConnectSQL implements IBookDao {
 	                genreId = rs.getInt(1);
 	            }
 	        }
-
 	        // Cập nhật sách
 	        ps.close(); // Đóng PreparedStatement trước khi mở mới
 	        ps = conn.prepareStatement(updateBookSql);
@@ -250,7 +237,7 @@ public class BookDaoImpl extends DBConnectSQL implements IBookDao {
 	@Override
 	public List<BookModel> findAll() {
 		List<BookModel> books = new ArrayList<>();
-		String sql = "SELECT B.book_id, B.title, B.content, B.created_at, B.images_book, B.author_id, A.author_name "
+		String sql = "SELECT B.book_id, B.title, B.content, B.created_at, B.images_book, B.author_id, B.status, A.author_name "
 				+ "FROM BOOK B " + "JOIN AUTHOR A ON B.author_id = A.author_id";
 		try {
 			conn = super.getConnection();
@@ -265,6 +252,7 @@ public class BookDaoImpl extends DBConnectSQL implements IBookDao {
 				book.setContent(rs.getString("content"));
 				book.setCreatedat(rs.getDate("created_at"));
 				book.setImagesbook(rs.getString("images_book"));
+				book.setStatus(rs.getBoolean("status"));
 				books.add(book);
 			}
 		} catch (Exception e) {
@@ -272,8 +260,7 @@ public class BookDaoImpl extends DBConnectSQL implements IBookDao {
 		}
 		return books;
 	}
-
-
+	
 	@Override
 	public List<BookModel> findByTitle(String title) {
 		List<BookModel> books = new ArrayList<>();
@@ -294,6 +281,7 @@ public class BookDaoImpl extends DBConnectSQL implements IBookDao {
 	            book.setContent(rs.getString("content"));
 	            book.setCreatedat(rs.getDate("created_at"));
 	            book.setImagesbook(rs.getString("images_book"));
+	            book.setStatus(rs.getBoolean("status"));
 	            books.add(book);
 	        }
 	    } catch (Exception e) {
@@ -325,6 +313,7 @@ public class BookDaoImpl extends DBConnectSQL implements IBookDao {
 	                book.setBookid(rs.getInt("book_id"));
 	                book.setTitle(rs.getString("title"));
 	                book.setImagesbook(rs.getString("images_book"));
+	                book.setStatus(rs.getBoolean("status"));
 	                books.add(book);
 	            }
 	        }
@@ -333,5 +322,4 @@ public class BookDaoImpl extends DBConnectSQL implements IBookDao {
 	    }
 	    return books;
 	}
-
 }

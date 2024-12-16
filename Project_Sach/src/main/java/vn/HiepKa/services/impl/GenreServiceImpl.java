@@ -33,7 +33,6 @@ public class GenreServiceImpl implements IGenreService {
 			genreDao.insert(genre);
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 		}
 	}
 
@@ -43,7 +42,6 @@ public class GenreServiceImpl implements IGenreService {
 			genreDao.update(genre);
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 		}
 	}
 
@@ -53,7 +51,6 @@ public class GenreServiceImpl implements IGenreService {
 			genreDao.delete(genreId);
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 		}
 	}
 }

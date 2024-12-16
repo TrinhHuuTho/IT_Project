@@ -10,9 +10,6 @@ public class DBConnectSQL {
 //	private final String instance = "";
 //	private final String userID = "sa";
 //	private final String password = "12";
-	
-	
-	
 //	 Kết nối trên máy của Ka
 	private final String serverName = "LAPTOP-4TT7LL7D\\NGUYENHIEPKA";
 	private final String dbName = "PROJECT";

@@ -32,11 +32,6 @@ public class BookGenreServiceImpl implements IBookGenreService {
 		}
 	}
 
-//	@Override
-//	public List<Integer> getGenresByBookId(int bookId) {
-//		return bookGenreDao.findGenresByBookId(bookId);
-//	}
-
 	@Override
 	public List<GenreModel> getGenresByBookId(int bookId) {
 		return bookGenreDao.findGenresByBookId(bookId);

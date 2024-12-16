@@ -27,20 +27,25 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp" %>
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
       "
     >
+    
+    	<!-- Khối chứa thông báo -->
+        <div id="notification-container">
+            <!-- Hiển thị thông báo thành công -->
+            <c:if test="${not empty successMessage}">
+                <div class="alert alert-success notification">${successMessage}</div>
+            </c:if>
+
+            <!-- Hiển thị thông báo lỗi -->
+            <c:if test="${not empty errorMessage}">
+                <div class="alert alert-danger notification">${errorMessage}</div>
+            </c:if>
+        </div>
+    
       <form
         action="${pageContext.request.contextPath}/authentication/reset-password"
         method="post"
         style="display: flex; flex-direction: column; gap: 15px"
       >
-        <!-- Hiển thị thông báo thành công -->
-        <c:if test="${not empty successMessage}">
-          <div class="alert alert-success">${successMessage}</div>
-        </c:if>
-
-        <!-- Hiển thị thông báo lỗi -->
-        <c:if test="${not empty errorMessage}">
-          <div class="alert alert-danger">${errorMessage}</div>
-        </c:if>
 
         <!-- Thêm trường action để xác định trường hợp sử dụng -->
         <input type="hidden" name="action" value="${action}" />
@@ -58,7 +63,6 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp" %>
           style="padding: 10px; border-radius: 5px; border: 1px solid #ccc"
           minlength="6"
         />
-
         <button
           type="submit"
           style="
@@ -78,5 +82,21 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp" %>
         </button>
       </form>
     </div>
+    
+    <!-- JavaScript để tự động ẩn thông báo -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const notifications = document.querySelectorAll(".notification");
+            notifications.forEach(notification => {
+                // Ẩn thông báo sau 5 giây
+                setTimeout(() => {
+                    notification.style.transition = "opacity 1s";
+                    notification.style.opacity = "0";
+                    setTimeout(() => notification.remove(), 1000); // Xóa hẳn khỏi DOM sau 1 giây
+                }, 3000);
+            });
+        });
+    </script>
+    
   </body>
 </html>

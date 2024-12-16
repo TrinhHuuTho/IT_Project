@@ -13,7 +13,7 @@ import vn.HiepKa.utils.Constant;
 import org.apache.commons.io.IOUtils;
 
 @WebServlet(urlPatterns = { "/image", "/readPdf" })
-public class DownloadFileController extends HttpServlet {
+public class UploadFileController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 

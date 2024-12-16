@@ -103,6 +103,7 @@
         <div class="col-12">
           <div class="section-stories-hot__list">
             <c:forEach var="book" items="${hotBooks}">
+            <c:if test="${book.status}">
               <div class="story-item">
                 <a href="${pageContext.request.contextPath}/story?id=${book.bookid}" class="d-block text-decoration-none">
                   <div class="story-item__image">
@@ -129,6 +130,7 @@
 				</div>
                 </a>
               </div>
+              </c:if>
             </c:forEach>
           </div>
           <!-- Skeleton loading -->
@@ -160,6 +162,7 @@
             <div class="col-12">
               <div class="section-stories-new__list">
                 <c:forEach var="book" items="${newBooks}">
+                <c:if test="${book.status}">
                   <c:if test="${book.isNew}">
                     <div class="story-item-no-image">
                       <div class="story-item-no-image__name d-flex align-items-center">
@@ -175,6 +178,7 @@
                         <a href="${pageContext.request.contextPath}/story?id=${book.bookid}" class="hover-title text-decoration-none text-info">Ngày cập nhật ${book.getCreatedat()}</a>
                       </div>
                     </div>
+                  </c:if>
                   </c:if>
                 </c:forEach>
               </div>

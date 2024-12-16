@@ -29,7 +29,6 @@ public class BookGenreDaoImpl extends DBConnectSQL implements IBookGenreDao {
 	                 "LEFT JOIN BOOKGENRE bg ON g.genre_id = bg.genre_id " +
 	                 "LEFT JOIN BOOK b ON bg.book_id = b.book_id " +
 	                 "ORDER BY g.genre_name";
-
 	    try {
 	        conn = super.getConnection();
 	        ps = conn.prepareStatement(sql);
@@ -48,14 +47,12 @@ public class BookGenreDaoImpl extends DBConnectSQL implements IBookGenreDao {
 	                if (currentGenre != null) {
 	                    genreWithBooksList.add(currentGenre);  // Thêm thể loại cũ vào danh sách
 	                }
-
 	                // Tạo đối tượng GenreWithBooksModel mới cho thể loại hiện tại
 	                currentGenre = new GenreWithBooksModel();
 	                currentGenre.setGenreId(genreId);
 	                currentGenre.setGenreName(genreName);
 	                currentGenre.setBooks(new ArrayList<>());
 	            }
-
 	            // Thêm sách vào danh sách của thể loại
 	            if (bookId != 0) {
 	                BookModel book = new BookModel();
@@ -64,12 +61,10 @@ public class BookGenreDaoImpl extends DBConnectSQL implements IBookGenreDao {
 	                currentGenre.getBooks().add(book);
 	            }
 	        }
-
 	        // Thêm genre cuối cùng vào danh sách
 	        if (currentGenre != null) {
 	            genreWithBooksList.add(currentGenre);
 	        }
-
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    } finally {
@@ -77,25 +72,6 @@ public class BookGenreDaoImpl extends DBConnectSQL implements IBookGenreDao {
 	    }
 	    return genreWithBooksList;
 	}
-
-	public static void main(String[] args) {
-        BookGenreDaoImpl dao = new BookGenreDaoImpl();
-
-        try {
-            // Test phương thức lấy danh sách thể loại với sách
-            List<GenreWithBooksModel> genresWithBooks = dao.findAllGenresWithBooks();
-
-            // In kết quả ra màn hình
-            for (GenreWithBooksModel genre : genresWithBooks) {
-                System.out.println("Genre: " + genre.getGenreName());
-                for (BookModel book : genre.getBooks()) {
-                    System.out.println("  - Book: " + book.getTitle());
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 	
 	@Override
 	public void insert(BookGenreModel bookGenre) throws SQLException {
@@ -113,7 +89,6 @@ public class BookGenreDaoImpl extends DBConnectSQL implements IBookGenreDao {
 		}
 	}
 	
-
 	@Override
 	public void delete(int bookId, int genreId) throws SQLException {
 		String sql = "DELETE FROM BOOKGENRE WHERE book_id = ? AND genre_id = ?";
@@ -156,8 +131,6 @@ public class BookGenreDaoImpl extends DBConnectSQL implements IBookGenreDao {
 	    return genres;
 	}
 
-
-
 	@Override
 	public List<Integer> findBooksByGenreId(int genreId) {
 		List<Integer> bookIds = new ArrayList<>();
@@ -190,21 +163,4 @@ public class BookGenreDaoImpl extends DBConnectSQL implements IBookGenreDao {
 			e.printStackTrace();
 		}
 	}
-
-	// Test phương thức trong main
-//	public static void main(String[] args) {
-//	    IBookGenreDao bookGenreDao = new BookGenreDaoImpl();
-//
-//	    // Lấy danh sách thể loại của sách có ID 1
-//	    List<GenreModel> genres = bookGenreDao.findGenresByBookId(1);
-//	    if (genres.isEmpty()) {
-//	        System.out.println("Không tìm thấy thể loại nào cho sách với ID 1.");
-//	    } else {
-//	        System.out.println("Thể loại của sách có ID 1:");
-//	        for (GenreModel genre : genres) {
-//	            System.out.println("- " + genre.getGenreName());
-//	        }
-//	    }
-//	}
-
 }

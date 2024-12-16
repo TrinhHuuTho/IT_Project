@@ -18,7 +18,6 @@ public class UserDaoImpl extends DBConnectSQL implements IUserDao {
 	@Override
 	public UserModel findByUserName(String username) {
 		String sql = "select * from USERS where username = ?";
-
 		try {
 			conn = super.getConnection();
 			ps = conn.prepareStatement(sql);
@@ -42,7 +41,6 @@ public class UserDaoImpl extends DBConnectSQL implements IUserDao {
 	@Override
 	public void insert(UserModel user) throws SQLException, Exception {
 		String sql = "INSERT INTO USERS (username, email, password)" + "VALUES (?, ?, ?)";
-
 		try {
 			new DBConnectSQL();
 			conn = super.getConnection();
@@ -98,15 +96,12 @@ public class UserDaoImpl extends DBConnectSQL implements IUserDao {
 	    try (Connection conn = super.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 	        ps.setString(1, resetToken);
 	        ResultSet rs = ps.executeQuery();
-
 	        if (rs.next()) {
 	            Timestamp expiryDate = rs.getTimestamp("reset_token_expiry");
 	            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-
 	            // In ra log chi tiết về thời gian hiện tại và thời gian hết hạn
 	            System.out.println("Thời gian hiện tại (UTC): " + currentTime);
 	            System.out.println("Thời gian hết hạn từ DB (UTC): " + expiryDate);
-
 	            // So sánh và in ra kết quả
 	            if (expiryDate != null && expiryDate.after(currentTime)) {
 	                System.out.println("Token hợp lệ");
@@ -130,9 +125,7 @@ public class UserDaoImpl extends DBConnectSQL implements IUserDao {
 	        ps.setString(1, hashedPassword); // Đặt mật khẩu băm vào vị trí đầu tiên
 	        ps.setString(2, resetToken); // Đặt token vào vị trí thứ hai
 	        int rowsAffected = ps.executeUpdate(); // Thực hiện cập nhật và lấy số hàng bị ảnh hưởng
-
 	        conn.commit(); // Commit để đảm bảo thay đổi được lưu
-
 	        System.out.println("Số hàng bị ảnh hưởng: " + rowsAffected); // Log kiểm tra
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -151,19 +144,5 @@ public class UserDaoImpl extends DBConnectSQL implements IUserDao {
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-	}
-
-
-	public static void main(String[] args) {
-		UserDaoImpl userDao = new UserDaoImpl(); // Tạo đối tượng DAO để gọi hàm kiểm tra
-
-		//Thử nghiệm với các token khác nhau (đảm bảo token đã tồn tại trong databaseđể kiểm tra)
-		String testToken1 = "54f006e1-ffb5-441c-9dad-14025547153b"; // Token có thể tồn tại và hợp lệ Kiểm tra token hợp lệ
-		boolean isValid1 = userDao.isResetTokenValid(testToken1);
-		System.out.println("Token " + testToken1 + " hợp lệ: " + isValid1);
-		System.out.println("Thời gian hiện tại (ứng dụng): " + new Timestamp(System.currentTimeMillis()));
-
-		new UserModel();
-		//userDao.findByResetPasswordToken(testToken1);
 	}
 }

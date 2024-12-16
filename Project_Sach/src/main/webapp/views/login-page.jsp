@@ -102,30 +102,26 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                   </p>
                 </div>
 
-				<!-- Hiển thị thông báo thành công -->
-					<c:if test="${not empty successMessage}">
-					    <div class="alert alert-success" class="alert alert-danger"
-		                      role="alert"
-		                      style="font-size: 14px; padding: 6px"
-		                      >
-                      		${successMessage}
-                     	</div>
-					</c:if>
-
-                <!-- Hiển thị thông báo lỗi nếu có -->
-                <div style="height: auto; margin-bottom: 10px">
-                  <c:if test="${not empty errorMessage}">
-                    <div
-                      class="alert alert-danger"
-                      role="alert"
-                      style="font-size: 14px; padding: 6px"
-                    >
-                      ${errorMessage}
-                    </div>
-                  </c:if>
-                </div>
                 <div class="row">
                   <div class="col-xs-12 col-sm-12">
+                  
+                  <!-- Khối chứa thông báo -->
+                    <div id="notification-container">
+                      <!-- Hiển thị thông báo thành công -->
+                      <c:if test="${not empty successMessage}">
+                        <div class="alert alert-success notification">
+                          ${successMessage}
+                        </div>
+                      </c:if>
+
+                      <!-- Hiển thị thông báo lỗi -->
+                      <c:if test="${not empty errorMessage}">
+                        <div class="alert alert-danger notification">
+                          ${errorMessage}
+                        </div>
+                      </c:if>
+                    </div>
+                    
                     <form
                       name="loginForm"
                       class="loginForm"
@@ -200,6 +196,24 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                     <div class="authfy-heading">
                       <h3 class="auth-title">Đăng ký miễn phí!</h3>
                     </div>
+                    
+                    <!-- Khối chứa thông báo -->
+                    <div id="notification-container">
+                      <!-- Hiển thị thông báo thành công -->
+                      <c:if test="${not empty successMessage}">
+                        <div class="alert alert-success notification">
+                          ${successMessage}
+                        </div>
+                      </c:if>
+
+                      <!-- Hiển thị thông báo lỗi -->
+                      <c:if test="${not empty errorMessage}">
+                        <div class="alert alert-danger notification">
+                          ${errorMessage}
+                        </div>
+                      </c:if>
+                    </div>
+                    
                     <form
                       name="signupForm"
                       class="signupForm"
@@ -273,23 +287,31 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
                         cho bạn một email kèm theo hướng dẫn thêm.
                       </p>
                     </div>
+                    
+                    <!-- Khối chứa thông báo -->
+                    <div id="notification-container">
+                      <!-- Hiển thị thông báo thành công -->
+                      <c:if test="${not empty successMessage}">
+                        <div class="alert alert-success notification">
+                          ${successMessage}
+                        </div>
+                      </c:if>
+
+                      <!-- Hiển thị thông báo lỗi -->
+                      <c:if test="${not empty errorMessage}">
+                        <div class="alert alert-danger notification">
+                          ${errorMessage}
+                        </div>
+                      </c:if>
+                    </div>
+                    
                     <form
                       name="forgetForm"
                       class="forgetForm"
                       action="<c:url value='/authentication/forgotpassword' />"
                       method="POST"
                     >
-                    
-	                    <!-- Hiển thị thông báo thành công -->
-						<c:if test="${not empty successMessage}">
-						    <div class="alert alert-success">${successMessage}</div>
-						</c:if>
-						
-						<!-- Hiển thị thông báo lỗi -->
-						<c:if test="${not empty errorMessage}">
-						    <div class="alert alert-danger">${errorMessage}</div>
-						</c:if>
-                                       
+                                                           
                       <div class="form-group">
                         <input
                           type="email"
@@ -335,5 +357,21 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
       <!-- ./row -->
     </div>
     <!-- ./container -->
+    
+     <!-- JavaScript để tự động ẩn thông báo -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const notifications = document.querySelectorAll(".notification");
+        notifications.forEach((notification) => {
+          // Ẩn thông báo sau 5 giây
+          setTimeout(() => {
+            notification.style.transition = "opacity 1s";
+            notification.style.opacity = "0";
+            setTimeout(() => notification.remove(), 1000); // Xóa hẳn khỏi DOM sau 1 giây
+          }, 3000);
+        });
+      });
+    </script>
+    
   </body>
 </html>

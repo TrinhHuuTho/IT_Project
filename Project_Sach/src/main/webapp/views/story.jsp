@@ -432,4 +432,12 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
 
     </div>
   </div>
+    <script>
+  document.addEventListener('DOMContentLoaded', function () {
+	    const defaultTab = document.getElementById('top-day-list');
+	    defaultTab.classList.add('active');
+	    const defaultTabContent = document.getElementById('top-day');
+	    defaultTabContent.classList.add('show', 'active');
+	});
+  </script>
 </main>

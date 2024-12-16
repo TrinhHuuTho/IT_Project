@@ -46,5 +46,4 @@ public class UserFilter implements Filter{
 	            resp.sendRedirect(req.getContextPath() + "/home");
 	        }
 	    }
-
 }

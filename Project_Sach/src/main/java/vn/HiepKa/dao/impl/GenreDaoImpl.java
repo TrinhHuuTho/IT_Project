@@ -122,23 +122,4 @@ public class GenreDaoImpl extends DBConnectSQL implements IGenreDao {
 	    }
 	    return null; // Trả về null nếu không tìm thấy thể loại
 	}
-
-	public static void main(String[] args) {
-		IGenreDao genreDao = new GenreDaoImpl();
-
-		// Test findAll
-		List<GenreModel> genres = genreDao.findAll();
-		if (genres.isEmpty()) {
-			System.out.println("Không có thể loại nào trong cơ sở dữ liệu.");
-		} else {
-			for (GenreModel genre : genres) {
-				System.out.println("Genre ID: " + genre.getGenreid());
-				System.out.println("Name: " + genre.getGenreName());
-				System.out.println("Description: " + genre.getDescribeGenre());
-				System.out.println("--------------------");
-			}
-		}
-
-	}
-
 }

@@ -9,7 +9,12 @@ pageEncoding="UTF-8"%> <%@ include file="/commons/taglib.jsp"%>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Trang chủ Admin</title>
+        <link
+	      rel="shortcut icon"
+	      href="${URL}assets/images/No-bg-logo.ico"
+	      type="image/x-icon"
+	    />
+        <title>Admin - TomeKeeper</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="${URL}startbootstrap-sb-admin-gh-pages/css/styles.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
