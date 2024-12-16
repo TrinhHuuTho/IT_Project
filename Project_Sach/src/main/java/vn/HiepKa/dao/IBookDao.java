@@ -19,7 +19,10 @@ public interface IBookDao {
     void insert(BookModel book) throws SQLException, Exception;
     // Xóa sách theo ID
     void delete(int bookid) throws SQLException, Exception;
-    void update(BookModel book, String authorName) throws SQLException;
+    
+	void update(BookModel book, String authorName, String genreName) throws SQLException;
 
 	List<BookModel> findBooksByIds(List<Integer> bookIds);
+
+
 }

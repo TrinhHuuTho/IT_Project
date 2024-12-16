@@ -4,22 +4,22 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 public class DBConnectSQL {
 	// Kết nối trên máy của Thọ
-	private final String serverName = "ADMIN";
-	private final String dbName = "PROJECT";
-	private final String portNumber = "1433";
-	private final String instance = "";
-	private final String userID = "sa";
-	private final String password = "12";
-	
-	
-	
-	// Kết nối trên máy của Ka
-//	private final String serverName = "LAPTOP-4TT7LL7D\\NGUYENHIEPKA";
+//	private final String serverName = "ADMIN";
 //	private final String dbName = "PROJECT";
 //	private final String portNumber = "1433";
 //	private final String instance = "";
 //	private final String userID = "sa";
-//	private final String password = "09102004";
+//	private final String password = "12";
+	
+	
+	
+//	 Kết nối trên máy của Ka
+	private final String serverName = "LAPTOP-4TT7LL7D\\NGUYENHIEPKA";
+	private final String dbName = "PROJECT";
+	private final String portNumber = "1433";
+	private final String instance = "";
+	private final String userID = "sa";
+	private final String password = "09102004";
 
 	public Connection getConnection() throws Exception {
 	        String url = "jdbc:sqlserver://" + serverName + ":" + portNumber + "\\" + instance + " ;databaseName=" + dbName;

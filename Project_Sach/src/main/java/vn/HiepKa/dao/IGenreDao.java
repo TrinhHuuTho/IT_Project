@@ -17,6 +17,8 @@ public interface IGenreDao {
 
 	GenreModel findById(int genreId);
 
+	GenreModel getGenreByName(String genreName);
+
 
 
 }

@@ -11,6 +11,11 @@ import vn.HiepKa.services.IGenreService;
 public class GenreServiceImpl implements IGenreService {
 
 	IGenreDao genreDao = new GenreDaoImpl();
+	
+	@Override
+    public GenreModel getGenreByName(String genreName) {
+        return genreDao.getGenreByName(genreName);
+    }
 
 	@Override
 	public List<GenreModel> getAllGenres() {

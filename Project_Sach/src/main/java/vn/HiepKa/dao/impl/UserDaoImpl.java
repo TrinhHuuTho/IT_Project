@@ -5,11 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import vn.HiepKa.configs.AzureConnectSQL;
+import vn.HiepKa.configs.DBConnectSQL;
 import vn.HiepKa.dao.IUserDao;
 import vn.HiepKa.models.UserModel;
 
-public class UserDaoImpl extends AzureConnectSQL implements IUserDao {
+public class UserDaoImpl extends DBConnectSQL implements IUserDao {
 
 	public Connection conn = null;
 	public PreparedStatement ps = null;
@@ -44,8 +44,8 @@ public class UserDaoImpl extends AzureConnectSQL implements IUserDao {
 		String sql = "INSERT INTO USERS (username, email, password)" + "VALUES (?, ?, ?)";
 
 		try {
-			new AzureConnectSQL();
-			conn = AzureConnectSQL.getConnection();
+			new DBConnectSQL();
+			conn = super.getConnection();
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, user.getUsername());
 			ps.setString(2, user.getEmail());
@@ -82,12 +82,12 @@ public class UserDaoImpl extends AzureConnectSQL implements IUserDao {
 	@Override
 	public void updateResetToken(String email, String token, Timestamp expiry) throws SQLException {
 	    String sql = "UPDATE users SET reset_token = ?, reset_token_expiry = ? WHERE email = ?";
-	    try (Connection conn = AzureConnectSQL.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+	    try (Connection conn = super.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 	        stmt.setString(1, token); // Cột reset_token
 	        stmt.setTimestamp(2, expiry); // Cột reset_token_expiry
 	        stmt.setString(3, email); // Email người dùng
 	        stmt.executeUpdate();
-	    } catch (SQLException e) {
+	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
 	}
@@ -95,7 +95,7 @@ public class UserDaoImpl extends AzureConnectSQL implements IUserDao {
 	@Override
 	public boolean isResetTokenValid(String resetToken) {
 	    String sql = "SELECT reset_token_expiry FROM users WHERE reset_token = ?";
-	    try (Connection conn = AzureConnectSQL.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+	    try (Connection conn = super.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 	        ps.setString(1, resetToken);
 	        ResultSet rs = ps.executeQuery();
 
@@ -116,7 +116,7 @@ public class UserDaoImpl extends AzureConnectSQL implements IUserDao {
 	                return false;
 	            }
 	        }
-	    } catch (SQLException e) {
+	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
 	    return false; // Token không hợp lệ hoặc đã hết hạn
@@ -126,7 +126,7 @@ public class UserDaoImpl extends AzureConnectSQL implements IUserDao {
 	@Override
 	public void updatePasswordByToken(String resetToken, String hashedPassword) throws SQLException {
 	    String sql = "UPDATE users SET password = ?, reset_token = NULL, reset_token_expiry = NULL WHERE reset_token = ?";
-	    try (Connection conn = AzureConnectSQL.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+	    try (Connection conn = super.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 	        ps.setString(1, hashedPassword); // Đặt mật khẩu băm vào vị trí đầu tiên
 	        ps.setString(2, resetToken); // Đặt token vào vị trí thứ hai
 	        int rowsAffected = ps.executeUpdate(); // Thực hiện cập nhật và lấy số hàng bị ảnh hưởng
@@ -134,7 +134,7 @@ public class UserDaoImpl extends AzureConnectSQL implements IUserDao {
 	        conn.commit(); // Commit để đảm bảo thay đổi được lưu
 
 	        System.out.println("Số hàng bị ảnh hưởng: " + rowsAffected); // Log kiểm tra
-	    } catch (SQLException e) {
+	    } catch (Exception e) {
 	        e.printStackTrace();
 	        throw new SQLException("Cập nhật mật khẩu thất bại.");
 	    }
@@ -143,14 +143,13 @@ public class UserDaoImpl extends AzureConnectSQL implements IUserDao {
 	@Override
 	public void updatePasswordByEmail(UserModel user) throws SQLException {
 	    String sql = "UPDATE USERS SET password = ? WHERE email = ?";
-	    try (Connection conn = AzureConnectSQL.getConnection();
+	    try (Connection conn = super.getConnection();
 	         PreparedStatement ps = conn.prepareStatement(sql)) {
 	        ps.setString(1, user.getPassword());
 	        ps.setString(2, user.getEmail());
 	        ps.executeUpdate();
-	    } catch (SQLException e) {
+	    } catch (Exception e) {
 	        e.printStackTrace();
-	        throw e;
 	    }
 	}
 

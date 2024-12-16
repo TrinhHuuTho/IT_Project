@@ -13,13 +13,14 @@ import vn.HiepKa.services.IBookService;
 public class BookServiceImpl implements IBookService {
 
 	IBookDao bookDao = new BookDaoImpl();
+
 	@Override
 	public BookModel findById(int bookid) {
-	    BookModel book = bookDao.findById(bookid);
-	    if (book != null) {
-	        checkIsNew(book);
-	    }
-	    return book;
+		BookModel book = bookDao.findById(bookid);
+		if (book != null) {
+			checkIsNew(book);
+		}
+		return book;
 	}
 
 	@Override
@@ -58,12 +59,12 @@ public class BookServiceImpl implements IBookService {
 	}
 
 	@Override
-	public void update(BookModel book, String authorName) throws SQLException {
+	public void update(BookModel book, String authorName, String genreName) throws SQLException {
 		try {
-			bookDao.update(book, authorName);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			bookDao.update(book, authorName, genreName); // Gọi dao để cập nhật thông tin sách
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new SQLException("Lỗi khi cập nhật sách", e); // Ném lại ngoại lệ cho controller
 		}
 	}
 
@@ -79,14 +80,14 @@ public class BookServiceImpl implements IBookService {
 
 	@Override
 	public List<BookModel> findBooksByIds(List<Integer> bookIds) {
-	    if (bookIds == null || bookIds.isEmpty()) {
-	        return List.of(); // Trả về danh sách rỗng nếu không có bookIds
-	    }
-	    List<BookModel> books = bookDao.findBooksByIds(bookIds);
-	    for (BookModel book : books) {
-	        checkIsNew(book);
-	    }
-	    return books;
+		if (bookIds == null || bookIds.isEmpty()) {
+			return List.of(); // Trả về danh sách rỗng nếu không có bookIds
+		}
+		List<BookModel> books = bookDao.findBooksByIds(bookIds);
+		for (BookModel book : books) {
+			checkIsNew(book);
+		}
+		return books;
 	}
 
 }

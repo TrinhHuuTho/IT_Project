@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import vn.HiepKa.configs.AzureConnectSQL;
+import vn.HiepKa.configs.DBConnectSQL;
 import vn.HiepKa.dao.IReviewDao;
 import vn.HiepKa.models.ReviewModel;
 
-public class ReviewDaoImpl extends AzureConnectSQL implements IReviewDao {
+public class ReviewDaoImpl extends DBConnectSQL implements IReviewDao {
 	private Connection conn = null;
 	private PreparedStatement ps = null;
 
@@ -71,7 +71,7 @@ public class ReviewDaoImpl extends AzureConnectSQL implements IReviewDao {
 				// Thêm đối tượng vào danh sách
 				reviews.add(review);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -91,7 +91,7 @@ public class ReviewDaoImpl extends AzureConnectSQL implements IReviewDao {
 					return new ReviewModel(averageRating, totalReviews);
 				}
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return new ReviewModel(0, 0); // Đảm bảo trả về một đối tượng mặc định khi không có kết quả
@@ -129,7 +129,7 @@ public class ReviewDaoImpl extends AzureConnectSQL implements IReviewDao {
 				review.setTotalReviews(rs.getInt("total_reviews"));
 				topRatedBooks.add(review);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return topRatedBooks;

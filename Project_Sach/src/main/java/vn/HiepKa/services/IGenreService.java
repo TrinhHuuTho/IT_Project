@@ -16,4 +16,6 @@ public interface IGenreService {
 
 	List<GenreModel> getAllGenres();
 
+	GenreModel getGenreByName(String genreName);
+
 }

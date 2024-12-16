@@ -15,8 +15,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import vn.HiepKa.models.BookModel;
+import vn.HiepKa.models.GenreModel;
 import vn.HiepKa.services.IBookService;
+import vn.HiepKa.services.IGenreService;
 import vn.HiepKa.services.impl.BookServiceImpl;
+import vn.HiepKa.services.impl.GenreServiceImpl;
 import vn.HiepKa.utils.Constant;
 
 @WebServlet(urlPatterns = { "/admin/home", "/admin/delete", "/admin/edit", "/admin/update" , "/admin/add", "/admin/insert" })
@@ -29,6 +32,7 @@ public class HomeController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private IBookService bookService = new BookServiceImpl();
+    private IGenreService genreService = new GenreServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -52,8 +56,13 @@ public class HomeController extends HttpServlet {
             int id = Integer.parseInt(req.getParameter("id"));
             BookModel book = bookService.findById(id);
             req.setAttribute("book", book);
+            List<GenreModel> genres = genreService.getAllGenres(); // Giả sử bạn có phương thức này
+        	req.setAttribute("genres", genres);
             req.getRequestDispatcher("/views/admin/book-edit.jsp").forward(req, resp);
         } else if (url.contains("add")) {
+        	// Trong controller
+        	List<GenreModel> genres = genreService.getAllGenres(); // Giả sử bạn có phương thức này
+        	req.setAttribute("genres", genres);
         	req.getRequestDispatcher("/views/admin/book-add.jsp").forward(req, resp);
         }
     }
@@ -72,6 +81,8 @@ public class HomeController extends HttpServlet {
                 String authorname = req.getParameter("authorname");
                 String statusStr = req.getParameter("status");
                 boolean status = "1".equals(statusStr);
+                
+                String genreName = req.getParameter("genre_name");
 
                 // Xử lý ngày tạo
                 String createdAtStr = req.getParameter("createdAt");
@@ -148,7 +159,7 @@ public class HomeController extends HttpServlet {
                 }
 
                 // Cập nhật thông tin sách
-                bookService.update(book, authorname);
+                bookService.update(book, authorname, genreName);
 
                 // Chuyển hướng về danh sách sách
                 resp.sendRedirect(req.getContextPath() + "/admin/home");
@@ -162,6 +173,8 @@ public class HomeController extends HttpServlet {
         }
         else if (url.contains("insert")) {
             try {
+            	
+
                 // Lấy thông tin từ form
                 String title = req.getParameter("title");
                 String authorname = req.getParameter("authorname");
@@ -172,6 +185,9 @@ public class HomeController extends HttpServlet {
                 String createdAtStr = req.getParameter("createdAt");
                 Date createdAt = Date.valueOf(createdAtStr); // Định dạng yyyy-MM-dd
 
+             // Lấy thông tin thể loại từ form
+                String genreName = req.getParameter("genre_name");
+                
                 // Tạo đối tượng BookModel
                 BookModel book = new BookModel();
                 book.setTitle(title);
@@ -235,6 +251,24 @@ public class HomeController extends HttpServlet {
                         book.setImagesbook(imageFileName); // Lưu URL ảnh mặc định vào database
                     }
                 }
+                
+             // Xử lý thể loại
+                if (genreName != null && !genreName.isEmpty()) {
+                    // Khởi tạo service để gọi phương thức
+                    GenreServiceImpl genreService = new GenreServiceImpl(); // Tạo đối tượng genreService
+                    // Kiểm tra xem thể loại đã tồn tại trong database chưa
+                    GenreModel genre = genreService.getGenreByName(genreName); // Gọi phương thức không tĩnh
+                    if (genre == null) {
+                        // Nếu thể loại chưa có, thêm vào database
+                        genre = new GenreModel();
+                        genre.setGenreName(genreName); // Thiết lập tên thể loại
+                        genreService.addGenre(genre); // Thêm thể loại vào database
+                    }
+
+                    // Gắn thể loại cho sách
+                    book.setGenreName(genreName); // Giả sử bạn có thể set genre vào BookModel
+                }
+
 
                 // Lưu vào cơ sở dữ liệu
                 bookService.insert(book); // Dùng phương thức insert từ bookService để thêm sách

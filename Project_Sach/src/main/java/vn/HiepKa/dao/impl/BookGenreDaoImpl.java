@@ -7,14 +7,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import vn.HiepKa.configs.AzureConnectSQL;
+
+import vn.HiepKa.configs.DBConnectSQL;
 import vn.HiepKa.dao.IBookGenreDao;
 import vn.HiepKa.models.BookGenreModel;
 import vn.HiepKa.models.BookModel;
 import vn.HiepKa.models.GenreModel;
 import vn.HiepKa.models.GenreWithBooksModel;
 
-public class BookGenreDaoImpl extends AzureConnectSQL implements IBookGenreDao {
+public class BookGenreDaoImpl extends DBConnectSQL implements IBookGenreDao {
 
 	private Connection conn = null;
 	private PreparedStatement ps = null;
@@ -69,7 +70,7 @@ public class BookGenreDaoImpl extends AzureConnectSQL implements IBookGenreDao {
 	            genreWithBooksList.add(currentGenre);
 	        }
 
-	    } catch (SQLException e) {
+	    } catch (Exception e) {
 	        e.printStackTrace();
 	    } finally {
 	        closeResources();
@@ -105,7 +106,7 @@ public class BookGenreDaoImpl extends AzureConnectSQL implements IBookGenreDao {
 			ps.setInt(1, bookGenre.getBookid());
 			ps.setInt(2, bookGenre.getGenreId());
 			ps.executeUpdate();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			closeResources();
@@ -122,7 +123,7 @@ public class BookGenreDaoImpl extends AzureConnectSQL implements IBookGenreDao {
 			ps.setInt(1, bookId);
 			ps.setInt(2, genreId);
 			ps.executeUpdate();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			closeResources();
@@ -147,7 +148,7 @@ public class BookGenreDaoImpl extends AzureConnectSQL implements IBookGenreDao {
 	            genre.setDescribeGenre(rs.getString("describe_genre"));
 	            genres.add(genre);
 	        }
-	    } catch (SQLException e) {
+	    } catch (Exception e) {
 	        e.printStackTrace();
 	    } finally {
 	        closeResources(); // Đóng tài nguyên sau khi hoàn tất
@@ -169,7 +170,7 @@ public class BookGenreDaoImpl extends AzureConnectSQL implements IBookGenreDao {
 			while (rs.next()) {
 				bookIds.add(rs.getInt("book_id"));
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			closeResources();

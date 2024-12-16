@@ -20,6 +20,22 @@
                         <label for="authorname">Tên tác giả:</label>
                         <input type="text" id="authorname" name="authorname" value="${book.authorname}" placeholder="Nhập tên tác giả" required>
 
+						<!-- Chọn thể loại -->
+						<label for="genre_name_select">Thể loại:</label>
+						<select id="genre_name_select" name="genre_name" required>
+						    <option value="" disabled selected>Chọn thể loại</option>
+						    <!-- Lặp qua các thể loại đã có sẵn trong database -->
+						    <c:forEach var="genre" items="${genres}">
+						        <option value="${genre.genreName}" 
+						            <c:if test="${genre.genreName == book.genreName}">selected</c:if>>
+						            ${genre.genreName}
+						        </option>
+						    </c:forEach>
+						</select>
+						<!-- Hoặc cho phép người dùng nhập thể loại mới -->
+						<label for="genre_name_input">Hoặc nhập thể loại mới:</label>
+						<input type="text" id="genre_name_input" name="genre_name" placeholder="Nhập thể loại mới (nếu có)" oninput="checkGenreInput()">
+
                         <!-- Chọn file PDF -->
                         <label for="content">File PDF:</label>
                         <c:if test="${book.content != null}">
@@ -87,6 +103,18 @@
             preview.src = url;
         }
     });
+    
+    function checkGenreInput() {
+        const genreSelect = document.getElementById('genre_name_select');
+        const genreInput = document.getElementById('genre_name_input');
+
+        // Kiểm tra nếu người dùng nhập thể loại mới
+        if (genreInput.value.trim() !== "") {
+            genreSelect.removeAttribute('required');  // Loại bỏ yêu cầu chọn thể loại
+        } else {
+            genreSelect.setAttribute('required', 'required');  // Đặt lại yêu cầu chọn thể loại nếu input trống
+        }
+    }
     
 </script>
 

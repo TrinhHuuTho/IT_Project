@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import vn.HiepKa.configs.AzureConnectSQL;
+import vn.HiepKa.configs.DBConnectSQL;
 import vn.HiepKa.dao.IGenreDao;
 import vn.HiepKa.models.GenreModel;
 
-public class GenreDaoImpl extends AzureConnectSQL implements IGenreDao {
+public class GenreDaoImpl extends DBConnectSQL implements IGenreDao {
 
 	private Connection conn = null;
 	private PreparedStatement ps = null;
@@ -32,7 +32,7 @@ public class GenreDaoImpl extends AzureConnectSQL implements IGenreDao {
 				genre.setDescribeGenre(rs.getString("describe_genre"));
 				return genre;
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -47,7 +47,7 @@ public class GenreDaoImpl extends AzureConnectSQL implements IGenreDao {
 			ps.setString(1, genre.getGenreName());
 			ps.setString(2, genre.getDescribeGenre());
 			ps.executeUpdate();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -62,7 +62,7 @@ public class GenreDaoImpl extends AzureConnectSQL implements IGenreDao {
 			ps.setString(2, genre.getDescribeGenre());
 			ps.setInt(3, genre.getGenreid());
 			ps.executeUpdate();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -75,7 +75,7 @@ public class GenreDaoImpl extends AzureConnectSQL implements IGenreDao {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, genreId);
 			ps.executeUpdate();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -95,10 +95,32 @@ public class GenreDaoImpl extends AzureConnectSQL implements IGenreDao {
 				genre.setDescribeGenre(rs.getString("describe_genre"));
 				genres.add(genre);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return genres;
+	}
+	
+	@Override
+	public GenreModel getGenreByName(String genreName) {
+	    String sql = "SELECT * FROM GENRE WHERE genre_name = ?";
+	    try {
+	        conn = super.getConnection();
+	        ps = conn.prepareStatement(sql);
+	        ps.setString(1, genreName);
+	        rs = ps.executeQuery();
+	        
+	        if (rs.next()) {
+	            GenreModel genre = new GenreModel();
+	            genre.setGenreid(rs.getInt("genre_id"));
+	            genre.setGenreName(rs.getString("genre_name"));
+	            genre.setDescribeGenre(rs.getString("describe_genre"));
+	            return genre;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return null; // Trả về null nếu không tìm thấy thể loại
 	}
 
 	public static void main(String[] args) {
